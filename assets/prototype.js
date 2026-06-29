@@ -24,6 +24,8 @@
 
   const $ = (s, r = document) => r.querySelector(s);
   const view = $('#view');
+  let sidebarEl, sbBackdrop;
+  function sbOpen(o) { if (!sidebarEl) return; sidebarEl.classList.toggle('open', o); sbBackdrop.classList.toggle('open', o); }
   const fmt = (n, sep) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep || ',');
   const money = (c, n) => `${c.code} ${fmt(n, c.sep)}`;
   const monthly = (f, d, c) => f * c.full + d * c.dept;
@@ -84,6 +86,19 @@
       <h1 class="page-title">Simple, transparent pricing</h1>
       <p class="page-sub">Pay only for the recruiters you need. Unlimited job postings included.</p>
 
+      <div class="card card-pad" style="margin-top:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:180px"><div class="section-title" style="font-size:16px">Understand Our Seat Types</div><p class="muted" style="font-size:13px;margin-top:4px">When you set specific role members, it affects your seat type.</p></div>
+        <button class="btn btn-outline" data-toast="Seat types: Full Recruiter, Department Head, and free Member seats.">Learn More</button>
+      </div>
+
+      <div class="card card-pad" style="margin-top:14px">
+        <div class="between"><b style="font-size:16px">${S.plan==='active'?"You're on a Paid Plan":"You're on Free Trial"}</b><a data-go="${S.plan==='active'?'billing':'order'}" style="font-weight:600;font-size:13.5px;cursor:pointer">Upgrade anytime →</a></div>
+        <div style="display:flex;gap:36px;margin-top:14px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:10px">${seatTile('full')}<div><b style="font-size:14px">Full seats</b><div class="muted" style="font-size:12px">${S.plan==='active'?S.bought.full:10} seats</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px">${seatTile('dept')}<div><b style="font-size:14px">Dept seats</b><div class="muted" style="font-size:12px">${S.plan==='active'?S.bought.dept:2} seats</div></div></div>
+        </div>
+      </div>
+
       <div class="seatcard blue" style="margin-top:20px">
         <div class="hd">${seatTile('full',42)}<h4>Full Recruiter Seat</h4></div>
         <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">HR Directors, PIC Branch, HRD Branch.</span></p>
@@ -98,9 +113,12 @@
       <h2 class="section-title" style="margin-top:28px">Calculate Your Monthly Cost</h2>
       <p class="muted" style="font-size:13.5px;margin-top:4px">Estimate your investment based on your team size</p>
       <label class="field-label" style="display:block;font-size:13px;color:var(--muted);margin:16px 0 8px">Currency</label>
-      <div class="cur-select ${S.curOpen?'open':''}" id="curSelect">
-        <button class="cur-trigger" id="curTrigger"><span class="flag">${S.cur.flag}</span><span>${S.cur.name}</span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <ul class="cur-menu">${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>${c.name}</span><span class="code">${c.code}</span></li>`).join('')}</ul>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="cur-select ${S.curOpen?'open':''}" id="curSelect" style="flex:1">
+          <button class="cur-trigger" id="curTrigger"><span class="flag">${S.cur.flag}</span><span>${S.cur.name}</span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <ul class="cur-menu">${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>${c.name}</span><span class="code">${c.code}</span></li>`).join('')}</ul>
+        </div>
+        <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes & purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
       </div>
       ${curItem('Full Recruiter Seats','full','full', money(S.cur,S.cur.full))}
       ${curItem('Department Seats','dept','dept', money(S.cur,S.cur.dept))}
@@ -322,7 +340,11 @@
 
   /* ===================== EVENTS ===================== */
   document.addEventListener('click', (e) => {
-    const go_ = e.target.closest('[data-go]'); if (go_) { go(go_.dataset.go); if (window.innerWidth < 900) openDrawer(false); return; }
+    // hamburger -> toggle mobile sidebar drawer
+    if (e.target.closest('.hamburger')) { sbOpen(!sidebarEl.classList.contains('open')); return; }
+    if (e.target.classList && e.target.classList.contains('sidebar-backdrop')) { sbOpen(false); return; }
+
+    const go_ = e.target.closest('[data-go]'); if (go_) { e.preventDefault(); go(go_.dataset.go); sbOpen(false); if (window.innerWidth < 900) openDrawer(false); return; }
     const to = e.target.closest('[data-toast]'); if (to) { toast(to.dataset.toast); return; }
 
     // counters
@@ -370,7 +392,12 @@
 
   window.addEventListener('hashchange', () => { const v = location.hash.replace('#',''); if (v && Views[v] && v !== S.view) go(v); });
 
-  // init
+  // init: sidebar drawer + accessible links
+  sidebarEl = document.querySelector('.sidebar');
+  sbBackdrop = document.createElement('div'); sbBackdrop.className = 'sidebar-backdrop';
+  document.body.appendChild(sbBackdrop);
+  document.querySelectorAll('a[data-go]').forEach(a => { if (!a.getAttribute('href')) a.setAttribute('href', '#' + a.dataset.go); });
+
   const start = location.hash.replace('#','');
   S.view = Views[start] ? start : 'dashboard';
   render();
