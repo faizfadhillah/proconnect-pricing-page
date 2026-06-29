@@ -1,86 +1,134 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ProConnect — Employer Dashboard Prototype</title>
-<meta name="description" content="Pixel-faithful prototype of the ProConnect Employer Dashboard — 80 screens implemented from Figma.">
+<title>ProConnect — Pricing Prototype</title>
+<meta name="description" content="Working interactive prototype of the ProConnect pricing & subscription flow — live calculator, upgrade journey, seat management.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%232563EB'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='white' stroke-width='3'/%3E%3Cline x1='20' y1='20' x2='27' y2='27' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',-apple-system,sans-serif;background:#0b0f1a;color:#e8eaf0;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-.hero{padding:60px 24px 30px;max-width:1180px;margin:0 auto;text-align:center}
-.hero .logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:22px}
-.hero .logo b{font-family:'Poppins';font-weight:600;font-size:24px;color:#fff;letter-spacing:-.02em}
-.hero h1{font-family:'Poppins';font-weight:800;font-size:40px;letter-spacing:-.02em;line-height:1.1}
-.hero p{color:#9aa3b2;margin-top:14px;font-size:16px;max-width:620px;margin-left:auto;margin-right:auto}
-.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
-.stats .chip{background:#161b29;border:1px solid #232a3b;border-radius:999px;padding:8px 16px;font-size:13px;color:#c7cdda}
-.stats .chip b{color:#fff}
-.filters{position:sticky;top:0;z-index:5;background:rgba(11,15,26,.86);backdrop-filter:blur(8px);border-bottom:1px solid #1c2333;padding:14px 24px;margin-top:30px}
-.filters .inner{max-width:1180px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.fbtn{background:#161b29;border:1px solid #232a3b;color:#c7cdda;border-radius:999px;padding:7px 15px;font-size:13px;font-weight:600;cursor:pointer}
-.fbtn.active{background:#2563eb;border-color:#2563eb;color:#fff}
-main{max-width:1180px;margin:0 auto;padding:10px 24px 80px}
-.group{margin-top:40px}
-.group h2{font-family:'Poppins';font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px}
-.group h2 .ct{font-size:12px;font-weight:600;color:#7f8aa0;background:#161b29;border:1px solid #232a3b;border-radius:999px;padding:2px 10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:18px}
-.card{background:#11151f;border:1px solid #1f2636;border-radius:14px;overflow:hidden;transition:transform .12s,border-color .12s;display:block}
-.card:hover{transform:translateY(-3px);border-color:#2563eb}
-.thumb{position:relative;height:200px;background:#fff;overflow:hidden;border-bottom:1px solid #1f2636}
-.thumb iframe{position:absolute;top:0;left:0;border:0;pointer-events:none}
-.thumb .badge{position:absolute;top:10px;right:10px;z-index:2;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:rgba(11,15,26,.78);color:#fff}
-.b-desktop{color:#7db1ff}.b-mobile{color:#7ee0a8}.b-modal{color:#f2c66b}.b-component{color:#c39bff}.b-entry{color:#ff9bb0}
-.meta{padding:13px 15px}
-.meta .t{font-weight:600;font-size:14px;line-height:1.3}
-.meta .s{color:#7f8aa0;font-size:12px;margin-top:3px}
-footer{text-align:center;color:#5e6679;font-size:12px;padding:40px 20px}
-@media(max-width:560px){.hero h1{font-size:30px}}
+/* ---- prototype-specific additions on top of app.css ---- */
+.summary{background:var(--dark);color:#fff;border-radius:var(--radius);padding:22px;margin-top:18px}
+.summary h3{font-size:18px;font-weight:600}.summary .sub{color:#9aa3b2;font-size:12.5px;margin-top:4px}
+.summary .seats{display:flex;gap:56px;margin-top:18px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.summary .seats .lbl{font-size:13px;font-weight:600}.summary .seats .val{color:#9aa3b2;font-size:13px;margin-top:3px}
+.summary .total{margin-top:16px;display:flex;align-items:baseline;gap:7px}
+.summary .total .cur{font-size:17px;font-weight:600}.summary .total .amt{font-size:30px;font-weight:800;font-family:'Poppins';letter-spacing:-.02em}
+.summary .total .mo{color:#9aa3b2;font-size:14px}
+.summary .tog{display:flex;align-items:center;gap:10px;margin-top:18px;justify-content:flex-end}
+.save-badge{margin-right:auto;display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.16);color:#4ade80;font-size:12px;font-weight:600;padding:4px 9px;border-radius:20px}
+.save-badge[hidden]{display:none}
+.seatpick{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px;display:flex;align-items:center;gap:12px}
+.seatpick .info{display:flex;flex-direction:column;min-width:0}
+.seatpick .info b{font-size:14.5px}.seatpick .info .price{font-size:13px;font-weight:600;margin-top:2px}.seatpick .info .per{font-size:11.5px;color:var(--light)}
+.counter{margin-left:auto;display:flex;align-items:center;gap:8px}
+.counter-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer;color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+.counter-btn:hover{background:var(--bg)}.counter-val{min-width:22px;text-align:center;font-weight:700;font-size:15px}
+.unlimited{margin-left:auto;color:var(--light);font-weight:600}
+.seatcard{border-radius:var(--radius);padding:18px}.seatcard.blue{background:var(--blue-soft)}.seatcard.green{background:var(--green-soft)}
+.seatcard .hd{display:flex;align-items:center;gap:12px}.seatcard h4{font-size:16px;font-weight:600}
+.flist{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
+.flist li{position:relative;padding-left:28px;font-size:13.5px}
+.flist li::before{position:absolute;left:0;top:1px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.flist li.y::before{content:"✓";background:var(--green)}.flist li.n::before{content:"✕";background:var(--red)}
+.cur-select{position:relative}
+.cur-trigger{width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;font:600 14.5px 'Inter';color:var(--ink)}
+.cur-trigger .flag{font-size:20px}.cur-trigger .chev{margin-left:auto;transition:transform .2s}
+.cur-select.open .chev{transform:rotate(180deg)}
+.cur-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:20;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(16,24,40,.14);list-style:none;padding:6px;display:none;max-height:260px;overflow:auto}
+.cur-select.open .cur-menu{display:block}
+.cur-menu li{padding:11px 12px;border-radius:8px;cursor:pointer;display:flex;gap:10px;align-items:center;font-size:14px}
+.cur-menu li:hover,.cur-menu li.active{background:var(--blue-soft)}.cur-menu li .code{margin-left:auto;color:var(--muted);font-size:12.5px}
+/* toast */
+.toast{position:fixed;top:78px;left:50%;transform:translateX(-50%) translateY(-20px);z-index:120;background:#ecfdf3;border:1px solid #abefc6;color:#067647;padding:12px 18px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:9px;box-shadow:var(--shadow-lg);opacity:0;transition:.25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{background:#fef3f2;border-color:#fecdca;color:#b42318}
+.invoice-tbl td,.invoice-tbl th{font-size:13px}
+.promo{display:flex;gap:10px;margin-top:12px}.promo .input{flex:1}
+.order-grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+@media(max-width:900px){.order-grid{grid-template-columns:1fr}}
+
+/* ---- flow / pages panel (bottom-right tab + right drawer) ---- */
+.flow-tab{position:fixed;bottom:22px;right:22px;z-index:100;background:#0b0f1a;color:#fff;border:none;border-radius:999px;padding:12px 18px;font:600 13.5px 'Inter';cursor:pointer;box-shadow:0 12px 36px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:9px}
+.flow-tab:hover{background:#161b29}
+.flow-drawer{position:fixed;top:0;right:0;height:100vh;width:300px;background:#0b0f1a;color:#e8eaf0;z-index:110;transform:translateX(100%);transition:transform .25s ease;box-shadow:-12px 0 40px rgba(0,0,0,.3);display:flex;flex-direction:column}
+.flow-drawer.open{transform:translateX(0)}
+.flow-drawer .dh{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 12px}
+.flow-drawer .dh b{font-family:'Poppins';font-size:15px}
+.flow-drawer .dh button{background:none;border:none;color:#9aa3b2;cursor:pointer;font-size:20px;line-height:1}
+.flow-drawer .body{overflow-y:auto;padding:6px 12px 20px}
+.flow-drawer .lbl{font-size:11px;font-weight:700;letter-spacing:.05em;color:#5e6679;text-transform:uppercase;margin:16px 8px 8px}
+.flow-step{display:flex;gap:12px;padding:10px 10px;border-radius:10px;cursor:pointer;align-items:flex-start}
+.flow-step:hover{background:#161b29}.flow-step.active{background:#16233f}
+.flow-step .n{width:22px;height:22px;border-radius:50%;background:#232a3b;color:#c7cdda;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+.flow-step.active .n{background:#2563eb;color:#fff}
+.flow-step .tt{font-size:13.5px;font-weight:600}.flow-step .ds{font-size:11.5px;color:#7f8aa0;margin-top:2px}
+.flow-conn{margin-left:20px;width:2px;height:10px;background:#232a3b}
+.flow-pg{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:13.5px;color:#c7cdda}
+.flow-pg:hover{background:#161b29}.flow-pg.active{background:#16233f;color:#fff;font-weight:600}
+.flow-pg .dot{width:7px;height:7px;border-radius:50%;background:#3a4151;flex:none}
+.flow-overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:105;display:none}
+.flow-overlay.open{display:block}
 </style>
 </head><body>
-<div class="hero">
-  <div class="logo"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><circle cx="14" cy="14" r="9.5" stroke="#5b9aff" stroke-width="2.6"/><circle cx="14" cy="14" r="3.4" fill="#5b9aff"/><line x1="20.5" y1="20.5" x2="28" y2="28" stroke="#5b9aff" stroke-width="2.6" stroke-linecap="round"/></svg><b>proconnect</b></div>
-  <h1>Employer Dashboard Prototype</h1>
-  <p>A pixel-faithful implementation of the ProConnect Figma designs — desktop, mobile, modals and components. Click any screen to open it full-size.</p>
-  <div class="stats" id="stats"></div>
+
+<div class="topbar">
+  <button class="hamburger" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  <a class="brand" href="#dashboard">
+    <img src="assets/proconnect-logo.svg" alt="ProConnect" style="height:28px;width:auto;display:block">
+  </a>
+  <span class="spacer"></span>
+  <button class="bell" aria-label="Notifications"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="bell-badge">999</span></button>
 </div>
-<div class="filters"><div class="inner" id="filters"></div></div>
-<main id="main"></main>
-<footer>ProConnect prototype · built from Figma "Employer Dashboard" · 80 screens · pricing &amp; content for illustration only</footer>
-<script>
-const DATA=[{"id": "490:24290", "file": "490_24290.png", "slug": "dashboard-home", "title": "Dashboard \u2014 Home", "group": "Dashboard", "nav": "Dashboard", "category": "desktop", "w": 1440, "h": 1040}, {"id": "490:27100", "file": "490_27100.png", "slug": "dashboard-home-stats", "title": "Dashboard \u2014 Home (Stats)", "group": "Dashboard", "nav": "Dashboard", "category": "desktop", "w": 1440, "h": 1040}, {"id": "490:26507", "file": "490_26507.png", "slug": "dashboard-trial-expired", "title": "Dashboard \u2014 Trial Expired", "group": "Dashboard", "nav": "Dashboard", "category": "desktop", "w": 1440, "h": 800}, {"id": "778:23821", "file": "778_23821.png", "slug": "dashboard-getting-started", "title": "Dashboard \u2014 Getting Started", "group": "Dashboard", "nav": "Dashboard", "category": "desktop", "w": 1440, "h": 1040}, {"id": "501:24517", "file": "501_24517.png", "slug": "account-created-success", "title": "Account Created \u2014 Success", "group": "Registration", "nav": "Dashboard", "category": "desktop", "w": 1440, "h": 800}, {"id": "1616:30493", "file": "1616_30493.png", "slug": "company-setup-incomplete", "title": "Company Setup \u2014 Incomplete (Public)", "group": "Registration", "nav": null, "category": "desktop", "w": 1440, "h": 700}, {"id": "467:26743", "file": "467_26743.png", "slug": "role-selection", "title": "Role Selection \u2014 Candidate vs Employer", "group": "Registration", "nav": null, "category": "desktop", "w": 1440, "h": 800}, {"id": "498:24447", "file": "498_24447.png", "slug": "pricing-plans-full", "title": "Pricing & Plans \u2014 Full", "group": "Pricing & Plans", "nav": "Account Management > Plan", "category": "desktop", "w": 1440, "h": 2592}, {"id": "501:26885", "file": "501_26885.png", "slug": "plan-features-table", "title": "Plan \u2014 Pricing & Features Table", "group": "Pricing & Plans", "nav": "Account Management > Plan", "category": "desktop", "w": 1440, "h": 1238}, {"id": "501:30309", "file": "501_30309.png", "slug": "plan-pricing-details", "title": "Plan \u2014 Pricing Details", "group": "Pricing & Plans", "nav": "Account Management > Plan", "category": "desktop", "w": 1440, "h": 800}, {"id": "1767:41465", "file": "1767_41465.png", "slug": "order-confirmation-promo", "title": "Order Confirmation \u2014 Promo", "group": "Subscription & Billing", "nav": "Account Management > Plan", "category": "desktop", "w": 1440, "h": 800}, {"id": "1767:40136", "file": "1767_40136.png", "slug": "order-confirmation", "title": "Order Confirmation", "group": "Subscription & Billing", "nav": "Account Management > Plan", "category": "desktop", "w": 1440, "h": 800}, {"id": "1529:72178", "file": "1529_72178.png", "slug": "pricing-calculator", "title": "Pricing Calculator", "group": "Pricing & Plans", "nav": null, "category": "component", "w": 1088, "h": 448}, {"id": "635:33706", "file": "635_33706.png", "slug": "pricing-calculator-summary", "title": "Pricing Calculator \u2014 Summary", "group": "Pricing & Plans", "nav": null, "category": "component", "w": 1088, "h": 492}, {"id": "1528:56820", "file": "1528_56820.png", "slug": "pricing-calculator-card", "title": "Pricing Calculator \u2014 Card", "group": "Pricing & Plans", "nav": null, "category": "component", "w": 1088, "h": 448}, {"id": "1495:29979", "file": "1495_29979.png", "slug": "company-alert-banner", "title": "Company Registration Alert Banner", "group": "Registration", "nav": null, "category": "component", "w": 1120, "h": 40}, {"id": "778:25740", "file": "778_25740.png", "slug": "billing-success", "title": "Subscription & Billing \u2014 Success", "group": "Subscription & Billing", "nav": "Account Management > Billing", "category": "desktop", "w": 1440, "h": 800}, {"id": "501:31990", "file": "501_31990.png", "slug": "billing-full", "title": "Subscription & Billing \u2014 Full", "group": "Subscription & Billing", "nav": "Account Management > Billing", "category": "desktop", "w": 1440, "h": 1584}, {"id": "501:31495", "file": "501_31495.png", "slug": "billing-trial-plan", "title": "Billing \u2014 Trial Plan", "group": "Subscription & Billing", "nav": "Account Management > Billing", "category": "desktop", "w": 1440, "h": 1000}, {"id": "501:31665", "file": "501_31665.png", "slug": "billing-subscription", "title": "Billing \u2014 Subscription & Invoices", "group": "Subscription & Billing", "nav": "Account Management > Billing", "category": "desktop", "w": 1440, "h": 1584}, {"id": "1580:64894", "file": "1580_64894.png", "slug": "billing-current-plan", "title": "Billing \u2014 Current Plan", "group": "Subscription & Billing", "nav": "Account Management > Billing", "category": "desktop", "w": 1440, "h": 800}, {"id": "1575:60988", "file": "1575_60988.png", "slug": "billing-edit-seats", "title": "Billing \u2014 Edit Seats Modal", "group": "Subscription & Billing", "nav": "Account Management > Billing", "category": "desktop", "w": 1440, "h": 800}, {"id": "1579:63342", "file": "1579_63342.png", "slug": "billing-edit-seats-2", "title": "Billing \u2014 Edit Seats (Alt)", "group": "Subscription & Billing", "nav": "Account Management > Billing", "category": "desktop", "w": 1440, "h": 800}, {"id": "639:39229", "file": "639_39229.png", "slug": "staff-management-list", "title": "Staff Management \u2014 Team List", "group": "Team & Staff Management", "nav": "Account Management > Staff Management", "category": "desktop", "w": 1440, "h": 1584}, {"id": "718:61146", "file": "718_61146.png", "slug": "staff-management-overview", "title": "Staff Management \u2014 Overview", "group": "Team & Staff Management", "nav": "Account Management > Staff Management", "category": "desktop", "w": 1440, "h": 800}, {"id": "1574:59100", "file": "1574_59100.png", "slug": "staff-management-success", "title": "Staff Management \u2014 Success", "group": "Team & Staff Management", "nav": "Account Management > Staff Management", "category": "desktop", "w": 1440, "h": 800}, {"id": "635:33648", "file": "635_33648.png", "slug": "staff-edit-member", "title": "Plan \u2014 Pricing (Trial)", "group": "Pricing & Plans", "nav": "Account Management > Staff Management", "category": "desktop", "w": 1440, "h": 1506}, {"id": "718:27586", "file": "718_27586.png", "slug": "staff-edit-member-2", "title": "Staff Management \u2014 Edit Member (Full)", "group": "Team & Staff Management", "nav": "Account Management > Staff Management", "category": "desktop", "w": 1440, "h": 1674}, {"id": "718:48853", "file": "718_48853.png", "slug": "staff-edit-member-3", "title": "Edit Team Member \u2014 Modal Form", "group": "Team & Staff Management", "nav": "Account Management > Staff Management", "category": "desktop", "w": 1440, "h": 1674}, {"id": "1562:56972", "file": "1562_56972.png", "slug": "staff-move-fullseats", "title": "Staff Management \u2014 Move to Full Seats", "group": "Team & Staff Management", "nav": "Account Management > Staff Management", "category": "desktop", "w": 1440, "h": 800}, {"id": "1498:25068", "file": "1498_25068.png", "slug": "jobs-list-detail", "title": "Jobs \u2014 List with Detail", "group": "Jobs", "nav": "Jobs", "category": "desktop", "w": 1440, "h": 800}, {"id": "1495:53059", "file": "1495_53059.png", "slug": "job-posting-detail", "title": "Job Posting Detail", "group": "Jobs", "nav": "Jobs", "category": "desktop", "w": 1440, "h": 800}, {"id": "778:24115", "file": "778_24115.png", "slug": "job-posting-detail-2", "title": "Cancel Subscription \u2014 Over Billing", "group": "Subscription & Billing", "nav": "Jobs", "category": "desktop", "w": 1440, "h": 800}, {"id": "467:26719", "file": "467_26719.png", "slug": "candidate-home-mobile", "title": "Choose Your Role \u2014 Mobile", "group": "Registration", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "467:26693", "file": "467_26693.png", "slug": "candidate-profile-mobile", "title": "Sign In \u2014 Mobile", "group": "Auth", "nav": null, "category": "mobile", "w": 360, "h": 832}, {"id": "1495:29984", "file": "1495_29984.png", "slug": "mobile-nav-bar", "title": "Company Registration Alert", "group": "Registration", "nav": null, "category": "component", "w": 360, "h": 70}, {"id": "635:33960", "file": "635_33960.png", "slug": "pricing-plans-mobile", "title": "Pricing & Plans \u2014 Mobile", "group": "Pricing & Plans", "nav": null, "category": "mobile", "w": 360, "h": 1980}, {"id": "1495:52983", "file": "1495_52983.png", "slug": "login-mobile", "title": "Job Detail \u2014 Mobile (Draft)", "group": "Jobs", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "1531:72301", "file": "1531_72301.png", "slug": "pricing-calculator-mobile", "title": "Pricing Calculator \u2014 Mobile", "group": "Pricing & Plans", "nav": null, "category": "mobile", "w": 360, "h": 894}, {"id": "501:27184", "file": "501_27184.png", "slug": "pricing-plan-mobile", "title": "Pricing & Plan \u2014 Mobile", "group": "Pricing & Plans", "nav": null, "category": "mobile", "w": 360, "h": 1976}, {"id": "501:32164", "file": "501_32164.png", "slug": "pricing-plan-mobile-2", "title": "Subscription & Billing \u2014 Mobile (Alt)", "group": "Subscription & Billing", "nav": null, "category": "mobile", "w": 360, "h": 1848}, {"id": "1580:65028", "file": "1580_65028.png", "slug": "plan-pricing-mobile", "title": "Plan & Pricing \u2014 Mobile", "group": "Pricing & Plans", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "1531:72540", "file": "1531_72540.png", "slug": "pricing-calculator-mobile-2", "title": "Pricing Calculator \u2014 Mobile (Alt)", "group": "Pricing & Plans", "nav": null, "category": "mobile", "w": 360, "h": 894}, {"id": "477:55182", "file": "477_55182.png", "slug": "dashboard-onboarding-mobile", "title": "Dashboard \u2014 Onboarding Mobile", "group": "Dashboard", "nav": null, "category": "mobile", "w": 360, "h": 1600}, {"id": "501:30606", "file": "501_30606.png", "slug": "dashboard-onboarding-mobile-2", "title": "Dashboard \u2014 Onboarding (Alt)", "group": "Dashboard", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "778:23734", "file": "778_23734.png", "slug": "dashboard-home-mobile", "title": "Dashboard \u2014 Home Mobile", "group": "Dashboard", "nav": null, "category": "mobile", "w": 360, "h": 1524}, {"id": "501:24430", "file": "501_24430.png", "slug": "order-summary-mobile", "title": "Account Created \u2014 Mobile", "group": "Registration", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "501:31599", "file": "501_31599.png", "slug": "billing-mobile", "title": "Billing \u2014 Mobile", "group": "Subscription & Billing", "nav": null, "category": "mobile", "w": 360, "h": 1258}, {"id": "1562:57142", "file": "1562_57142.png", "slug": "billing-success-mobile", "title": "Move to Full Seats \u2014 Confirm Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "778:25873", "file": "778_25873.png", "slug": "billing-cancel-success-mobile", "title": "Billing \u2014 Cancel Success Mobile", "group": "Subscription & Billing", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "778:24268", "file": "778_24268.png", "slug": "cancel-subscription-mobile", "title": "Cancel Subscription \u2014 Mobile", "group": "Subscription & Billing", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "1579:63533", "file": "1579_63533.png", "slug": "remove-seats-mobile", "title": "Remove Seats \u2014 Mobile", "group": "Subscription & Billing", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "501:24965", "file": "501_24965.png", "slug": "jobs-listing-mobile", "title": "Pricing & Plans \u2014 Mobile (Full)", "group": "Pricing & Plans", "nav": null, "category": "mobile", "w": 360, "h": 3466}, {"id": "1498:24991", "file": "1498_24991.png", "slug": "job-detail-mobile", "title": "Job Detail \u2014 Mobile", "group": "Jobs", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "501:31847", "file": "501_31847.png", "slug": "team-management-mobile", "title": "Subscription & Billing \u2014 Mobile", "group": "Subscription & Billing", "nav": null, "category": "mobile", "w": 360, "h": 1924}, {"id": "1574:59271", "file": "1574_59271.png", "slug": "team-management-mobile-2", "title": "Team Management \u2014 Mobile (Alt)", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "718:61331", "file": "718_61331.png", "slug": "team-role-selection-mobile", "title": "Team Role Selection \u2014 Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "718:27494", "file": "718_27494.png", "slug": "edit-member-mobile", "title": "Edit Team Member \u2014 Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 745}, {"id": "718:49813", "file": "718_49813.png", "slug": "edit-member-role-mobile", "title": "Edit Member Role \u2014 Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 745}, {"id": "718:58074", "file": "718_58074.png", "slug": "edit-member-modal-mobile", "title": "Edit Member \u2014 Modal Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 745}, {"id": "718:33911", "file": "718_33911.png", "slug": "edit-member-full-mobile", "title": "Edit Member \u2014 Full Form Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 1938}, {"id": "1562:54699", "file": "1562_54699.png", "slug": "edit-member-full-mobile-2", "title": "Edit Member \u2014 Full Form (Alt)", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 1938}, {"id": "1767:40566", "file": "1767_40566.png", "slug": "upgrade-seat-mobile", "title": "Upgrade Seat \u2014 Confirm Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "1767:41830", "file": "1767_41830.png", "slug": "move-seat-mobile", "title": "Move Seat \u2014 Confirm Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "1575:61153", "file": "1575_61153.png", "slug": "remove-seats-confirm-mobile", "title": "Remove Seats \u2014 Confirm Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 800}, {"id": "718:58841", "file": "718_58841.png", "slug": "edit-member-mobile-2", "title": "Edit Team Member \u2014 Mobile (Alt)", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 745}, {"id": "639:39436", "file": "639_39436.png", "slug": "team-management-mobile-full", "title": "Team Admin \u2014 Mobile", "group": "Team & Staff Management", "nav": null, "category": "mobile", "w": 360, "h": 1752}, {"id": "1616:30417", "file": "1616_30417.png", "slug": "role-selection-mobile", "title": "Company Setup \u2014 Empty State (Mobile)", "group": "Registration", "nav": null, "category": "mobile", "w": 360, "h": 700}, {"id": "718:47842", "file": "718_47842.png", "slug": "modal-role-assignment", "title": "Team Member Role Assignment \u2014 Modal", "group": "Team & Staff Management", "nav": null, "category": "modal", "w": 588, "h": 550}, {"id": "718:48014", "file": "718_48014.png", "slug": "modal-add-member", "title": "Add Team Member \u2014 Modal", "group": "Team & Staff Management", "nav": null, "category": "modal", "w": 588, "h": 550}, {"id": "718:47631", "file": "718_47631.png", "slug": "modal-move-member-seat", "title": "Move Member Seat \u2014 Modal", "group": "Team & Staff Management", "nav": null, "category": "modal", "w": 588, "h": 550}, {"id": "1566:58915", "file": "1566_58915.png", "slug": "modal-confirm-seat-move", "title": "Confirm Member Seat Move \u2014 Modal", "group": "Team & Staff Management", "nav": null, "category": "modal", "w": 588, "h": 574}, {"id": "1562:55245", "file": "1562_55245.png", "slug": "modal-seat-change", "title": "Seat Change Confirmation \u2014 Modal", "group": "Team & Staff Management", "nav": null, "category": "modal", "w": 588, "h": 592}, {"id": "1562:55466", "file": "1562_55466.png", "slug": "modal-upgrade-seat", "title": "Upgrade Seat Confirmation \u2014 Modal", "group": "Team & Staff Management", "nav": null, "category": "modal", "w": 328, "h": 596}, {"id": "1580:66287", "file": "1580_66287.png", "slug": "modal-remove-seats", "title": "Remove Seats \u2014 Modal", "group": "Subscription & Billing", "nav": null, "category": "modal", "w": 328, "h": 752}, {"id": "1580:66250", "file": "1580_66250.png", "slug": "modal-edit-seats-remove", "title": "Edit Seats / Remove \u2014 Modal", "group": "Subscription & Billing", "nav": null, "category": "modal", "w": 588, "h": 522}, {"id": "1566:58945", "file": "1566_58945.png", "slug": "modal-cancel-subscription", "title": "Cancel Subscription \u2014 Modal", "group": "Subscription & Billing", "nav": null, "category": "modal", "w": 328, "h": 596}, {"id": "1528:56946", "file": "1528_56946.png", "slug": "dropdown-currency", "title": "Dropdown \u2014 Currency Selector", "group": "Other", "nav": null, "category": "component", "w": 300, "h": 76}, {"id": "1531:72527", "file": "1531_72527.png", "slug": "dropdown-country", "title": "Dropdown \u2014 Country Selector", "group": "Other", "nav": null, "category": "component", "w": 300, "h": 76}, {"id": "467:26667", "file": "467_26667.png", "slug": "login", "title": "Login", "group": "Auth", "nav": null, "category": "entry", "w": 1280, "h": 832}];
-const GROUP_ORDER=["Auth","Registration","Dashboard","Pricing & Plans","Subscription & Billing","Team & Staff Management","Jobs","Candidate & ATS","Other"];
-const CATS=["all","desktop","mobile","modal","component","entry"];
-let filter="all";
-const stats=document.getElementById('stats');
-const cats={};DATA.forEach(d=>cats[d.category]=(cats[d.category]||0)+1);
-stats.innerHTML='<span class="chip"><b>'+DATA.length+'</b> screens</span>'+Object.entries(cats).map(([k,v])=>'<span class="chip"><b>'+v+'</b> '+k+'</span>').join('');
-const fwrap=document.getElementById('filters');
-fwrap.innerHTML=CATS.map(c=>'<button class="fbtn'+(c==='all'?' active':'')+'" data-c="'+c+'">'+(c[0].toUpperCase()+c.slice(1))+'</button>').join('');
-fwrap.addEventListener('click',e=>{const b=e.target.closest('.fbtn');if(!b)return;filter=b.dataset.c;[...fwrap.children].forEach(x=>x.classList.toggle('active',x===b));render();});
-function thumbScale(cat){return cat==='mobile'?0.62:(cat==='modal'||cat==='component')?0.6:0.30;}
-function frameW(cat){return cat==='mobile'?390:(cat==='modal'||cat==='component')?640:1280;}
-function render(){
-  const main=document.getElementById('main');main.innerHTML='';
-  const groups={};DATA.forEach(d=>{(groups[d.group]=groups[d.group]||[]).push(d)});
-  GROUP_ORDER.filter(g=>groups[g]).forEach(g=>{
-    let items=groups[g];if(filter!=='all')items=items.filter(d=>d.category===filter);
-    if(!items.length)return;
-    const sec=document.createElement('div');sec.className='group';
-    sec.innerHTML='<h2>'+g+' <span class="ct">'+items.length+'</span></h2>';
-    const grid=document.createElement('div');grid.className='grid';
-    items.forEach(d=>{
-      const sc=thumbScale(d.category),fw=frameW(d.category);
-      const a=document.createElement('a');a.className='card';a.href='screens/'+d.slug+'.html';a.target='_blank';
-      a.innerHTML='<div class="thumb"><span class="badge b-'+d.category+'">'+d.category+'</span>'+
-        '<iframe loading="lazy" src="screens/'+d.slug+'.html" scrolling="no" style="width:'+fw+'px;height:'+(200/sc)+'px;transform:scale('+sc+');transform-origin:top left;"></iframe></div>'+
-        '<div class="meta"><div class="t">'+d.title+'</div><div class="s">'+d.slug+'</div></div>';
-      grid.appendChild(a);
-    });
-    sec.appendChild(grid);main.appendChild(sec);
-  });
-}
-render();
-</script>
+
+<div class="app-body">
+  <aside class="sidebar">
+    <button class="org-switch"><span class="org-logo" style="background:#0b2540;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;">ACME</span><b>Startup Colorbox</b><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="side-profile">
+      <div class="side-profile-head"><span class="avatar" style="background:#0b2540;color:#fff;font-size:10px;font-weight:700;">ACME</span><div><div class="pname">Arufa Dhiarma Putu Riordan Kevin Putra …</div><div class="pcompany">PT AMBURAN JAKARTA</div></div></div>
+      <div class="side-seats"><span>Current Seats</span><span class="badge badge-gray" id="seatBadge">Member Seats</span></div>
+      <button class="btn btn-outline btn-block" style="margin-top:12px;" data-go="dashboard">Profile <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    </div>
+    <div class="side-label">Main Menu</div>
+    <ul class="nav">
+      <li><a data-go="dashboard" data-nav="dashboard"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Dashboard</a></li>
+      <li><a data-go="dashboard"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg> Candidate</a></li>
+      <li><a data-go="dashboard"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18"/></svg> Jobs <span class="nav-badge">49</span></a></li>
+      <li class="has-sub open">
+        <div class="nav-item"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M7 18c1-2 3-3 5-3s4 1 5 3"/></svg> Account Management <svg class="nav-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <ul class="subnav">
+          <li><a data-go="staff" data-nav="staff">Staff Management</a></li>
+          <li><a data-go="billing" data-nav="billing">Billing</a></li>
+          <li><a data-go="plan" data-nav="plan">Plan</a></li>
+          <li><a data-go="dashboard">Reset Password</a></li>
+          <li><a data-go="dashboard">Sign Out</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="side-trial"><span class="st-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><b>You're on a free trial</b><span>Your trial ends in 6 days</span><button class="btn btn-primary btn-block btn-sm" data-go="plan">Upgrade Plan Now</button></div>
+    <div class="side-foot">ProConnect © 2026<br>Supported by<div class="aseanta">ASEANTA<small>ASEAN TOURISM ASSOCIATION</small></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="trial-banner" id="trialBanner">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      You have <strong style="margin:0 4px;">6D 23H</strong> on the free trial. You can manage your subscription from the <a data-go="plan" style="margin-left:4px;cursor:pointer;">Plan page</a>
+    </div>
+    <div class="page" id="view"></div>
+  </main>
+</div>
+
+<!-- Flow / pages tab + drawer -->
+<button class="flow-tab" id="flowTab"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8 6h6a3 3 0 0 1 3 3v0M8 18h6a3 3 0 0 0 3-3v0"/></svg> Pages &amp; Flow</button>
+<div class="flow-overlay" id="flowOverlay"></div>
+<aside class="flow-drawer" id="flowDrawer">
+  <div class="dh"><b>Prototype Map</b><button id="flowClose" aria-label="Close">×</button></div>
+  <div class="body" id="flowBody"></div>
+</aside>
+
+<div id="modalRoot"></div>
+<div class="toast" id="toast"></div>
+
+<script src="assets/prototype.js"></script>
 </body></html>
