@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProConnect — Cancel Subscription — Modal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body style="background:var(--bg);">
+<div class="overlay">
+  <div class="modal modal-sm" style="max-width:520px;">
+    <div class="modal-pad">
+      <div class="modal-head">
+        <h3 style="font-size:24px;">Confirmation</h3>
+        <button class="modal-close" data-close aria-label="Close"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:16px;margin-top:22px;">
+        <span class="avatar" style="width:52px;height:52px;border-radius:50%;background:#3b2f29;flex:none;overflow:hidden;display:block;"></span>
+        <h3 style="font-size:22px;font-weight:700;">Move Cody Fisher to Full Seats?</h3>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:22px 0;">
+
+      <!-- Current seat -->
+      <div class="card" style="padding:16px;border-color:var(--line);">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="seat-ic lg seat-ic-gray"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+          <div style="flex:1;">
+            <b style="font-size:18px;font-family:'Poppins',sans-serif;">Member Company</b>
+            <div class="muted" style="font-size:14px;">All other employees</div>
+          </div>
+          <span class="badge badge-gray" style="font-size:14px;padding:6px 14px;">Current</span>
+        </div>
+      </div>
+
+      <div style="text-align:center;color:var(--ink);margin:14px 0;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto;"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="6 14 12 20 18 14"/></svg>
+      </div>
+
+      <!-- Target seat -->
+      <div class="card" style="padding:16px;border-color:var(--line);">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="seat-ic lg seat-ic-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9 12 4l10 5-10 5L2 9z"/><path d="M5 11v5c0 1 3 3 7 3s7-2 7-3v-5"/></svg></span>
+          <div style="flex:1;">
+            <b style="font-size:18px;font-family:'Poppins',sans-serif;display:block;margin-bottom:8px;">Full Seats</b>
+            <span style="display:inline-flex;align-items:center;gap:10px;background:var(--blue-soft);border:1px solid #cfe0fb;border-radius:10px;padding:8px 14px;">
+              <span style="width:22px;height:22px;background:var(--blue);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <b style="font-size:16px;">PIC Branch</b>
+            </span>
+          </div>
+          <b style="font-size:16px;text-align:right;">Rp 250.000/<br>mo</b>
+        </div>
+      </div>
+
+      <div style="background:#eef6ff;border-radius:12px;padding:18px;margin-top:14px;">
+        <p style="font-size:15px;">You will downgrade the seat type, then the "Full" seat will be available.</p>
+        <a href="#" style="display:inline-block;margin-top:14px;font-weight:700;font-size:15px;">Learn more about seats</a>
+      </div>
+
+      <div class="modal-foot" style="flex-direction:column;gap:12px;margin-top:26px;">
+        <button class="btn btn-primary btn-lg btn-block">Confirm</button>
+        <button class="btn btn-outline btn-lg btn-block" data-close>Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../assets/app.js"></script></body></html>

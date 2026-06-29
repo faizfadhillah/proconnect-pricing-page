@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProConnect — Edit Team Member — Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div style="background:#5d728f;min-height:100vh;display:flex;justify-content:center;align-items:flex-end;">
+  <div style="width:100%;max-width:390px;background:#fff;border-radius:22px 22px 0 0;min-height:96vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);">
+    <!-- grab handle -->
+    <div style="display:flex;justify-content:center;padding:10px 0 0;"><span style="width:44px;height:4px;border-radius:4px;background:#cbd2dc;"></span></div>
+
+    <!-- scrollable body -->
+    <div style="flex:1;overflow-y:auto;padding:18px 22px 16px;">
+      <div class="between" style="margin-bottom:22px;">
+        <h2 style="font-size:24px;font-weight:700;">Edit Team Member</h2>
+        <button class="modal-close" data-close aria-label="Close"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+      </div>
+
+      <div class="collapse-head" style="font-size:21px;margin-bottom:14px;padding:0;">
+        Personal Detail
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+
+      <!-- highest role card -->
+      <div style="background:var(--blue-soft);border-radius:14px;padding:18px;margin-bottom:24px;">
+        <div class="between" style="align-items:flex-start;">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <b style="font-size:18px;">Highest role</b>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <div style="display:flex;align-items:center;gap:9px;margin-top:10px;">
+              <span class="seat-ic seat-ic-blue sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg></span>
+              <span style="font-size:16px;color:var(--ink-2);">HRD Branch</span>
+            </div>
+          </div>
+          <a href="#" style="display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:15px;white-space:nowrap;">See role <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:6px;">
+        <label>Full Name<span class="req">*</span></label>
+        <input class="input" style="font-size:18px;font-weight:600;color:#0b2540;padding:16px 16px;" value="Cody Fisher">
+      </div>
+      <p class="muted" style="font-size:14px;margin:0 0 22px;">Please use first letter capital</p>
+
+      <div class="field" style="margin-bottom:22px;">
+        <label>Gender<span class="req">*</span></label>
+        <select class="select" style="font-size:18px;font-weight:600;color:#0b2540;padding:16px 16px;"><option>Male</option><option>Female</option></select>
+      </div>
+
+      <div class="field" style="margin-bottom:22px;">
+        <label>Date of Birth<span class="req">*</span></label>
+        <div style="position:relative;">
+          <input class="input" style="font-size:18px;font-weight:600;color:#0b2540;padding:16px 16px;" value="19/03/1995">
+          <svg style="position:absolute;right:16px;top:50%;transform:translateY(-50%);" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:22px;">
+        <label>Email<span class="req">*</span></label>
+        <input class="input" style="font-size:18px;font-weight:600;color:#0b2540;padding:16px 16px;" value="codyf@seruam.com">
+      </div>
+
+      <div class="field" style="margin-bottom:0;">
+        <label>Phone Number<span class="req">*</span></label>
+      </div>
+    </div>
+
+    <!-- sticky footer -->
+    <div style="display:flex;gap:14px;padding:16px 22px;border-top:1px solid var(--line);">
+      <button class="btn btn-outline btn-lg" style="flex:1;" data-close>Cancel</button>
+      <button class="btn btn-primary btn-lg" style="flex:1;">Save</button>
+    </div>
+  </div>
+</div>
+<script src="../assets/app.js"></script></body></html>

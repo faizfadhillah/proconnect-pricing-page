@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProConnect — Move Seat — Confirm Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="mobile">
+  <div class="m-header">
+    <button class="hamburger" aria-label="Menu" style="background:none;border:none;color:#2563EB;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <a class="brand" href="../index.html">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><circle cx="14" cy="14" r="9.5" stroke="#2563EB" stroke-width="2.6"/><circle cx="14" cy="14" r="3.4" fill="#2563EB"/><line x1="20.5" y1="20.5" x2="28" y2="28" stroke="#2563EB" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span class="brand-name">proconnect</span>
+    </a>
+    <span style="margin-left:auto;"></span>
+    <button class="bell" aria-label="Notifications" style="background:none;border:none;color:#1f2937;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="bell-badge">999</span></button>
+  </div>
+
+  <div class="m-body" style="padding-bottom:96px;">
+    <!-- error toast -->
+    <div style="background:var(--red);color:#fff;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:12px;font-weight:600;font-size:16px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span style="flex:1;">Promo code failed to be used</span>
+      <button data-close style="background:none;border:none;color:#fff;cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+    </div>
+
+    <!-- header row -->
+    <div class="between" style="margin-top:18px;border-bottom:1px solid var(--line);padding-bottom:14px;">
+      <h1 style="font-size:24px;font-weight:700;">Confirmation Order</h1>
+      <span style="color:var(--muted);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></span>
+    </div>
+
+    <!-- Seats Detail -->
+    <h2 style="font-size:21px;font-weight:700;margin-top:20px;">Seats Detail</h2>
+    <p class="muted" style="font-size:15px;margin-top:6px;">Add or remove seats to match your hiring needs</p>
+
+    <div style="border-top:1px solid var(--line);margin-top:16px;"></div>
+
+    <!-- Full Recruiter Seats -->
+    <div class="card card-pad" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="seat-ic lg seat-ic-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9 12 4l10 5-10 5L2 9z"/><path d="M5 11v5c0 1 3 3 7 3s7-2 7-3v-5"/></svg></span>
+        <div>
+          <b style="font-size:18px;font-family:'Poppins',sans-serif;line-height:1.2;">Full Recruiter Seats</b>
+          <div style="font-weight:700;font-size:15px;margin-top:6px;">Rp 350.000</div>
+          <div class="muted" style="font-size:13px;">Per user</div>
+        </div>
+      </div>
+      <div class="counter" data-min="0" style="display:flex;align-items:center;gap:8px;">
+        <button class="pager" data-act="dec" style="width:42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:20px;box-shadow:var(--shadow-sm);">−</button>
+        <span class="counter-val" style="min-width:24px;text-align:center;font-weight:700;font-size:18px;">5</span>
+        <button class="pager" data-act="inc" style="width:42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:20px;box-shadow:var(--shadow-sm);">+</button>
+      </div>
+    </div>
+
+    <!-- Department Seats -->
+    <div class="card card-pad" style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="seat-ic lg seat-ic-green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><circle cx="15" cy="7" r="3"/><circle cx="12" cy="14" r="3"/></svg></span>
+        <div>
+          <b style="font-size:18px;font-family:'Poppins',sans-serif;line-height:1.2;">Department Seats</b>
+          <div style="font-weight:700;font-size:15px;margin-top:6px;">Rp 150.000</div>
+          <div class="muted" style="font-size:13px;">Per user</div>
+        </div>
+      </div>
+      <div class="counter" data-min="0" style="display:flex;align-items:center;gap:8px;">
+        <button class="pager" data-act="dec" style="width:42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:20px;box-shadow:var(--shadow-sm);">−</button>
+        <span class="counter-val" style="min-width:24px;text-align:center;font-weight:700;font-size:18px;">1</span>
+        <button class="pager" data-act="inc" style="width:42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:20px;box-shadow:var(--shadow-sm);">+</button>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid var(--line);margin-top:22px;"></div>
+
+    <!-- Order Summary -->
+    <h2 style="font-size:21px;font-weight:700;margin-top:22px;">Order Summary</h2>
+    <p class="muted" style="font-size:15px;margin-top:6px;">This is summary based on your seats</p>
+
+    <!-- promo input (error state) -->
+    <div style="display:flex;align-items:center;border:1px solid var(--red);border-radius:12px;padding:14px 16px;margin-top:16px;gap:12px;">
+      <input value="BEASISWAHAHAHAHA" style="border:none;outline:none;font:inherit;font-weight:700;font-size:16px;color:var(--blue);flex:1;background:none;text-transform:uppercase;">
+      <span style="width:1px;height:24px;background:var(--line);"></span>
+      <button style="background:none;border:none;color:var(--blue);font-weight:600;font-size:16px;cursor:pointer;white-space:nowrap;">Cek Promo</button>
+    </div>
+
+    <!-- total price -->
+    <div style="margin-top:22px;font-family:'Poppins',sans-serif;">
+      <span style="font-size:16px;font-weight:700;vertical-align:top;">Rp</span>
+      <span style="font-size:38px;font-weight:800;letter-spacing:-.02em;">7.463.000</span>
+      <span class="muted" style="font-size:18px;">/mo</span>
+    </div>
+
+    <div class="between" style="margin-top:16px;">
+      <span class="badge badge-green" style="font-size:13px;padding:6px 12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="8 12 11 15 16 9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> Save 10%</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+        <span style="font-size:16px;">Annual</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- sticky footer pay bar -->
+  <div style="position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;gap:14px;max-width:390px;margin:0 auto;">
+    <div class="muted" style="font-size:14px;line-height:1.3;flex:none;">Billed every month<br>on the 1st</div>
+    <button class="btn btn-primary btn-lg" style="flex:1;font-size:16px;">Pay Now</button>
+  </div>
+</div>
+<script src="../assets/app.js"></script></body></html>

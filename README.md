@@ -1,30 +1,45 @@
-# ProConnect — Pricing Page Prototype
+# ProConnect — Employer Dashboard Prototype
 
-A faithful, interactive prototype of the **ProConnect** pricing page, built from the
-*Employer Dashboard* design set. Pure static HTML/CSS/JS — no build step.
+A **pixel-faithful, navigable prototype** of the ProConnect Employer Dashboard, implemented
+directly from the Figma *Employer Dashboard* design file (`SxImwwoE11hklbKv8Eu2bZ`).
+**80 screens** — desktop, mobile, modals and components — built as pure static HTML/CSS/JS
+on a shared design system. No build step.
 
-🔗 **Live:** https://faizfadhillah.github.io/proconnect-pricing-page/
+🔗 **Live gallery:** https://faizfadhillah.github.io/proconnect-pricing-page/
 
-## Features
+## What's inside
 
-- **Simple, transparent pricing** hero and seat-type explainer (Full Recruiter vs. Department Head)
-- **Free trial** status banner and plan card
-- **Monthly cost calculator** with `+ / −` seat counters and live total
-- **Currency switcher** — Indonesia (IDR), Malaysia (MYR), Singapore (SGD), Philippines (PHP), United States (USD) with localised pricing and number formatting
-- **Annual billing toggle** — applies a *Save 10%* discount
-- **Feature comparison table** (horizontally scrollable on mobile)
-- **"Need a custom solution?"** sales CTA
-- **FAQ accordion**
-- Mobile-first (360px) layout that scales up responsively
+| Flow | Screens |
+|------|--------:|
+| Auth & Registration | login, sign-in (mobile), role selection, company setup |
+| Dashboard | home, getting-started, trial-expired, onboarding (desktop + mobile) |
+| Pricing & Plans | pricing page, calculator, feature table (desktop + mobile + modal) |
+| Subscription & Billing | subscription, invoices, edit/remove seats, cancel, order confirmation |
+| Team & Staff Management | staff list, edit member, role assignment, move/upgrade seat modals |
+| Jobs | job list + detail, job posting (desktop + mobile) |
+| Candidate & ATS | candidate home / profile (mobile) |
 
-## Pricing reference
+The landing page (`index.html`) is a **gallery** that groups every screen by flow with live
+scaled previews and a category filter (desktop / mobile / modal / component). Click any card to
+open the screen full-size.
 
-| Currency | Full Recruiter / user / mo | Department / user / mo |
-|----------|---------------------------:|-----------------------:|
-| IDR      | 750.000                    | 580.000                |
-| MYR      | 175                        | 135                    |
+## Architecture
 
-> Prototype only — figures are for illustration and based on the source designs.
+```
+index.html              # gallery / launcher (groups all 80 screens)
+pricing-classic.html    # original standalone interactive pricing page (currency + annual calc)
+assets/
+  app.css               # shared design system (tokens, sidebar, topbar, cards, tables, forms, modals…)
+  app.js                # shared interactions (sidebar submenus, FAQ, counters, modal close)
+  manifest.json         # catalog of all 80 screens (slug, title, group, category)
+partials/
+  desktop-shell.html    # reference skeleton: topbar + sidebar + trial banner + content
+  mobile-shell.html     # reference skeleton: 360px header + body
+screens/                # 80 self-contained screen pages (<slug>.html)
+```
+
+Every screen reuses the shared design-system classes from `assets/app.css` for consistency, with
+small per-screen tweaks. Brand: blue `#2563eb`, green `#16a34a`, amber trial banner `#f4c84c`.
 
 ## Run locally
 
@@ -32,3 +47,5 @@ A faithful, interactive prototype of the **ProConnect** pricing page, built from
 python3 -m http.server 8000
 # open http://localhost:8000
 ```
+
+> Prototype only — names, prices and content are reproduced from the source designs for illustration.

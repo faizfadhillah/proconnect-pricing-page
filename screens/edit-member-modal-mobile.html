@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProConnect — Edit Member — Modal Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div style="background:#5d728f;min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:14px 12px;">
+  <div style="width:100%;max-width:360px;background:#fff;border-radius:18px;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);overflow:hidden;">
+    <div style="display:flex;justify-content:center;padding:8px 0 0;"><span style="width:42px;height:4px;border-radius:4px;background:#cbd2dc;"></span></div>
+
+    <div style="padding:14px 18px 14px;">
+      <div class="between" style="margin-bottom:18px;">
+        <h2 style="font-size:20px;font-weight:700;">Edit Team Member</h2>
+        <button class="modal-close" data-close aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+      </div>
+
+      <div class="collapse-head" style="font-size:17px;margin-bottom:14px;padding:0;">
+        Team Role
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+
+      <label style="font-size:13px;color:var(--ink-2);font-weight:500;display:inline-flex;align-items:center;gap:5px;margin-bottom:6px;">Role<span class="req">*</span> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></label>
+
+      <div style="border:1.5px solid var(--blue);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 0 0 3px var(--blue-soft);">
+        <span style="font-size:15px;font-weight:600;color:#0b2540;">Member</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+
+      <div style="border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;box-shadow:var(--shadow);overflow:hidden;">
+        <div style="background:var(--bg);padding:12px 14px;font-weight:700;font-size:14px;border-bottom:1px solid var(--line);">Available seats</div>
+
+        <div style="padding:13px 14px 2px;">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;">
+            <span class="seat-ic seat-ic-blue sm"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg></span>
+            <b style="font-size:14px;">Full Seats</b>
+          </div>
+          <label style="display:flex;align-items:center;gap:10px;border:1px solid #bfdbfe;background:var(--blue-soft);border-radius:10px;padding:11px 13px;margin-bottom:9px;cursor:pointer;">
+            <span style="width:20px;height:20px;border-radius:5px;background:var(--blue);display:inline-flex;align-items:center;justify-content:center;flex:none;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span style="font-size:14px;">PIC Branch</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:11px;cursor:pointer;">
+            <span style="width:20px;height:20px;border:2px solid #cbd2dc;border-radius:50%;flex:none;"></span>
+            <span style="font-size:14px;">HRD Branch</span>
+          </label>
+        </div>
+
+        <div style="padding:13px 14px 2px;border-top:1px solid var(--line);">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;">
+            <span class="seat-ic seat-ic-green sm"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="15" cy="9" r="3"/><circle cx="12" cy="14" r="3"/></svg></span>
+            <b style="font-size:14px;">Dept Seats</b>
+          </div>
+          <label style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:9px;cursor:pointer;">
+            <span style="width:20px;height:20px;border:2px solid #cbd2dc;border-radius:50%;flex:none;"></span>
+            <span style="font-size:14px;">Dept Head HQ</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:11px;cursor:pointer;">
+            <span style="width:20px;height:20px;border:2px solid #cbd2dc;border-radius:50%;flex:none;"></span>
+            <span style="font-size:14px;">Dept Head Branch</span>
+          </label>
+        </div>
+
+        <div style="padding:13px 14px 14px;border-top:1px solid var(--line);display:flex;align-items:center;gap:9px;">
+          <span class="seat-ic seat-ic-gray sm"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+          <b style="font-size:14px;">Free Seats</b>
+          <span class="badge badge-blue" style="font-size:11px;">Current</span>
+        </div>
+      </div>
+
+      <div style="opacity:.35;pointer-events:none;margin-top:2px;">
+        <div style="display:flex;align-items:center;gap:10px;margin:11px 0;">
+          <span class="switch"><input type="checkbox" checked><span class="slider"></span></span>
+          <span style="font-size:15px;">Currently here</span>
+        </div>
+        <label style="font-size:13px;color:var(--ink-2);font-weight:500;">End Date<span class="req">*</span></label>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;padding:14px 18px;border-top:1px solid var(--line);">
+      <button class="btn btn-outline" style="flex:1;" data-close>Cancel</button>
+      <button class="btn btn-primary" style="flex:1;">Save</button>
+    </div>
+  </div>
+</div>
+<script src="../assets/app.js"></script></body></html>

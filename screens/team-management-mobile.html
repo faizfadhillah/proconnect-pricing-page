@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProConnect — Team Management — Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/app.css">
+</head><body>
+<div class="mobile">
+  <div class="m-header">
+    <button class="hamburger" aria-label="Menu" style="background:none;border:none;color:#2563EB;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <a class="brand" href="../index.html">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><circle cx="14" cy="14" r="9.5" stroke="#2563EB" stroke-width="2.6"/><circle cx="14" cy="14" r="3.4" fill="#2563EB"/><line x1="20.5" y1="20.5" x2="28" y2="28" stroke="#2563EB" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span class="brand-name">proconnect</span>
+    </a>
+    <span style="margin-left:auto;"></span>
+    <button class="bell" aria-label="Notifications" style="background:none;border:none;color:#1f2937;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="bell-badge">999</span></button>
+  </div>
+
+  <div class="m-body">
+    <h1 style="font-size:24px;font-weight:700;">Subscription &amp; Billing</h1>
+    <p class="muted" style="font-size:14px;margin-top:4px;">Manage your subscription and billing details here.</p>
+
+    <!-- Current subscription -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;border-bottom:1px solid var(--line);padding-bottom:16px;">
+      <div>
+        <h2 style="font-size:18px;font-weight:700;">Current Subscription</h2>
+        <p class="muted" style="font-size:13px;margin-top:4px;">You are currently in Plan</p>
+      </div>
+      <button class="btn btn-outline btn-sm" style="flex:none;">Edit seats</button>
+    </div>
+
+    <!-- seat rows -->
+    <div class="card" style="padding:14px 16px;margin-top:16px;display:flex;align-items:center;gap:12px;background:var(--bg);border:none;">
+      <span class="seat-ic seat-ic-blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/></svg></span>
+      <div style="flex:1;"><b style="font-size:14px;">Full Seats</b><div class="muted" style="font-size:12px;">5 seats</div></div>
+      <span style="font-weight:600;font-size:14px;">1 Avail</span>
+    </div>
+    <div class="card" style="padding:14px 16px;margin-top:10px;display:flex;align-items:center;gap:12px;background:var(--bg);border:none;">
+      <span class="seat-ic seat-ic-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="15" cy="9" r="3"/><circle cx="12" cy="14" r="3"/></svg></span>
+      <div style="flex:1;"><b style="font-size:14px;">Dept Seats</b><div class="muted" style="font-size:12px;">5 seats</div></div>
+      <span style="font-weight:600;font-size:14px;">1 Avail</span>
+    </div>
+
+    <!-- price + billing -->
+    <div style="display:flex;gap:12px;margin-top:14px;">
+      <div class="card" style="flex:1;padding:14px 16px;background:var(--bg);border:none;">
+        <div class="muted" style="font-size:12px;">Price</div>
+        <div style="font-weight:700;font-size:16px;margin-top:4px;">Rp 2.500.000</div>
+      </div>
+      <div class="card" style="flex:1;padding:14px 16px;background:var(--bg);border:none;">
+        <div class="muted" style="font-size:12px;">Next Billing</div>
+        <div style="font-weight:700;font-size:16px;margin-top:4px;">Feb 28, 2026</div>
+      </div>
+    </div>
+
+    <button class="btn btn-danger btn-block" style="margin-top:16px;">Cancel Subscription</button>
+
+    <!-- Payment method -->
+    <div class="card card-pad" style="margin-top:24px;">
+      <h2 style="font-size:18px;font-weight:700;">Payment Method</h2>
+      <p class="muted" style="font-size:13px;margin-top:4px;">Manage your payment detils</p>
+      <div class="card" style="margin-top:16px;padding:16px;display:flex;align-items:center;gap:14px;border-color:var(--line);">
+        <span style="width:48px;height:30px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Poppins';font-weight:800;font-style:italic;color:#1a1f71;font-size:13px;">VISA</span>
+        <div><b style="font-size:14px;letter-spacing:.5px;">**** **** **** 3627</b><div class="muted" style="font-size:12px;">Expiry 02/26</div></div>
+      </div>
+      <button class="btn btn-outline btn-block" style="margin-top:16px;">Update Payment Method</button>
+    </div>
+
+    <!-- Invoice -->
+    <h2 style="font-size:18px;font-weight:700;margin-top:24px;">Invoice</h2>
+    <p class="muted" style="font-size:14px;margin-top:4px;">View your previous invoices/</p>
+    <button class="btn btn-outline btn-block" style="margin-top:14px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download All</button>
+
+    <div class="card" style="margin-top:16px;overflow:hidden;">
+      <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Invoice</th><th>Date <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;"><polyline points="7 9 12 4 17 9"/><polyline points="7 15 12 20 17 15"/></svg></th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr><td>INV-19</td><td>Jan 28, 2026</td><td>Rp 2.500.000</td></tr>
+            <tr><td>INV-18</td><td>Des 28, 2025</td><td>Rp 0</td></tr>
+            <tr><td>INV-17</td><td>Nov 28, 2025</td><td>Rp 0</td></tr>
+            <tr><td>INV-16</td><td>Oct 28, 2025</td><td>Rp 0</td></tr>
+            <tr><td>INV-15</td><td>Sep 28, 2025</td><td>Rp 0</td></tr>
+            <tr><td>INV-14</td><td>Aug 28, 2025</td><td>Rp 2.500.000</td></tr>
+            <tr><td>INV-13</td><td>Jul 28, 2025</td><td>Rp 2.500.000</td></tr>
+            <tr><td>INV-12</td><td>Jun 28, 2025</td><td>Rp 2.500.000</td></tr>
+            <tr><td>INV-11</td><td>May 28, 2025</td><td>Rp 2.500.000</td></tr>
+            <tr><td>INV-10</td><td>Apr 28, 2025</td><td>Rp 2.500.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:16px;border-top:1px solid var(--line-2);">
+        <span class="muted" style="font-size:13px;">Item Per page</span>
+        <div class="select" style="width:auto;padding:8px 34px 8px 14px;font-weight:600;">10</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../assets/app.js"></script></body></html>
