@@ -152,30 +152,35 @@
     order() {
       const sub = monthly(S.full, S.dept, S.cur);
       const disc = S.annual ? sub * DISC : 0;
-      const total = sub - disc;
-      const promoRow = S.promoState === 'ok' ? `<div class="between" style="font-size:13.5px;color:var(--green)"><span>Promo “BEASISWA”</span><span>− ${money(S.cur, sub*0.05)}</span></div>` : '';
-      const grand = total - (S.promoState === 'ok' ? sub*0.05 : 0);
+      const promo = S.promoState === 'ok' ? sub * 0.05 : 0;
+      const grand = Math.max(0, sub - disc - promo);
+      const promoBorder = S.promoState === 'fail' ? 'var(--red)' : (S.promoState === 'ok' ? 'var(--green)' : 'var(--line)');
       return `
       <h1 class="page-title">Confirmation Order</h1><p class="page-sub">Review your seats and confirm payment</p>
       <div class="order-grid" style="margin-top:22px">
         <div class="card card-pad">
           <div class="section-title" style="font-size:16px">Seats Detail</div><p class="muted" style="font-size:13px;margin-top:2px">Add or remove seats to match your hiring needs</p>
-          <div class="seatpick" style="margin-top:14px">${seatTile('full')}<div class="info"><b>Full Recruiter Seats</b><span class="per">${money(S.cur,S.cur.full)} / user / mo</span></div><span style="margin-left:auto;font-weight:700">${S.full}</span></div>
-          <div class="seatpick">${seatTile('dept')}<div class="info"><b>Department Seats</b><span class="per">${money(S.cur,S.cur.dept)} / user / mo</span></div><span style="margin-left:auto;font-weight:700">${S.dept}</span></div>
-          <div class="promo"><input class="input" id="promoInput" placeholder="Promo code" value="${S.promo}"><button class="btn btn-outline" id="promoBtn">Apply</button></div>
-          ${S.promoState==='fail'?'<p style="color:var(--red);font-size:12.5px;margin-top:6px">Promo code failed to be used.</p>':''}
-          ${S.promoState==='ok'?'<p style="color:var(--green);font-size:12.5px;margin-top:6px">Promo code successfully used.</p>':''}
+          <div style="height:1px;background:var(--line);margin:16px 0"></div>
+          <div class="seatpick" style="margin-top:0;border-radius:14px;padding:16px">${seatTile('full',46)}<div class="info"><b style="font-size:16px">Full Recruiter Seats</b><span class="per" style="font-size:12.5px;color:var(--muted);margin-top:4px">${money(S.cur,S.cur.full)}</span><span class="per" style="font-size:12px">Per user</span></div><span style="margin-left:auto;font-weight:700;font-size:18px">${S.full}</span></div>
+          <div class="seatpick" style="border-radius:14px;padding:16px">${seatTile('dept',46)}<div class="info"><b style="font-size:16px">Department Seats</b><span class="per" style="font-size:12.5px;color:var(--muted);margin-top:4px">${money(S.cur,S.cur.dept)}</span><span class="per" style="font-size:12px">Per user</span></div><span style="margin-left:auto;font-weight:700;font-size:18px">${S.dept}</span></div>
         </div>
         <div class="card card-pad">
-          <div class="section-title" style="font-size:16px">Order Summary</div>
-          <div class="between" style="margin-top:14px;font-size:13.5px"><span class="muted">Subtotal</span><span>${money(S.cur,sub)}/mo</span></div>
-          ${S.annual?`<div class="between" style="margin-top:8px;font-size:13.5px;color:var(--green)"><span>Annual discount (10%)</span><span>− ${money(S.cur,disc)}</span></div>`:''}
-          ${promoRow}
-          <div class="between" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)"><b>Total</b><b style="font-size:20px;font-family:'Poppins'">${money(S.cur,Math.max(0,grand))}<span style="font-size:13px;color:var(--muted);font-weight:500">/mo</span></b></div>
-          <div class="tog" style="display:flex;align-items:center;gap:10px;margin-top:14px;justify-content:flex-end"><span class="save-badge" ${S.annual?'':'hidden'} style="color:var(--green);background:#e8f6ee">Save 10%</span><label class="switch"><input type="checkbox" id="annualO" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px">Annual billing</span></div>
-          <p class="muted" style="font-size:12px;margin-top:10px">Billed every month on the 1st. Cancel anytime.</p>
-          <button class="btn btn-primary btn-block btn-lg" style="margin-top:14px" id="payNow">Pay Now</button>
-          <button class="btn btn-ghost btn-block" style="margin-top:10px" data-go="plan">Back to Plan</button>
+          <div class="section-title" style="font-size:16px">Order Summary</div><p class="muted" style="font-size:13px;margin-top:2px">This is summary based on your seats</p>
+          <div style="height:1px;background:var(--line);margin:16px 0"></div>
+          <div class="promo-box" style="display:flex;align-items:center;border:1px solid ${promoBorder};border-radius:10px;padding:0 4px 0 14px;transition:border-color .15s">
+            <input id="promoInput" placeholder="Enter promo code" value="${S.promo}" style="flex:1;border:none;outline:none;font:600 14px 'Inter';background:none;padding:14px 0;color:var(--ink)">
+            <span style="width:1px;height:24px;background:var(--line)"></span>
+            <button id="promoBtn" style="background:none;border:none;cursor:pointer;color:var(--blue);font:600 14px 'Inter';padding:12px 14px;white-space:nowrap">Cek Promo</button>
+          </div>
+          <div class="total" style="display:flex;align-items:flex-end;gap:6px;margin-top:18px">
+            <span style="font-size:15px;font-weight:700;align-self:flex-start;margin-top:2px">${S.cur.code}</span>
+            <span style="font-size:30px;font-weight:800;font-family:'Poppins';letter-spacing:-.02em;line-height:1">${fmt(grand,S.cur.sep)}</span>
+            <span style="font-size:14px;color:var(--muted)">/mo</span>
+          </div>
+          <div class="tog" style="display:flex;align-items:center;margin-top:16px"><span class="save-badge" ${S.annual?'':'hidden'} style="color:var(--green);background:#e8f6ee;margin-right:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save 10%</span><label class="switch"><input type="checkbox" id="annualO" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px;margin-left:10px">Annual</span></div>
+          <div style="height:1px;background:var(--line);margin:16px 0"></div>
+          <button class="btn btn-primary btn-block btn-lg" id="payNow">Pay Now</button>
+          <p class="muted" style="font-size:12px;margin-top:12px;text-align:center">Billed every month on the 1st</p>
         </div>
       </div>`;
     },
@@ -183,59 +188,69 @@
     billing() {
       const active = S.plan === 'active';
       const b = S.bought;
-      const price = active ? money(b.cur, (b.annual?monthly(b.full,b.dept,b.cur)*(1-DISC):monthly(b.full,b.dept,b.cur))) + '/mo' : '-';
+      const total = b.annual ? monthly(b.full,b.dept,b.cur)*(1-DISC) : monthly(b.full,b.dept,b.cur);
+      const price = active ? money(b.cur, total) : `${S.cur.code} 0`;
+      const dl = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+      const planLines = active ? `- Full seats (${b.full})<br>- Dept seats (${b.dept})` : 'Free Seats';
+      const invoices = active
+        ? [['INV-20','Jun 1, 2026',price,'Paid',planLines],['INV-19','May 1, 2026',price,'Paid',planLines],['INV-18','Apr 1, 2026',`${S.cur.code} 0`,'Paid','Free Seats']]
+        : [];
       return `
       <h1 class="page-title">Subscription &amp; Billing</h1><p class="page-sub">Manage your subscription and billing details here.</p>
-      ${active?`<div class="badge badge-green" style="margin-top:14px;padding:8px 14px">✓ Subscription is active</div>`:''}
-      <div class="grid" style="grid-template-columns:1.3fr 1fr;margin-top:16px;align-items:start">
+      <div class="grid" style="grid-template-columns:1.35fr 1fr;margin-top:16px;align-items:start">
         <div class="card card-pad">
-          <div class="section-title" style="font-size:16px">Current Subscription</div><p class="muted" style="font-size:13px;margin-top:2px">${active?'You are on a paid plan':'You are currently in Free Seats'}</p>
-          <div style="display:flex;gap:14px;margin-top:14px;flex-wrap:wrap">
-            <div class="card" style="flex:1;min-width:160px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:none">${seatTile('full')}<div><b>Full Seats</b><div class="muted" style="font-size:12px">${active?b.full:0} seats</div></div><b style="margin-left:auto">${active?b.full:0} Avail</b></div>
-            <div class="card" style="flex:1;min-width:160px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:none">${seatTile('dept')}<div><b>Dept Seats</b><div class="muted" style="font-size:12px">${active?b.dept:0} seats</div></div><b style="margin-left:auto">${active?b.dept:0} Avail</b></div>
+          <div class="between"><div><div class="section-title" style="font-size:16px">Current Subscription</div><p class="muted" style="font-size:13px;margin-top:2px">${active?'You are currently in Plan':'You are currently in Trial Plan'}</p></div>
+            ${active?`<button class="btn btn-outline btn-sm" id="editSeats">Edit seats</button>`:`<button class="btn btn-outline btn-sm" data-go="plan">Upgrade</button>`}</div>
+          <div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap">
+            <div style="flex:1;min-width:170px;background:var(--bg);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px">${seatTile('full',42)}<div><b style="font-size:15px">Full Seats</b><div class="muted" style="font-size:12px;margin-top:2px">${active?b.full:0} seats</div></div><b style="margin-left:auto;font-size:14px">${active?Math.max(0,b.full-(b.full?4:0)):0} Avail</b></div>
+            <div style="flex:1;min-width:170px;background:var(--bg);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px">${seatTile('dept',42)}<div><b style="font-size:15px">Dept Seats</b><div class="muted" style="font-size:12px;margin-top:2px">${active?b.dept:0} seats</div></div><b style="margin-left:auto;font-size:14px">${active?Math.max(0,b.dept-(b.dept?1:0)):0} Avail</b></div>
           </div>
-          <div style="display:flex;gap:14px;margin-top:14px">
-            <div class="card" style="flex:1;padding:12px 14px;box-shadow:none"><div class="muted" style="font-size:12px">Price</div><b>${price}</b></div>
-            <div class="card" style="flex:1;padding:12px 14px;box-shadow:none"><div class="muted" style="font-size:12px">Next Billing</div><b>${active?'Jul 1, 2026':'-'}</b></div>
-          </div>
-          <div style="display:flex;gap:10px;margin-top:16px">
-            ${active?`<button class="btn btn-outline" id="editSeats">Edit Seats</button><button class="btn btn-danger" id="cancelSub">Cancel Subscription</button>`:`<button class="btn btn-primary btn-block" data-go="plan">Upgrade</button>`}
+          <div style="display:flex;gap:14px;margin-top:14px;align-items:stretch">
+            <div style="flex:1;background:var(--bg);border-radius:12px;padding:14px 16px"><div class="muted" style="font-size:12px">${active?'Total Price':'Price'}</div><b style="font-size:15px">${price}</b></div>
+            <div style="flex:1;background:var(--bg);border-radius:12px;padding:14px 16px"><div class="muted" style="font-size:12px">Next Billing</div><b style="font-size:15px">${active?'Feb 28, 2026':'-'}</b></div>
+            ${active?`<button class="btn btn-danger" id="cancelSub" style="white-space:nowrap">Cancel Subscription</button>`:''}
           </div>
         </div>
         <div class="card card-pad">
-          <div class="section-title" style="font-size:16px">Payment Method</div><p class="muted" style="font-size:13px;margin-top:2px">Manage your payment details</p>
-          <div class="card" style="margin-top:14px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:none"><span style="background:#1a1f71;color:#fff;font-weight:800;font-style:italic;padding:6px 9px;border-radius:6px;font-size:13px">VISA</span><div><b>**** **** **** 3627</b><div class="muted" style="font-size:12px">Expiry 02/26</div></div></div>
-          <button class="btn btn-outline btn-block" style="margin-top:14px">Update Payment Method</button>
+          <div class="section-title" style="font-size:16px">Payment Method</div><p class="muted" style="font-size:13px;margin-top:2px">Manage your payment detials</p>
+          <div style="height:1px;background:var(--line);margin:14px 0"></div>
+          ${active?`<div style="border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px"><span style="background:#fff;border:1px solid var(--line);color:#1a1f71;font-weight:800;font-style:italic;padding:6px 10px;border-radius:6px;font-size:14px">VISA</span><div><b>**** **** **** 3627</b><div class="muted" style="font-size:12px">Expiry 02/26</div></div></div>
+          <button class="btn btn-outline btn-block" style="margin-top:18px">Update Payment Method</button>`:`<div style="min-height:88px"></div><button class="btn btn-outline btn-block">Update Payment Method</button>`}
         </div>
       </div>
       <div class="card card-pad" style="margin-top:18px">
-        <div class="between"><div class="section-title" style="font-size:16px">Invoice</div><button class="btn btn-outline btn-sm">↓ Download All</button></div>
-        <div class="table-wrap" style="margin-top:14px"><table class="tbl invoice-tbl"><thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr></thead><tbody>
-          ${active?[['INV-20','Jun 1, 2026',price.replace('/mo',''),'Paid'],['INV-19','May 1, 2026',price.replace('/mo',''),'Paid']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><span class="badge badge-green">${r[3]}</span></td><td style="text-align:right"><button class="tbl-actions"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button></td></tr>`).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:30px">Oops — no invoices yet. Upgrade to a paid plan to see your billing history.</td></tr>`}
+        <div class="between"><div><div class="section-title" style="font-size:16px">Invoice</div><p class="muted" style="font-size:13px;margin-top:2px">View your previous invoices/</p></div><button class="btn btn-outline btn-sm">${dl} Download All</button></div>
+        <div class="table-wrap" style="margin-top:14px"><table class="tbl invoice-tbl"><thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th>Plan</th><th style="text-align:right">Action</th></tr></thead><tbody>
+          ${invoices.length?invoices.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><span class="badge ${r[3]==='Paid'?'badge-green':'badge-red'}">${r[3]}</span></td><td style="font-size:12.5px;color:var(--ink-2)">${r[4]}</td><td style="text-align:right"><button class="tbl-actions">${dl}</button></td></tr>`).join(''):`<tr><td colspan="6" style="text-align:center;padding:40px 20px"><div style="font-family:'Poppins';font-weight:700;font-size:16px">Oops</div><div class="muted" style="font-size:13px;margin-top:4px">Oops you don't have any invoice yet</div><button class="btn btn-outline btn-sm" data-go="plan" style="margin-top:14px">Upgrade Now</button></td></tr>`}
         </tbody></table></div>
+        ${invoices.length?`<div class="between" style="margin-top:16px"><div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">Item Per page <select class="select" style="width:auto;padding:6px 30px 6px 12px"><option>10</option><option>25</option><option>50</option></select></div><div class="pager"><button>«</button><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>…</button><button>99</button><button>›</button><button>»</button></div></div>`:''}
       </div>`;
     },
 
     staff() {
       const members = [
-        ['Bambang Setiawan','bambang@seruam.com','HRD HQ','Active'],
-        ['Brooklyn Simmons','brocklyns@seruam.com','PIC Branch','Active'],
-        ['Cody Fisher','codyf@seruam.com','Member','Non Active'],
-        ['Avery Johnson','averyj@seruam.com','HRD HQ','Active'],
-        ['Taylor Martinez','taylorm@seruam.com','Dept Head Branch','Active'],
+        ['Bambang Setiawan','bambang@seruam.com','HRD HQ','full','Active'],
+        ['Brooklyn Simmons','brocklyns@seruam.com','PIC Branch','full','Active'],
+        ['Cody Fisher','codyf@seruam.com','Member','member','Non Active'],
+        ['Avery Johnson','averyj@seruam.com','HRD HQ','full','Active'],
+        ['Taylor Martinez','taylorm@seruam.com','Dept Head Branch','dept','Active'],
       ];
+      const roleIc = { full:'#2563eb', dept:'#1e9e5a', member:'#9ca3af' };
+      const seatChip = c => `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:6px"><path d="M2 9 12 4l10 5-10 5L2 9z"/></svg>`;
+      const editIc = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`;
+      const mvIc = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3 3-5 6-5"/><polyline points="16 11 19 14 16 17"/><line x1="13" y1="14" x2="19" y2="14"/></svg>`;
       return `
       <h1 class="page-title">Staff Management</h1><p class="page-sub">Manage your team members and their roles</p>
       <div class="row" style="margin-top:18px;gap:14px;flex-wrap:wrap">
-        ${['Full Seats|'+(S.plan==='active'?S.bought.full:5),'Dept Seats|'+(S.plan==='active'?S.bought.dept:1),'Free Seats|5'].map(x=>{const[a,b]=x.split('|');return `<div class="card" style="flex:1;min-width:180px;padding:16px"><div class="muted" style="font-size:13px">${a}</div><div style="font-size:24px;font-weight:800;font-family:'Poppins';margin-top:4px">${b}</div></div>`}).join('')}
+        ${[['Total Seats',(S.plan==='active'?S.bought.full+S.bought.dept+12:'12'),'member'],['Full Seats',(S.plan==='active'?S.bought.full:5),'full'],['Dept Seats',(S.plan==='active'?S.bought.dept:1),'dept'],['Free Seats',5,'member']].map(([a,n,k])=>`<div class="card" style="flex:1;min-width:160px;padding:16px;display:flex;align-items:center;gap:12px">${seatTile(k,40)}<div><div class="muted" style="font-size:12.5px">${a}</div><div style="font-size:22px;font-weight:800;font-family:'Poppins';margin-top:2px">${n}</div></div></div>`).join('')}
       </div>
       <div class="card card-pad" style="margin-top:18px">
-        <div class="between" style="margin-bottom:14px"><div class="section-title" style="font-size:16px">Team Members</div><button class="btn btn-outline btn-sm" data-toast="Invite link copied — share it with your teammate.">+ Invite Member</button></div>
-        <div class="toolbar" style="margin-bottom:8px"><div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><input placeholder="Search name or email"></div></div>
-        <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Name</th><th>Role</th><th>Status</th><th>Action</th></tr></thead><tbody>
-          ${members.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><span class="avatar"></span><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}</td><td><span class="dot-status ${m[3]==='Active'?'status-active':'status-inactive'}">${m[3]==='Active'?'● Active':'✕ Non Active'}</span></td><td><div class="tbl-actions"><button class="mv" data-member="${m[0]}" title="Move seat"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l3-3-3-3"/><path d="M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg></button><button title="Edit"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div></td></tr>`).join('')}
+        <div class="between" style="margin-bottom:14px"><div><div class="section-title" style="font-size:16px">Team Members</div><p class="muted" style="font-size:13px;margin-top:2px">Add, edit and manage your staff and their roles</p></div><button class="btn btn-outline btn-sm" data-toast="Invite link copied — share it with your teammate."><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Invite Member</button></div>
+        <div class="toolbar" style="margin-bottom:12px"><div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><input placeholder="Search name or email"></div><select class="select" style="width:auto;min-width:150px"><option>Select Role</option><option>Full Seats</option><option>Dept Seats</option><option>Free Seats</option></select><button class="btn btn-outline btn-sm" data-toast="Filter applied.">Apply</button></div>
+        <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Name</th><th>Role</th><th>Role Status</th><th style="text-align:right">Action</th></tr></thead><tbody>
+          ${members.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><span class="avatar"></span><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}${m[3]!=='member'?seatChip(roleIc[m[3]]):''}</td><td>${m[4]==='Active'?`<span class="badge badge-blue">✓ Active</span>`:`<span class="badge badge-red">✕ Non Active</span>`}</td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${editIc}</button><button class="mv" data-member="${m[0]}" title="Move seat">${mvIc}</button></div></td></tr>`).join('')}
         </tbody></table></div>
-        <div class="between" style="margin-top:14px"><span class="muted" style="font-size:13px">Item per page 10</span><div class="pager"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>›</button></div></div>
+        <div class="between" style="margin-top:16px"><div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">Item Per page <select class="select" style="width:auto;padding:6px 30px 6px 12px"><option>10</option><option>25</option><option>50</option></select></div><div class="pager"><button>«</button><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>…</button><button>99</button><button>›</button><button>»</button></div></div>
       </div>`;
     },
   };
@@ -250,24 +265,39 @@
   let modalTmp = {};
   function openModal(kind, ctx) {
     let html = '';
-    if (kind === 'editSeats') {
+    if (kind === 'editSeats' || kind === 'removeSeats') {
       modalTmp = { full: S.bought.full, dept: S.bought.dept };
-      html = `<div class="modal modal-sm modal-pad"><div class="modal-head"><h3>Edit Seats</h3><button class="modal-close" data-mclose>×</button></div>
-        <p class="muted" style="font-size:13px;margin-top:4px">Adjust the number of seats on your subscription.</p>
-        <div class="seatpick" style="margin-top:14px">${seatTile('full')}<div class="info"><b>Full Seats</b><span class="per">${money(S.cur,S.cur.full)}/mo</span></div>${counter('mfull',modalTmp.full)}</div>
-        <div class="seatpick">${seatTile('dept')}<div class="info"><b>Dept Seats</b><span class="per">${money(S.cur,S.cur.dept)}/mo</span></div>${counter('mdept',modalTmp.dept)}</div>
-        <div class="modal-foot"><button class="btn btn-ghost" data-mclose>Cancel</button><button class="btn btn-primary" id="saveSeats">Save Changes</button></div></div>`;
+      const avF = Math.max(0, S.bought.full - (S.bought.full ? 4 : 0));
+      const avD = Math.max(0, S.bought.dept - (S.bought.dept ? 1 : 0));
+      const canRemove = modalTmp.full + modalTmp.dept > 0;
+      const banner = kind === 'removeSeats'
+        ? `To remove the seats only for the available seat, please setting your seats member first <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-left:auto"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
+        : `To remove the seats only for the available seat`;
+      const seatBox = (kind2, label, av, key, val) => `<div style="flex:1;min-width:0;border:1px solid var(--line);border-radius:14px;padding:14px">
+        <div style="display:flex;align-items:center;gap:12px;background:var(--bg);border-radius:10px;padding:12px">${seatTile(kind2,42)}<div><b style="font-size:15px">${label}</b><div class="muted" style="font-size:12.5px;margin-top:2px">${av} Avail</div></div></div>
+        <div style="display:flex;justify-content:center;margin-top:18px">${counter(key,val)}</div></div>`;
+      html = `<div class="modal modal-pad" style="max-width:560px"><div class="modal-head"><h3>Edit Seats</h3><button class="modal-close" data-mclose>×</button></div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--blue-soft-2);border-radius:10px;padding:14px 16px;margin-top:18px;font-size:13.5px;color:var(--ink-2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span style="flex:1">${banner}</span></div>
+        <p style="text-align:center;font-weight:700;font-family:'Poppins';font-size:15px;margin-top:20px">Select seats to remove</p>
+        <div style="display:flex;gap:16px;margin-top:14px">
+          ${seatBox('full','Full Seats',avF,'mfull',modalTmp.full)}
+          ${seatBox('dept','Dept Seats',avD,'mdept',modalTmp.dept)}
+        </div>
+        <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn" id="saveSeats" ${canRemove?'':'disabled'} style="${canRemove?'background:var(--red);color:#fff;border-color:var(--red)':'background:#b8bcc4;color:#fff;border-color:#b8bcc4;cursor:not-allowed'}">Remove Seats</button></div></div>`;
     } else if (kind === 'cancel') {
-      html = `<div class="modal modal-sm modal-pad" style="text-align:center"><div class="between"><span></span><button class="modal-close" data-mclose>×</button></div>
-        <div style="font-size:46px;margin:6px 0">😔</div><h3 style="font-size:18px">Cancel subscription?</h3>
-        <p class="muted" style="font-size:13.5px;margin-top:8px">You'll lose access to paid seats at the end of your billing cycle. This can't be undone.</p>
-        <div class="modal-foot" style="flex-direction:column"><button class="btn btn-primary btn-block" data-mclose>Back</button><button class="btn btn-danger btn-block" id="confirmCancel">Cancel Subscription</button></div></div>`;
+      html = `<div class="modal modal-sm modal-pad" style="text-align:center"><div class="between" style="margin-bottom:6px"><span></span><button class="modal-close" data-mclose>×</button></div>
+        <span style="display:inline-flex;width:78px;height:78px;border-radius:50%;border:3px solid var(--red);align-items:center;justify-content:center;margin:8px auto 0"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8 16c1-1.5 2.5-2 4-2s3 .5 4 2"/></svg></span>
+        <h3 style="font-size:19px;margin-top:18px">Do you want to Cancel your plan?</h3>
+        <p class="muted" style="font-size:14px;margin-top:8px">Are you sure you want to cancel plan?</p>
+        <div class="modal-foot" style="flex-direction:column"><button class="btn btn-block" id="confirmCancel" style="background:var(--red);color:#fff;border-color:var(--red)">Cancel subscription</button><button class="btn btn-outline btn-block" data-mclose>Back</button></div></div>`;
     } else if (kind === 'moveSeat') {
       html = `<div class="modal modal-sm modal-pad"><div class="modal-head"><h3>Move ${ctx} to Full Seats?</h3><button class="modal-close" data-mclose>×</button></div>
-        <div style="display:flex;align-items:center;gap:12px;margin-top:14px"><span class="avatar" style="width:42px;height:42px;border-radius:50%;background:#e5e7eb"></span><div><b>${ctx}</b><div class="muted" style="font-size:12px">Currently: Member Seat (Free)</div></div></div>
-        <div class="seatcard blue" style="margin-top:14px;padding:14px"><div class="hd">${seatTile('full')}<div><b>Full Recruiter Seat</b><div class="muted" style="font-size:12px">${money(S.cur,S.cur.full)} / mo</div></div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:16px"><span class="avatar" style="width:42px;height:42px;border-radius:50%;background:#e5e7eb"></span><div><b>${ctx}</b><div class="muted" style="font-size:12px">Currently: Member Seat (Free)</div></div></div>
+        <p class="muted" style="font-size:12.5px;margin-top:14px">Assign an available seat to this member.</p>
+        <div class="seatcard blue" style="margin-top:10px;padding:14px"><div class="hd">${seatTile('full')}<div><b>Full Recruiter Seat</b><div class="muted" style="font-size:12px">${money(S.cur,S.cur.full)} / mo</div></div></div></div>
+        <div class="seatcard green" style="margin-top:10px;padding:14px"><div class="hd">${seatTile('dept')}<div><b>Department Head Seat</b><div class="muted" style="font-size:12px">${money(S.cur,S.cur.dept)} / mo</div></div></div></div>
         <p class="muted" style="font-size:12.5px;margin-top:12px">You'll be charged a prorated amount for the rest of this billing cycle.</p>
-        <div class="modal-foot"><button class="btn btn-ghost" data-mclose>Back</button><button class="btn btn-primary" id="confirmMove">Confirm</button></div></div>`;
+        <div class="modal-foot"><button class="btn btn-outline" data-mclose>Back</button><button class="btn btn-primary" id="confirmMove">Confirm</button></div></div>`;
     }
     $('#modalRoot').innerHTML = `<div class="overlay">${html}</div>`;
   }
@@ -320,6 +350,7 @@
   ];
   const MDLS = [
     { k:'editSeats', t:'Edit Seats' },
+    { k:'removeSeats', t:'Remove Seats' },
     { k:'cancel', t:'Cancel Subscription' },
     { k:'moveSeat', t:'Move Member Seat', ctx:'Cody Fisher' },
   ];
