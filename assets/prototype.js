@@ -215,8 +215,8 @@
           <div style="display:flex;gap:14px;margin-top:14px;align-items:stretch">
             <div style="flex:1;background:var(--bg);border-radius:12px;padding:14px 16px"><div class="muted" style="font-size:12px">${active?'Total Price':'Price'}</div><b style="font-size:15px">${price}</b></div>
             <div style="flex:1;background:var(--bg);border-radius:12px;padding:14px 16px"><div class="muted" style="font-size:12px">Next Billing</div><b style="font-size:15px">${active?'Feb 28, 2026':'-'}</b></div>
-            ${active?`<button class="btn btn-danger" id="cancelSub" style="white-space:nowrap">Cancel Subscription</button>`:''}
           </div>
+          ${active?`<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px"><button class="btn btn-outline btn-block" id="changeCycle">Change Cycle</button><button class="btn btn-danger btn-block" id="cancelSub">Cancel Subscription</button></div>`:''}
         </div>
         <div class="card card-pad">
           <div class="section-title" style="font-size:16px">Payment Method</div><p class="muted" style="font-size:13px;margin-top:2px">Manage your payment detials</p>
@@ -305,6 +305,21 @@
         <div class="seatcard green" style="margin-top:10px;padding:14px"><div class="hd">${seatTile('dept')}<div><b>Department Head Seat</b><div class="muted" style="font-size:12px">${money(S.cur,S.cur.dept)} / mo</div></div></div></div>
         <p class="muted" style="font-size:12.5px;margin-top:12px">You'll be charged a prorated amount for the rest of this billing cycle.</p>
         <div class="modal-foot"><button class="btn btn-outline" data-mclose>Back</button><button class="btn btn-primary" id="confirmMove">Confirm</button></div></div>`;
+    } else if (kind === 'changeCycle') {
+      const b = S.bought;
+      if (modalTmp.cycle === undefined) modalTmp = { cycle: b.annual ? 'yearly' : 'monthly' };
+      const mMon = monthly(b.full, b.dept, b.cur);
+      const mYrPerMo = mMon * (1 - DISC);
+      const yrBilled = mMon * 12 * (1 - DISC);
+      const sel = modalTmp.cycle;
+      const card = (key,label,priceLine,note,badge) => `<div data-cycle="${key}" style="cursor:pointer;display:flex;align-items:center;gap:12px;border:${sel===key?'1.5px solid var(--blue)':'1px solid var(--line)'};background:${sel===key?'var(--blue-soft)':'#fff'};border-radius:12px;padding:14px 16px;margin-top:12px">
+        <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px"><b style="font-size:14px">${label}</b>${badge?`<span style="background:#e7f5ed;color:#208f4f;font-weight:600;font-size:11px;padding:2px 8px;border-radius:6px">${badge}</span>`:''}</div><div style="font-size:13px;font-weight:500;margin-top:4px">${priceLine}</div>${note?`<div class="muted" style="font-size:12px;margin-top:2px">${note}</div>`:''}</div>
+        <span style="width:20px;height:20px;border-radius:50%;flex:none;border:${sel===key?'none':'1.5px solid var(--line)'};background:${sel===key?'var(--blue)':'#fff'};display:flex;align-items:center;justify-content:center">${sel===key?'<span style="width:8px;height:8px;border-radius:50%;background:#fff"></span>':''}</span></div>`;
+      html = `<div class="modal modal-sm modal-pad"><div class="modal-head"><h3>Change Billing Cycle</h3><button class="modal-close" data-mclose>×</button></div>
+        <p class="muted" style="font-size:13.5px;margin-top:4px">Switch between monthly and yearly billing.</p>
+        ${card('monthly','Monthly', money(b.cur,mMon)+' / month','','')}
+        ${card('yearly','Yearly', money(b.cur,mYrPerMo)+' / month','Billed '+money(b.cur,yrBilled)+' yearly','Save 10%')}
+        <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn btn-primary" id="confirmCycle">Confirm Change</button></div></div>`;
     }
     $('#modalRoot').innerHTML = `<div class="overlay">${html}</div>`;
   }
@@ -414,6 +429,9 @@
     if (e.target.closest('#saveSeats')) { S.bought.full = modalTmp.full; S.bought.dept = modalTmp.dept; closeModal(); toast('Seats updated.'); render(); return; }
     if (e.target.closest('#confirmCancel')) { S.plan = 'trial'; S.bought = { full:0, dept:0, cur:S.cur, annual:false }; closeModal(); toast('Subscription cancelled.', true); go('billing'); return; }
     if (e.target.closest('#confirmMove')) { closeModal(); toast('Member moved to a Full Recruiter seat.'); return; }
+    if (e.target.closest('#changeCycle')) { modalTmp = {}; openModal('changeCycle'); return; }
+    const cyc = e.target.closest('[data-cycle]'); if (cyc) { modalTmp.cycle = cyc.dataset.cycle; openModal('changeCycle'); return; }
+    if (e.target.closest('#confirmCycle')) { S.bought.annual = (modalTmp.cycle === 'yearly'); closeModal(); toast('Billing cycle updated.'); render(); return; }
     if (e.target.closest('[data-mclose]') || e.target.classList.contains('overlay')) { closeModal(); return; }
 
     // drawer
