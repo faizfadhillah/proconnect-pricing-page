@@ -3,26 +3,26 @@
    Used by every screen in the Employer Dashboard prototype.
    ============================================================ */
 :root {
-  --blue: #2563eb;
-  --blue-600: #1d4ed8;
-  --blue-soft: #e8f1fe;
-  --blue-soft-2: #eef4ff;
+  --blue: #1560bd;
+  --blue-600: #1151a6;
+  --blue-soft: #eefaff;
+  --blue-soft-2: #eef3fb;
   --green: #16a34a;
-  --green-ic: #1e9e5a;
+  --green-ic: #16a34a;
   --green-soft: #e8f6ee;
   --amber: #f4c84c;            /* trial banner */
   --amber-soft: #fbf6ea;       /* trial plan card bg */
   --amber-ink: #5c4708;
   --red: #ef4444;
-  --ink: #111827;
-  --ink-2: #1f2937;
-  --muted: #6b7280;
-  --light: #9ca3af;
-  --line: #e5e7eb;
-  --line-2: #eef0f2;
-  --bg: #f6f7f9;
+  --ink: #292929;
+  --ink-2: #292929;
+  --muted: #929393;
+  --light: #b5b6b6;
+  --line: #eaebeb;
+  --line-2: #f1f2f2;
+  --bg: #f8f9f9;
   --card: #ffffff;
-  --dark: #0b0f1a;
+  --dark: #042648;
   --sidebar-w: 288px;
   --radius: 14px;
   --radius-sm: 10px;
@@ -33,25 +33,25 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--ink); background: var(--bg); line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-h1,h2,h3,h4 { font-family: 'Poppins','Inter',sans-serif; line-height: 1.2; letter-spacing: -.01em; }
+h1,h2,h3,h4 { font-family: 'Montserrat','Montserrat',sans-serif; line-height: 1.2; letter-spacing: -.01em; }
 a { color: var(--blue); text-decoration: none; }
 img { max-width: 100%; }
 svg { display: block; }
 
 /* ---------- Buttons ---------- */
-.btn { font: 600 14px/1 'Inter',sans-serif; border-radius: var(--radius-sm); padding: 11px 18px;
+.btn { font: 600 14px/1 'Montserrat',sans-serif; border-radius: 8px; padding: 11px 18px;
   cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center;
   justify-content: center; gap: 8px; transition: background .15s, box-shadow .15s, transform .05s; white-space: nowrap; }
 .btn:active { transform: translateY(1px); }
 .btn svg { width: 18px; height: 18px; }
 .btn-primary { background: var(--blue); color: #fff; }
 .btn-primary:hover { background: var(--blue-600); }
-.btn-outline { background: #fff; color: var(--blue); border-color: var(--blue); }
-.btn-outline:hover { background: var(--blue-soft); }
+.btn-outline { background: #fff; color: var(--blue); border: 1.5px solid var(--blue); }
+.btn-outline:hover { background: var(--blue-soft-2); }
 .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line); }
 .btn-ghost:hover { background: var(--bg); }
 .btn-white { background: #fff; color: var(--blue); }
@@ -97,7 +97,7 @@ svg { display: block; }
   height: 64px; display: flex; align-items: center; gap: 14px; padding: 0 22px; }
 .topbar .hamburger { background: none; border: none; cursor: pointer; color: var(--blue); display: inline-flex; }
 .brand { display: flex; align-items: center; gap: 8px; }
-.brand-name { font-family: 'Poppins',sans-serif; font-weight: 600; font-size: 21px; color: var(--blue); letter-spacing: -.02em; }
+.brand-name { font-family: 'Montserrat',sans-serif; font-weight: 600; font-size: 21px; color: var(--blue); letter-spacing: -.02em; }
 .topbar .spacer { margin-left: auto; }
 .bell { position: relative; background: none; border: none; cursor: pointer; color: var(--ink-2); }
 .bell-badge { position: absolute; top: -6px; right: -8px; background: var(--red); color: #fff; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 10px; }
@@ -148,7 +148,7 @@ svg { display: block; }
 
 /* sidebar footer */
 .side-foot { text-align: center; margin-top: 18px; padding-top: 8px; color: var(--muted); font-size: 12px; }
-.side-foot .aseanta { font-family: 'Poppins',sans-serif; font-weight: 800; color: #b9261d; letter-spacing: .04em; margin-top: 6px; font-size: 15px; }
+.side-foot .aseanta { font-family: 'Montserrat',sans-serif; font-weight: 800; color: #b9261d; letter-spacing: .04em; margin-top: 6px; font-size: 15px; }
 .side-foot .aseanta small { display: block; font-size: 8px; letter-spacing: .06em; color: #b9261d; font-weight: 700; }
 
 /* ============================================================
@@ -168,7 +168,7 @@ svg { display: block; }
 .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
 .stat-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
 .stat-card .label { font-size: 13px; color: var(--muted); }
-.stat-card .value { font-size: 28px; font-weight: 800; font-family: 'Poppins',sans-serif; margin-top: 8px; }
+.stat-card .value { font-size: 28px; font-weight: 800; font-family: 'Montserrat',sans-serif; margin-top: 8px; }
 
 /* ============================================================
    TABLES
@@ -194,7 +194,7 @@ table.tbl tr:last-child td { border-bottom: none; }
 
 /* pagination */
 .pager { display: flex; align-items: center; gap: 6px; }
-.pager button { min-width: 34px; height: 34px; border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; font: 600 13px 'Inter'; color: var(--ink-2); }
+.pager button { min-width: 34px; height: 34px; border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; font: 600 13px 'Montserrat'; color: var(--ink-2); }
 .pager button.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 .pager .per { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-right: auto; }
 
@@ -251,7 +251,7 @@ table.tbl tr:last-child td { border-bottom: none; }
    ============================================================ */
 .faq-item { background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
 .faq-q { width: 100%; background: none; border: none; cursor: pointer; padding: 16px; display: flex; gap: 12px; text-align: left;
-  font-family: 'Poppins',sans-serif; font-weight: 600; font-size: 14.5px; color: var(--ink); align-items: center; }
+  font-family: 'Montserrat',sans-serif; font-weight: 600; font-size: 14.5px; color: var(--ink); align-items: center; }
 .faq-q .faq-ic { margin-left: auto; flex: none; transition: transform .2s; color: var(--muted); }
 .faq-item.open .faq-q .faq-ic { transform: rotate(180deg); }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height .25s; }

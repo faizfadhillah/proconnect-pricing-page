@@ -58,7 +58,7 @@
       <div class="card card-pad" style="margin-top:18px">
         <div class="between"><div><div class="section-title">Profile Completion</div><div class="muted" style="margin-top:4px">4 of 4 steps completed</div></div><button class="btn btn-outline btn-sm">Edit</button></div>
         <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:18px">
-          ${['Business Profile Details','Company Representative Info','Headquarters and Branch Information','Team Management'].map(t=>`<div style="display:flex;align-items:center;gap:10px;background:var(--blue-soft-2);border-radius:12px;padding:14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 9"/></svg><b style="color:var(--blue);font-size:13px;font-family:'Poppins'">${t}</b></div>`).join('')}
+          ${['Business Profile Details','Company Representative Info','Headquarters and Branch Information','Team Management'].map(t=>`<div style="display:flex;align-items:center;gap:10px;background:var(--blue-soft-2);border-radius:12px;padding:14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 9"/></svg><b style="color:var(--blue);font-size:13px;font-family:'Montserrat'">${t}</b></div>`).join('')}
         </div>
       </div>
       <div class="card card-pad" style="margin-top:18px;background:var(--amber-soft);border-color:#f0e2bf">
@@ -118,7 +118,7 @@
           <button class="cur-trigger" id="curTrigger"><span class="flag">${S.cur.flag}</span><span>${S.cur.name}</span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
           <ul class="cur-menu">${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>${c.name}</span><span class="code">${c.code}</span></li>`).join('')}</ul>
         </div>
-        <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes & purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+        <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes & purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
       </div>
       ${curItem('Full Recruiter Seats','full','full', money(S.cur,S.cur.full))}
       ${curItem('Department Seats','dept','dept', money(S.cur,S.cur.dept))}
@@ -168,13 +168,13 @@
           <div class="section-title" style="font-size:16px">Order Summary</div><p class="muted" style="font-size:13px;margin-top:2px">This is summary based on your seats</p>
           <div style="height:1px;background:var(--line);margin:16px 0"></div>
           <div class="promo-box" style="display:flex;align-items:center;border:1px solid ${promoBorder};border-radius:10px;padding:0 4px 0 14px;transition:border-color .15s">
-            <input id="promoInput" placeholder="Enter promo code" value="${S.promo}" style="flex:1;border:none;outline:none;font:600 14px 'Inter';background:none;padding:14px 0;color:var(--ink)">
+            <input id="promoInput" placeholder="Enter promo code" value="${S.promo}" style="flex:1;border:none;outline:none;font:600 14px 'Montserrat';background:none;padding:14px 0;color:var(--ink)">
             <span style="width:1px;height:24px;background:var(--line)"></span>
-            <button id="promoBtn" style="background:none;border:none;cursor:pointer;color:var(--blue);font:600 14px 'Inter';padding:12px 14px;white-space:nowrap">Cek Promo</button>
+            <button id="promoBtn" style="background:none;border:none;cursor:pointer;color:var(--blue);font:600 14px 'Montserrat';padding:12px 14px;white-space:nowrap">Cek Promo</button>
           </div>
           <div class="total" style="display:flex;align-items:flex-end;gap:6px;margin-top:18px">
             <span style="font-size:15px;font-weight:700;align-self:flex-start;margin-top:2px">${S.cur.code}</span>
-            <span style="font-size:30px;font-weight:800;font-family:'Poppins';letter-spacing:-.02em;line-height:1">${fmt(grand,S.cur.sep)}</span>
+            <span style="font-size:30px;font-weight:800;font-family:'Montserrat';letter-spacing:-.02em;line-height:1">${fmt(grand,S.cur.sep)}</span>
             <span style="font-size:14px;color:var(--muted)">/mo</span>
           </div>
           <div class="tog" style="display:flex;align-items:center;margin-top:16px"><span class="save-badge" ${S.annual?'':'hidden'} style="color:var(--green);background:#e8f6ee;margin-right:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save 10%</span><label class="switch"><input type="checkbox" id="annualO" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px;margin-left:10px">Annual</span></div>
@@ -221,7 +221,7 @@
       <div class="card card-pad" style="margin-top:18px">
         <div class="between"><div><div class="section-title" style="font-size:16px">Invoice</div><p class="muted" style="font-size:13px;margin-top:2px">View your previous invoices/</p></div><button class="btn btn-outline btn-sm">${dl} Download All</button></div>
         <div class="table-wrap" style="margin-top:14px"><table class="tbl invoice-tbl"><thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th>Plan</th><th style="text-align:right">Action</th></tr></thead><tbody>
-          ${invoices.length?invoices.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><span class="badge ${r[3]==='Paid'?'badge-green':'badge-red'}">${r[3]}</span></td><td style="font-size:12.5px;color:var(--ink-2)">${r[4]}</td><td style="text-align:right"><button class="tbl-actions">${dl}</button></td></tr>`).join(''):`<tr><td colspan="6" style="text-align:center;padding:40px 20px"><div style="font-family:'Poppins';font-weight:700;font-size:16px">Oops</div><div class="muted" style="font-size:13px;margin-top:4px">Oops you don't have any invoice yet</div><button class="btn btn-outline btn-sm" data-go="plan" style="margin-top:14px">Upgrade Now</button></td></tr>`}
+          ${invoices.length?invoices.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><span class="badge ${r[3]==='Paid'?'badge-green':'badge-red'}">${r[3]}</span></td><td style="font-size:12.5px;color:var(--ink-2)">${r[4]}</td><td style="text-align:right"><button class="tbl-actions">${dl}</button></td></tr>`).join(''):`<tr><td colspan="6" style="text-align:center;padding:40px 20px"><div style="font-family:'Montserrat';font-weight:700;font-size:16px">Oops</div><div class="muted" style="font-size:13px;margin-top:4px">Oops you don't have any invoice yet</div><button class="btn btn-outline btn-sm" data-go="plan" style="margin-top:14px">Upgrade Now</button></td></tr>`}
         </tbody></table></div>
         ${invoices.length?`<div class="between" style="margin-top:16px"><div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">Item Per page <select class="select" style="width:auto;padding:6px 30px 6px 12px"><option>10</option><option>25</option><option>50</option></select></div><div class="pager"><button>«</button><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>…</button><button>99</button><button>›</button><button>»</button></div></div>`:''}
       </div>`;
@@ -235,14 +235,14 @@
         ['Avery Johnson','averyj@seruam.com','HRD HQ','full','Active'],
         ['Taylor Martinez','taylorm@seruam.com','Dept Head Branch','dept','Active'],
       ];
-      const roleIc = { full:'#2563eb', dept:'#1e9e5a', member:'#9ca3af' };
+      const roleIc = { full:'#1560bd', dept:'#1e9e5a', member:'#9ca3af' };
       const seatChip = c => `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:6px"><path d="M2 9 12 4l10 5-10 5L2 9z"/></svg>`;
       const editIc = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`;
       const mvIc = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3 3-5 6-5"/><polyline points="16 11 19 14 16 17"/><line x1="13" y1="14" x2="19" y2="14"/></svg>`;
       return `
       <h1 class="page-title">Staff Management</h1><p class="page-sub">Manage your team members and their roles</p>
       <div class="row" style="margin-top:18px;gap:14px;flex-wrap:wrap">
-        ${[['Total Seats',(S.plan==='active'?S.bought.full+S.bought.dept+12:'12'),'member'],['Full Seats',(S.plan==='active'?S.bought.full:5),'full'],['Dept Seats',(S.plan==='active'?S.bought.dept:1),'dept'],['Free Seats',5,'member']].map(([a,n,k])=>`<div class="card" style="flex:1;min-width:160px;padding:16px;display:flex;align-items:center;gap:12px">${seatTile(k,40)}<div><div class="muted" style="font-size:12.5px">${a}</div><div style="font-size:22px;font-weight:800;font-family:'Poppins';margin-top:2px">${n}</div></div></div>`).join('')}
+        ${[['Total Seats',(S.plan==='active'?S.bought.full+S.bought.dept+12:'12'),'member'],['Full Seats',(S.plan==='active'?S.bought.full:5),'full'],['Dept Seats',(S.plan==='active'?S.bought.dept:1),'dept'],['Free Seats',5,'member']].map(([a,n,k])=>`<div class="card" style="flex:1;min-width:160px;padding:16px;display:flex;align-items:center;gap:12px">${seatTile(k,40)}<div><div class="muted" style="font-size:12.5px">${a}</div><div style="font-size:22px;font-weight:800;font-family:'Montserrat';margin-top:2px">${n}</div></div></div>`).join('')}
       </div>
       <div class="card card-pad" style="margin-top:18px">
         <div class="between" style="margin-bottom:14px"><div><div class="section-title" style="font-size:16px">Team Members</div><p class="muted" style="font-size:13px;margin-top:2px">Add, edit and manage your staff and their roles</p></div><button class="btn btn-outline btn-sm" data-toast="Invite link copied — share it with your teammate."><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Invite Member</button></div>
@@ -256,7 +256,7 @@
   };
 
   function actionCard(t, d, btn) {
-    return `<div class="card card-pad"><div class="between"><div style="display:flex;gap:12px"><span style="color:var(--ink-2);margin-top:2px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></span><div><b style="font-size:15px;font-family:'Poppins'">${t}</b><div class="muted" style="font-size:13px;margin-top:4px">${d}</div></div></div><button class="btn btn-outline btn-sm" data-toast="${t} — coming soon in this prototype.">${btn}</button></div></div>`;
+    return `<div class="card card-pad"><div class="between"><div style="display:flex;gap:12px"><span style="color:var(--ink-2);margin-top:2px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></span><div><b style="font-size:15px;font-family:'Montserrat'">${t}</b><div class="muted" style="font-size:13px;margin-top:4px">${d}</div></div></div><button class="btn btn-outline btn-sm" data-toast="${t} — coming soon in this prototype.">${btn}</button></div></div>`;
   }
   function cell(v){ return v==='✓'?'<span style="color:var(--green);font-weight:700">✓</span>':v==='—'?'<span style="color:var(--light)">—</span>':`<span class="muted" style="font-size:12.5px">${v}</span>`; }
   function faq(q,a,open){ return `<div class="faq-item${open?' open':''}"><button class="faq-q">${q}<svg class="faq-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>${a}</p></div></div>`; }
@@ -271,14 +271,14 @@
       const avD = Math.max(0, S.bought.dept - (S.bought.dept ? 1 : 0));
       const canRemove = modalTmp.full + modalTmp.dept > 0;
       const banner = kind === 'removeSeats'
-        ? `To remove the seats only for the available seat, please setting your seats member first <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-left:auto"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
+        ? `To remove the seats only for the available seat, please setting your seats member first <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-left:auto"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
         : `To remove the seats only for the available seat`;
       const seatBox = (kind2, label, av, key, val) => `<div style="flex:1;min-width:0;border:1px solid var(--line);border-radius:14px;padding:14px">
         <div style="display:flex;align-items:center;gap:12px;background:var(--bg);border-radius:10px;padding:12px">${seatTile(kind2,42)}<div><b style="font-size:15px">${label}</b><div class="muted" style="font-size:12.5px;margin-top:2px">${av} Avail</div></div></div>
         <div style="display:flex;justify-content:center;margin-top:18px">${counter(key,val)}</div></div>`;
       html = `<div class="modal modal-pad" style="max-width:560px"><div class="modal-head"><h3>Edit Seats</h3><button class="modal-close" data-mclose>×</button></div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--blue-soft-2);border-radius:10px;padding:14px 16px;margin-top:18px;font-size:13.5px;color:var(--ink-2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span style="flex:1">${banner}</span></div>
-        <p style="text-align:center;font-weight:700;font-family:'Poppins';font-size:15px;margin-top:20px">Select seats to remove</p>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--blue-soft-2);border-radius:10px;padding:14px 16px;margin-top:18px;font-size:13.5px;color:var(--ink-2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span style="flex:1">${banner}</span></div>
+        <p style="text-align:center;font-weight:700;font-family:'Montserrat';font-size:15px;margin-top:20px">Select seats to remove</p>
         <div style="display:flex;gap:16px;margin-top:14px">
           ${seatBox('full','Full Seats',avF,'mfull',modalTmp.full)}
           ${seatBox('dept','Dept Seats',avD,'mdept',modalTmp.dept)}
