@@ -338,13 +338,13 @@ table.tbl tr:last-child td { border-bottom: none; }
 .reg-vsteps { display: flex; flex-direction: column; position: sticky; top: 84px; }
 .reg-vstep { display: flex; gap: 14px; position: relative; padding-bottom: 36px; cursor: pointer; }
 .reg-vstep:last-child { padding-bottom: 0; }
-.reg-vstep:not(:last-child)::before { content: ""; position: absolute; left: 15px; top: 34px; bottom: 4px; width: 2px; background: var(--line); }
-.reg-vstep.done:not(:last-child)::before { background: var(--green); }
+.reg-vstep:not(:last-child)::before { content: ""; position: absolute; left: 15px; top: 34px; bottom: 4px; width: 2.5px; background: var(--line); }
+.reg-vstep.done:not(:last-child)::before { background: var(--blue); }
 .reg-vstep .rn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center; font: 700 13px 'Montserrat'; color: var(--muted); background: #fff; flex: none; z-index: 1; }
 .reg-vstep .rl { font-size: 14px; font-weight: 700; color: var(--muted); padding-top: 6px; line-height: 1.3; }
 .reg-vstep.active .rn { border-color: var(--blue); color: var(--blue); }
 .reg-vstep.active .rl { color: var(--blue); }
-.reg-vstep.done .rn { border-color: var(--green); background: var(--green); color: #fff; }
+.reg-vstep.done .rn { border-color: var(--blue); background: #fff; }
 .reg-vstep.done .rl { color: var(--ink); }
 .reg-field { margin-bottom: 16px; }
 .reg-lab { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }

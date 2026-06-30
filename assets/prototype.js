@@ -65,7 +65,8 @@
       const ta = (ph) => `<textarea class="input" rows="3" placeholder="${ph}"></textarea>`;
       const upload = (btn) => `<div class="reg-upload"><span class="reg-up-ph">${userIc}</span><div><button class="btn btn-outline btn-sm" data-toast="Photo upload — coming soon.">${btn}</button><div class="reg-hint" style="margin-top:6px">Size recommendation: 400 x 400px</div></div></div>`;
       const verify = (ph) => `<div class="reg-verify">${inp(ph)}<button class="reg-verify-btn" data-toast="Verification link sent.">Verify</button></div>`;
-      const steps = `<div class="reg-vsteps">${REG.map((r,i)=>`<div class="reg-vstep ${i===step?'active':''} ${i<step?'done':''}" data-reg="${i}"><span class="rn">${i<step?'✓':i+1}</span><span class="rl">${r.t}</span></div>`).join('')}</div>`;
+      const checkIc = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>';
+      const steps = `<div class="reg-vsteps">${REG.map((r,i)=>`<div class="reg-vstep ${i===step?'active':''} ${i<step?'done':''}" data-reg="${i}"><span class="rn">${i<step?checkIc:i+1}</span><span class="rl">${r.t}</span></div>`).join('')}</div>`;
       let headAction = '', form = '';
       if (cur.k==='business') form = `
         ${upload('Upload Company Photo')}
