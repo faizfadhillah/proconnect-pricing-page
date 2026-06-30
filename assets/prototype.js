@@ -257,6 +257,10 @@
       const disc = S.annual ? sub * DISC : 0;
       const promo = S.promoState === 'ok' ? sub * 0.05 : 0;
       const grand = Math.max(0, sub - disc - promo);
+      const _now = new Date();
+      const _dim = new Date(_now.getFullYear(), _now.getMonth()+1, 0).getDate();
+      const _daysLeft = _dim - _now.getDate() + 1;
+      const firstMonth = grand * _daysLeft / _dim;
       const promoBorder = S.promoState === 'fail' ? 'var(--red)' : (S.promoState === 'ok' ? 'var(--green)' : 'var(--line)');
       return `
       <h1 class="page-title">Confirmation Order</h1><p class="page-sub">Review your seats and confirm payment</p>
@@ -283,7 +287,7 @@
           <div class="tog" style="display:flex;align-items:center;margin-top:16px"><span class="save-badge" ${S.annual?'':'hidden'} style="color:var(--green);background:#e8f6ee;margin-right:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save 10%</span><label class="switch"><input type="checkbox" id="annualO" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px;margin-left:10px">Annual</span></div>
           <div style="height:1px;background:var(--line);margin:16px 0"></div>
           <button class="btn btn-primary btn-block btn-lg" id="payNow">Pay Now</button>
-          <p class="muted" style="font-size:12px;margin-top:12px;text-align:center">Billed every month on the 1st</p>
+          <div class="muted" style="font-size:12px;margin-top:12px;text-align:center;line-height:1.7"><div>1st month (prorated): <b style="color:var(--ink)">${money(S.cur, firstMonth)}</b></div><div>Next month: ${money(S.cur, grand)} (full rate)</div><div>Billed every month on the 1st</div></div>
         </div>
       </div>`;
     },
