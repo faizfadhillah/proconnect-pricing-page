@@ -374,3 +374,7 @@ table.tbl tr:last-child td { border-bottom: none; }
 /* center the +/- counter inside the Edit/Remove Seats modal */
 .seat-counter-wrap { display: flex; justify-content: center; margin-top: 18px; }
 .seat-counter-wrap .counter { margin-left: 0; }
+
+/* show element only on mobile (e.g. external-link arrow on Upgrade) */
+.mobile-only { display: none !important; }
+@media (max-width: 900px) { .btn .mobile-only { display: inline-flex !important; align-items: center; } }
