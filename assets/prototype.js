@@ -611,9 +611,9 @@
           m = Math.floor(ms % 3600000 / 60000), s = Math.floor(ms % 60000 / 1000);
     const cd = document.getElementById('trialCountdown');
     const sd = document.getElementById('trialSide');
-    if (cd) cd.textContent = ms <= 0 ? 'expired' : `${d}D ${pad(h)}H ${pad(m)}M ${pad(s)}S`;
-    if (sd) sd.textContent = ms <= 0 ? 'Your free trial has ended' : `Your trial ends in ${d}d ${pad(h)}h ${pad(m)}m`;
+    if (cd) cd.textContent = ms <= 0 ? 'expired' : `${d}D ${pad(h)}H`;
+    if (sd) sd.textContent = ms <= 0 ? 'Your free trial has ended' : `Your trial ends in ${d}d ${pad(h)}h`;
   }
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown, 60000);
 })();
