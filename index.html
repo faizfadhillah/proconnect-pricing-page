@@ -80,13 +80,14 @@
   </a>
   <span class="spacer"></span>
   <button class="bell" aria-label="Notifications"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="bell-badge">999</span></button>
+  <img class="top-avatar" src="assets/avatar-user.svg" alt="Faiz Fadhillah">
 </div>
 
 <div class="app-body">
   <aside class="sidebar">
-    <button class="org-switch"><span class="org-logo" style="background:#0b2540;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;">ACME</span><b>Startup Colorbox</b><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <button class="org-switch"><img class="org-logo" src="assets/logo-company.svg" alt="Startup Colorbox"><b>Startup Colorbox</b><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
     <div class="side-profile">
-      <div class="side-profile-head"><span class="avatar" style="background:#0b2540;color:#fff;font-size:10px;font-weight:700;">ACME</span><div><div class="pname">Faiz Fadhillah</div><div class="pcompany">PT AMBURAN JAKARTA</div></div></div>
+      <div class="side-profile-head"><img class="avatar" src="assets/logo-company.svg" alt="Startup Colorbox" style="width:46px;height:46px;border-radius:10px;object-fit:cover"><div><div class="pname">Faiz Fadhillah</div><div class="pcompany">PT AMBURAN JAKARTA</div></div></div>
       <div class="side-seats"><span>Current Seats</span><span class="badge badge-gray" id="seatBadge">Member Seats</span></div>
       <button class="btn btn-outline btn-block" style="margin-top:12px;" data-go="dashboard">Profile <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
     </div>
@@ -106,14 +107,14 @@
         </ul>
       </li>
     </ul>
-    <div class="side-trial"><span class="st-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><b>You're on a free trial</b><span>Your trial ends in 6 days</span><button class="btn btn-primary btn-block btn-sm" data-go="plan">Upgrade Plan Now</button></div>
+    <div class="side-trial"><span class="st-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><b>You're on a free trial</b><span id="trialSide">Your trial ends in 6 days</span><button class="btn btn-primary btn-block btn-sm" data-go="plan">Upgrade Plan Now</button></div>
     <div class="side-foot">ProConnect © 2026<br>Supported by<div class="aseanta">ASEANTA<small>ASEAN TOURISM ASSOCIATION</small></div></div>
   </aside>
 
   <main class="main">
     <div class="trial-banner" id="trialBanner">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      You have <strong style="margin:0 4px;">6D 23H</strong> on the free trial. You can manage your subscription from the <a data-go="plan" style="margin-left:4px;cursor:pointer;">Plan page</a>
+      You have <strong id="trialCountdown" style="margin:0 4px;">6D 23H</strong> on the free trial. You can manage your subscription from the <a data-go="plan" style="margin-left:4px;cursor:pointer;">Plan page</a>
     </div>
     <div class="page" id="view"></div>
   </main>

@@ -14,9 +14,16 @@
     { code: 'USD', flag: '🇺🇸', name: 'United States',  full: 49,     dept: 38,     sep: ',' },
   ];
   const DISC = 0.10; // annual save 10%
+  const REG = [
+    { k:'account',  t:'Create Account',        d:'Email, password and company' },
+    { k:'business', t:'Business Profile',       d:'Company details and industry' },
+    { k:'rep',      t:'Company Representative',  d:'PIC name, role and contact' },
+    { k:'branch',   t:'HQ & Branch Info',        d:'Headquarters and branches' },
+    { k:'team',     t:'Team Setup',              d:'Invite members and assign seats' },
+  ];
 
   const S = {
-    view: 'dashboard', cur: CUR[0], full: 0, dept: 0, annual: false, curOpen: false,
+    view: 'dashboard', cur: CUR[0], full: 0, dept: 0, annual: false, curOpen: false, regStep: 0,
     plan: 'trial',                                   // 'trial' | 'active'
     bought: { full: 0, dept: 0, cur: CUR[0], annual: false },
     promo: '', promoState: '',                       // '', 'ok', 'fail'
@@ -45,6 +52,54 @@
 
   /* ===================== VIEWS ===================== */
   const Views = {
+    register() {
+      const step = S.regStep || 0;
+      const cur = REG[step];
+      const lbl = (t,o) => `<label style="display:block;font-size:13px;font-weight:600;color:var(--ink);margin:0 0 6px">${t}${o?'':'<span style="color:#ef4444"> *</span>'}</label>`;
+      const stepper = `<div class="reg-stepper">${REG.map((r,i)=>`<div class="reg-step ${i===step?'active':''} ${i<step?'done':''}" data-reg="${i}"><span class="rn">${i<step?'✓':i+1}</span><span class="rl">${r.t}</span></div>${i<REG.length-1?'<span class="reg-line"></span>':''}`).join('')}</div>`;
+      let form = '';
+      if (cur.k==='account') form = `<div class="form-grid-2">
+        <div>${lbl('Full Name')}<input class="input" value="Faiz Fadhillah"></div>
+        <div>${lbl('Work Email')}<input class="input" type="email" value="faiz@startupcolorbox.com"></div>
+        <div>${lbl('Password')}<input class="input" type="password" value="********"></div>
+        <div>${lbl('Confirm Password')}<input class="input" type="password" value="********"></div>
+        <div style="grid-column:1 / -1">${lbl('Company Name')}<input class="input" value="Startup Colorbox"></div></div>`;
+      else if (cur.k==='business') form = `<div class="form-grid-2">
+        <div>${lbl('Legal Entity Name')}<input class="input" value="PT Amburan Jakarta"></div>
+        <div>${lbl('Industry')}<select class="select"><option>Tourism and Hospitality</option><option>Technology</option><option>Retail</option></select></div>
+        <div>${lbl('Company Size')}<select class="select"><option>11 - 50</option><option>1 - 10</option><option>51 - 200</option></select></div>
+        <div>${lbl('Website',1)}<input class="input" value="startupcolorbox.com"></div>
+        <div style="grid-column:1 / -1">${lbl('About the Company',1)}<textarea class="input" rows="3">ASEAN-focused hospitality recruitment.</textarea></div></div>`;
+      else if (cur.k==='rep') form = `<div class="form-grid-2">
+        <div>${lbl('PIC Full Name')}<input class="input" value="Faiz Fadhillah"></div>
+        <div>${lbl('Role / Position')}<select class="select"><option>HR Director</option><option>Founder / CEO</option><option>HRD</option></select></div>
+        <div>${lbl('Email')}<input class="input" type="email" value="faiz@startupcolorbox.com"></div>
+        <div>${lbl('Phone')}<input class="input" value="+62 812 0000 0000"></div></div>`;
+      else if (cur.k==='branch') form = `<div class="form-grid-2">
+        <div style="grid-column:1 / -1">${lbl('Headquarters Address')}<input class="input" value="Jl. Sudirman No. 1"></div>
+        <div>${lbl('City')}<input class="input" value="Jakarta"></div>
+        <div>${lbl('Province')}<input class="input" value="DKI Jakarta"></div>
+        <div>${lbl('Postal Code')}<input class="input" value="10220"></div>
+        <div>${lbl('Country')}<select class="select"><option>Indonesia</option><option>Malaysia</option><option>Singapore</option></select></div></div>
+        <button class="btn btn-outline btn-sm" style="margin-top:14px" data-toast="Add another branch — coming soon."><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Branch</button>`;
+      else form = `<p class="muted" style="font-size:13.5px">Invite teammates and assign their seat type. You can skip this and do it later from Team Management.</p>
+        <div class="form-grid-2" style="margin-top:14px">
+          <div>${lbl('Teammate Email',1)}<input class="input" placeholder="name@company.com"></div>
+          <div>${lbl('Seat Type',1)}<select class="select"><option>Full Recruiter Seat</option><option>Department Head Seat</option><option>Member Seat (Free)</option></select></div></div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--blue-soft);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--ink-2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> You start on a 6-day free trial with 10 Full and 2 Dept seats.</div>`;
+      return `
+      <h1 class="page-title">Create your ProConnect account</h1><p class="page-sub">Step ${step+1} of ${REG.length} — ${cur.t}</p>
+      ${stepper}
+      <div class="card card-pad" style="margin-top:18px;max-width:760px">
+        <div class="section-title" style="font-size:16px">${cur.t}</div><p class="muted" style="font-size:13px;margin-top:2px">${cur.d}</p>
+        <div style="height:1px;background:var(--line);margin:16px 0"></div>
+        ${form}
+        <div style="display:flex;gap:12px;justify-content:space-between;margin-top:24px">
+          <button class="btn btn-outline" ${step===0?'disabled':''} id="regBack">Back</button>
+          <button class="btn btn-primary" id="regNext">${step===REG.length-1?'Create Account':'Next'}</button>
+        </div>
+      </div>`;
+    },
     dashboard() {
       const trial = S.plan === 'trial';
       return `
@@ -380,6 +435,7 @@
     { v:'billing', t:'Payment → Billing', d:'Active subscription & invoices' },
   ];
   const PAGES = [
+    { v:'register', t:'Registration (5 steps)' },
     { v:'dashboard', t:'Dashboard — Home' },
     { v:'plan', t:'Plan & Pricing' },
     { v:'order', t:'Order Confirmation' },
@@ -394,7 +450,12 @@
   ];
   function buildDrawer() {
     const b = $('#flowBody'); if (!b) return;
-    let h = '<div class="lbl">Upgrade flow</div>';
+    let h = '<div class="lbl">Registration flow</div>';
+    REG.forEach((r, i) => {
+      h += `<div class="flow-step ${S.view==='register'&&(S.regStep||0)===i?'active':''}" data-reg="${i}"><span class="n">${i+1}</span><div><div class="tt">${r.t}</div><div class="ds">${r.d}</div></div></div>`;
+      if (i < REG.length - 1) h += '<div class="flow-conn"></div>';
+    });
+    h += '<div class="lbl">Upgrade flow</div>';
     FLOW.forEach((f, i) => {
       h += `<div class="flow-step ${S.view===f.v?'active':''}" data-go="${f.v}"><span class="n">${i+1}</span><div><div class="tt">${f.t}</div><div class="ds">${f.d}</div></div></div>`;
       if (i < FLOW.length - 1) h += '<div class="flow-conn"></div>';
@@ -454,6 +515,9 @@
     if (e.target.closest('#confirmCycle')) { S.bought.annual = (modalTmp.cycle === 'yearly'); closeModal(); toast('Billing cycle updated.'); render(); return; }
     const ed = e.target.closest('.ed'); if (ed) { modalTmp = { name: ed.dataset.member, role: ed.dataset.role, status: ed.dataset.status }; openModal('editMember'); return; }
     if (e.target.closest('#saveMember')) { closeModal(); toast('Member updated.'); render(); return; }
+    const rg = e.target.closest('[data-reg]'); if (rg) { S.regStep = +rg.dataset.reg; go('register'); if (window.innerWidth < 900) openDrawer(false); return; }
+    if (e.target.closest('#regBack')) { S.regStep = Math.max(0, (S.regStep||0) - 1); render(); return; }
+    if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regStep = 0; toast('Account created — welcome to ProConnect.'); go('dashboard'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
     if (e.target.closest('[data-mclose]') || e.target.classList.contains('overlay')) { closeModal(); return; }
 
     // drawer
@@ -488,4 +552,19 @@
   const start = location.hash.replace('#','');
   S.view = Views[start] ? start : 'dashboard';
   render();
+
+  /* ===================== TRIAL COUNTDOWN ===================== */
+  const TRIAL_END = Date.now() + ((6 * 24 + 23) * 3600 * 1000) + 59 * 60000;
+  const pad = (n) => (n < 10 ? '0' + n : '' + n);
+  function updateCountdown() {
+    let ms = TRIAL_END - Date.now(); if (ms < 0) ms = 0;
+    const d = Math.floor(ms / 86400000), h = Math.floor(ms % 86400000 / 3600000),
+          m = Math.floor(ms % 3600000 / 60000), s = Math.floor(ms % 60000 / 1000);
+    const cd = document.getElementById('trialCountdown');
+    const sd = document.getElementById('trialSide');
+    if (cd) cd.textContent = ms <= 0 ? 'expired' : `${d}D ${pad(h)}H ${pad(m)}M ${pad(s)}S`;
+    if (sd) sd.textContent = ms <= 0 ? 'Your free trial has ended' : `Your trial ends in ${d}d ${pad(h)}h ${pad(m)}m`;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 })();

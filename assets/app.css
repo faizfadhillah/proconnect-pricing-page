@@ -315,3 +315,16 @@ table.tbl tr:last-child td { border-bottom: none; }
   .sidebar { transition: width .2s ease, padding .2s ease; }
   .app-body.sb-hidden .sidebar { width: 0; padding-left: 0; padding-right: 0; overflow: hidden; border-right: none; }
 }
+
+/* ---------- Registration stepper ---------- */
+.reg-stepper { display:flex; align-items:center; gap:6px; margin-top:18px; overflow-x:auto; padding-bottom:6px; }
+.reg-step { display:flex; align-items:center; gap:8px; cursor:pointer; white-space:nowrap; flex:none; }
+.reg-step .rn { width:26px; height:26px; border-radius:50%; border:1.5px solid var(--line); display:inline-flex; align-items:center; justify-content:center; font:700 12px 'Montserrat'; color:var(--muted); background:#fff; flex:none; }
+.reg-step .rl { font-size:13px; font-weight:600; color:var(--muted); }
+.reg-step.active .rn { border-color:var(--blue); background:var(--blue); color:#fff; }
+.reg-step.active .rl { color:var(--ink); }
+.reg-step.done .rn { border-color:var(--green); background:var(--green); color:#fff; }
+.reg-step.done .rl { color:var(--ink); }
+.reg-line { flex:1; min-width:16px; height:2px; background:var(--line); }
+/* header user avatar */
+.top-avatar { width:34px; height:34px; border-radius:50%; object-fit:cover; margin-left:10px; border:1px solid var(--line); }
