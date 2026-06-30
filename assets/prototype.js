@@ -413,6 +413,7 @@
     $('.side-trial').style.display = active ? 'none' : '';
     $('#seatBadge').textContent = active ? 'Full Seats' : 'Member Seats';
     $('#seatBadge').className = 'badge ' + (active ? 'badge-blue' : 'badge-gray');
+    const pb = document.getElementById('planBadge'); if (pb) pb.textContent = active ? 'Full Seats' : 'Free Seats';
     document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === S.view));
   }
   function render() {
