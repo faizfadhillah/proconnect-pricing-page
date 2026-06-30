@@ -15,12 +15,11 @@
   ];
   const DISC = 0.10; // annual save 10%
   const REG = [
-    { k:'account',  t:'Create Account',        d:'Email, password and company' },
-    { k:'business', t:'Business Profile',       d:'Company details and industry' },
-    { k:'rep',      t:'Company Representative',  d:'PIC name, role and contact' },
-    { k:'branch',   t:'HQ & Branch Info',        d:'Headquarters and branches' },
-    { k:'team',     t:'Team Setup',              d:'Invite members and assign seats' },
-  ];
+    { k:'business', t:'Business Profile Details',           d:'Tell us about your company so we can set up your profile.' },
+    { k:'rep',      t:'Company Representative Info',          d:"Provide your information as the company's point of contact." },
+    { k:'branch',   t:'Headquarters and Branch Information',  d:"Please enter the details of your company's headquarters and branches." },
+    { k:'team',     t:'Team Management',                      d:'Add, edit and manage your team members and their roles.' },
+  ];;
 
   const S = {
     view: 'dashboard', cur: CUR[0], full: 0, dept: 0, annual: false, curOpen: false, regStep: 0,
@@ -55,52 +54,78 @@
     register() {
       const step = S.regStep || 0;
       const cur = REG[step];
-      const lbl = (t,o) => `<label style="display:block;font-size:13px;font-weight:600;color:var(--ink);margin:0 0 6px">${t}${o?'':'<span style="color:#ef4444"> *</span>'}</label>`;
-      const stepper = `<div class="reg-stepper">${REG.map((r,i)=>`<div class="reg-step ${i===step?'active':''} ${i<step?'done':''}" data-reg="${i}"><span class="rn">${i<step?'✓':i+1}</span><span class="rl">${r.t}</span></div>${i<REG.length-1?'<span class="reg-line"></span>':''}`).join('')}</div>`;
-      let form = '';
-      if (cur.k==='account') form = `<div class="form-grid-2">
-        <div>${lbl('Full Name')}<input class="input" value="Faiz Fadhillah"></div>
-        <div>${lbl('Work Email')}<input class="input" type="email" value="faiz@startupcolorbox.com"></div>
-        <div>${lbl('Password')}<input class="input" type="password" value="********"></div>
-        <div>${lbl('Confirm Password')}<input class="input" type="password" value="********"></div>
-        <div style="grid-column:1 / -1">${lbl('Company Name')}<input class="input" value="Startup Colorbox"></div></div>`;
-      else if (cur.k==='business') form = `<div class="form-grid-2">
-        <div>${lbl('Legal Entity Name')}<input class="input" value="PT Amburan Jakarta"></div>
-        <div>${lbl('Industry')}<select class="select"><option>Tourism and Hospitality</option><option>Technology</option><option>Retail</option></select></div>
-        <div>${lbl('Company Size')}<select class="select"><option>11 - 50</option><option>1 - 10</option><option>51 - 200</option></select></div>
-        <div>${lbl('Website',1)}<input class="input" value="startupcolorbox.com"></div>
-        <div style="grid-column:1 / -1">${lbl('About the Company',1)}<textarea class="input" rows="3">ASEAN-focused hospitality recruitment.</textarea></div></div>`;
-      else if (cur.k==='rep') form = `<div class="form-grid-2">
-        <div>${lbl('PIC Full Name')}<input class="input" value="Faiz Fadhillah"></div>
-        <div>${lbl('Role / Position')}<select class="select"><option>HR Director</option><option>Founder / CEO</option><option>HRD</option></select></div>
-        <div>${lbl('Email')}<input class="input" type="email" value="faiz@startupcolorbox.com"></div>
-        <div>${lbl('Phone')}<input class="input" value="+62 812 0000 0000"></div></div>`;
-      else if (cur.k==='branch') form = `<div class="form-grid-2">
-        <div style="grid-column:1 / -1">${lbl('Headquarters Address')}<input class="input" value="Jl. Sudirman No. 1"></div>
-        <div>${lbl('City')}<input class="input" value="Jakarta"></div>
-        <div>${lbl('Province')}<input class="input" value="DKI Jakarta"></div>
-        <div>${lbl('Postal Code')}<input class="input" value="10220"></div>
-        <div>${lbl('Country')}<select class="select"><option>Indonesia</option><option>Malaysia</option><option>Singapore</option></select></div></div>
-        <button class="btn btn-outline btn-sm" style="margin-top:14px" data-toast="Add another branch — coming soon."><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Branch</button>`;
-      else form = `<p class="muted" style="font-size:13.5px">Invite teammates and assign their seat type. You can skip this and do it later from Team Management.</p>
-        <div class="form-grid-2" style="margin-top:14px">
-          <div>${lbl('Teammate Email',1)}<input class="input" placeholder="name@company.com"></div>
-          <div>${lbl('Seat Type',1)}<select class="select"><option>Full Recruiter Seat</option><option>Department Head Seat</option><option>Member Seat (Free)</option></select></div></div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--blue-soft);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--ink-2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> You start on a 6-day free trial with 10 Full and 2 Dept seats.</div>`;
+      const eIc = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
+      const tIc = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+      const userIc = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>';
+      const calIc = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+      const searchIc = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#929393" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>';
+      const F = (label, ctrl, req, hint) => `<div class="reg-field"><label class="reg-lab">${label}${req?'<span class="req"> *</span>':''}</label>${ctrl}${hint?`<div class="reg-hint">${hint}</div>`:''}</div>`;
+      const inp = (ph, val) => `<input class="input" placeholder="${ph}" value="${val||''}">`;
+      const sel = (ph, arr) => `<select class="select"><option value="" disabled selected hidden>${ph}</option>${arr.map(o=>`<option>${o}</option>`).join('')}</select>`;
+      const ta = (ph) => `<textarea class="input" rows="3" placeholder="${ph}"></textarea>`;
+      const upload = (btn) => `<div class="reg-upload"><span class="reg-up-ph">${userIc}</span><div><button class="btn btn-outline btn-sm" data-toast="Photo upload — coming soon.">${btn}</button><div class="reg-hint" style="margin-top:6px">Size recommendation: 400 x 400px</div></div></div>`;
+      const verify = (ph) => `<div class="reg-verify">${inp(ph)}<button class="reg-verify-btn" data-toast="Verification link sent.">Verify</button></div>`;
+      const steps = `<div class="reg-vsteps">${REG.map((r,i)=>`<div class="reg-vstep ${i===step?'active':''} ${i<step?'done':''}" data-reg="${i}"><span class="rn">${i<step?'✓':i+1}</span><span class="rl">${r.t}</span></div>`).join('')}</div>`;
+      let headAction = '', form = '';
+      if (cur.k==='business') form = `
+        ${upload('Upload Company Photo')}
+        ${F('Brand Name', inp('Your brand name, ie. ABC Hotel'), true)}
+        ${F('Branch', inp('Please state your branch name'), true)}
+        ${F('Company Name', inp('Your company name, ie. PT ABC'), true)}
+        ${F('Industry', sel('Choose one that suits your company the most',['Tourism and Hospitality','Technology','Retail','Finance','Manufacturing']), true)}
+        ${F('Company Description', ta('Explain about your company'), true)}
+        ${F('Organization Type', sel('What is your organization type?',['Private','Government','NGO','Startup']))}
+        ${F('Organization Size', sel('What is your organization size?',['1 - 10','11 - 50','51 - 200','200+']))}
+        ${F('List of Department', sel('Select your Department',['HRD','Finance','IT','Marketing','Legal','Operation']))}
+        ${F('Tagline', inp('Describe your company motto / tagline'))}
+        ${F('Location', ta('Please state your address, city, and postal code (optional)'))}
+        ${F('NPWP / TIN Number', inp('Input your NPWP / Tax ID Number (optional)'))}
+        ${F('Upload Document NPWP / TIN Number', `<div class="reg-upload-row"><input class="input" placeholder="Upload your NPWP / Tax ID Number (optional)" readonly><button class="btn btn-outline btn-sm" data-toast="Upload — coming soon.">Upload</button></div>`)}
+        ${F('Company Website', inp('Input your website (without https)'))}
+        ${F('Company Email', verify('Input your general email address (optional)'))}
+        ${F('Company Phone', verify('Input your general phone number (optional)'))}
+        ${F('Status', `<input class="input" value="Unverified" readonly style="background:var(--bg);color:var(--muted)">`)}`;
+      else if (cur.k==='rep') form = `
+        ${upload('Upload Photo')}
+        ${F('Full Name', inp('Input your full name'), true, 'Please use first letter capital')}
+        ${F('Gender', sel('Select your Gender',['Male','Female','Prefer not to say']), true)}
+        ${F('Date of Birth', `<div class="reg-verify">${inp('Select date of birth')}<span class="reg-cal">${calIc}</span></div>`, true)}
+        ${F('Email', inp('Input email','bambang@seruam.com'), true)}
+        ${F('Phone Number', inp('Input phone number'), true)}
+        <div class="reg-field" style="display:flex;align-items:center;gap:12px"><label class="switch"><input type="checkbox"><span class="slider"></span></label><span style="font-weight:600;font-size:14px">Outside Indonesia?</span></div>
+        ${F('City', sel('Select city',['Jakarta','Bandung','Surabaya','Semarang','Malang']), true)}
+        ${F('Postal Code', inp('Input postal code'), true)}
+        ${F('Location', ta('Please state your address, city, and postal code (optional)'))}`;
+      else if (cur.k==='branch') { headAction = `<button class="btn btn-outline btn-sm" data-toast="Add branch — coming soon."><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Branch</button>`;
+        form = `
+        <div class="toolbar" style="margin:18px 0 14px"><div class="search">${searchIc}<input placeholder="Search name or email..."></div><select class="select" style="width:auto;min-width:190px"><option>Select Department</option><option>HRD</option><option>Finance</option><option>IT</option></select><button class="btn btn-outline btn-sm" data-toast="Filter applied.">Apply</button></div>
+        <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Branch</th><th>Department</th><th>Location</th><th>Email</th><th>Phone Number</th><th style="text-align:right">Action</th></tr></thead><tbody>
+          <tr><td>1</td><td>Headquarter</td><td style="font-size:12.5px;color:var(--muted)">Maintenance, IT, HRD, Marketing, Finance, Legal, Operation</td><td>Jakarta, Indonesia</td><td>info@seruam.com</td><td>081234567890</td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${eIc}</button><button title="Delete">${tIc}</button></div></td></tr>
+        </tbody></table></div>`;
+      }
+      else { headAction = `<button class="btn btn-outline btn-sm" id="addTeam"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Team Member</button>`;
+        const tm = [['Bambang Setiawan','bambang@seruam.com','Headquarters','Human Resource','HRD (Owner)','HRD HQ','Active'],['Brooklyn Simmons','brocklyns@seruam.com','Malaysia','Human Resource','HRD','PIC Branch','Active'],['Cody Fisher','codyf@seruam.com','Bandung','IT','Backend','HRD Branch','Active']];
+        form = `
+        <div class="toolbar" style="margin:18px 0 14px"><div class="search">${searchIc}<input placeholder="Search name or email..."></div><select class="select" style="width:auto;min-width:160px"><option>Select Branch</option></select><select class="select" style="width:auto;min-width:150px"><option>Select Role</option></select><button class="btn btn-outline btn-sm" data-toast="Filter applied.">Apply</button></div>
+        <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Name</th><th>Branch</th><th>Departement</th><th>Job Title</th><th>Role</th><th>Role Status</th><th style="text-align:right">Action</th></tr></thead><tbody>
+          ${tm.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><img class="avatar" src="assets/avatar-user.jpg" alt=""><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}</td><td>${m[3]}</td><td>${m[4]}</td><td>${m[5]}</td><td><span class="badge badge-blue">✓ ${m[6]}</span></td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${eIc}</button><button title="Delete">${tIc}</button></div></td></tr>`).join('')}
+        </tbody></table></div>`;
+      }
       return `
-      <h1 class="page-title">Create your ProConnect account</h1><p class="page-sub">Step ${step+1} of ${REG.length} — ${cur.t}</p>
-      ${stepper}
-      <div class="card card-pad" style="margin-top:18px;max-width:760px">
-        <div class="section-title" style="font-size:16px">${cur.t}</div><p class="muted" style="font-size:13px;margin-top:2px">${cur.d}</p>
-        <div style="height:1px;background:var(--line);margin:16px 0"></div>
-        ${form}
-        <div style="display:flex;gap:12px;justify-content:space-between;margin-top:24px">
-          <button class="btn btn-outline" ${step===0?'disabled':''} id="regBack">Back</button>
-          <button class="btn btn-primary" id="regNext">${step===REG.length-1?'Create Account':'Next'}</button>
+      <div class="reg-wrap">
+        ${steps}
+        <div class="card card-pad">
+          <div class="between" style="align-items:flex-start"><div><div class="section-title" style="font-size:18px">${cur.t}</div><p class="muted" style="font-size:13px;margin-top:4px">${cur.d}</p></div>${headAction}</div>
+          <div style="height:1px;background:var(--line);margin:18px 0"></div>
+          ${form}
         </div>
+      </div>
+      <div class="reg-foot">
+        <button class="btn btn-outline" ${step===0?'disabled':''} id="regBack">Back</button>
+        <button class="btn btn-primary" id="regNext">${step===REG.length-1?'Finish':'Next'}</button>
       </div>`;
     },
-    dashboard() {
+        dashboard() {
       const trial = S.plan === 'trial';
       return `
       <h1 class="page-title">Hello Faiz</h1><p class="page-sub">Get Started Finding Something</p>
@@ -391,6 +416,24 @@
           <div>${lbl('Status')}<select class="select">${opt('Active',m.status)}${opt('Non Active',m.status==='Active'?'Active':'Non Active')}</select></div>
         </div>
         <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn btn-primary" id="saveMember">Save Changes</button></div></div>`;
+    } else if (kind === 'addTeam') {
+      const F = (label, ctrl, req, hint) => `<div class="reg-field"><label class="reg-lab">${label}${req?'<span class="req"> *</span>':''}</label>${ctrl}${hint?`<div class="reg-hint">${hint}</div>`:''}</div>`;
+      const inp = (ph) => `<input class="input" placeholder="${ph}">`;
+      const sel = (ph,arr) => `<select class="select"><option value="" disabled selected hidden>${ph}</option>${arr.map(o=>`<option>${o}</option>`).join('')}</select>`;
+      const cal = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+      html = `<div class="modal modal-pad" style="max-width:520px"><div class="modal-head"><h3>Add Team Member</h3><button class="modal-close" data-mclose>×</button></div>
+        <div style="margin-top:16px">
+        ${F('Full Name', inp('Input your full name'), true, 'Please use first letter capital')}
+        ${F('Gender', sel('Select your gender',['Male','Female','Prefer not to say']), true)}
+        ${F('Date of Birth', `<div class="reg-verify">${inp('Select date of birth')}<span class="reg-cal">${cal}</span></div>`, true)}
+        ${F('Email', inp('Input email'), true)}
+        ${F('Phone Number', inp('Input phone number'), true)}
+        <div class="reg-field" style="display:flex;align-items:center;gap:12px"><label class="switch"><input type="checkbox"><span class="slider"></span></label><span style="font-weight:600;font-size:14px">Outside Indonesia?</span></div>
+        ${F('City', sel('Select city',['Jakarta','Bandung','Surabaya','Semarang']), true)}
+        ${F('Postal Code', inp('Input postal code'), true)}
+        ${F('Address', `<textarea class="input" rows="3" placeholder="Please state your address, city, and postal code (optional)"></textarea>`)}
+        </div>
+        <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn btn-primary" id="saveTeam">Add Member</button></div></div>`;
     }
     $('#modalRoot').innerHTML = `<div class="overlay">${html}</div>`;
   }
@@ -409,7 +452,9 @@
   /* ===================== ROUTER / RENDER ===================== */
   function syncChrome() {
     const active = S.plan === 'active';
-    $('#trialBanner').style.display = active ? 'none' : '';
+    const reg = S.view === 'register';
+    document.querySelector('.app-body').classList.toggle('reg-mode', reg);
+    $('#trialBanner').style.display = (active || reg) ? 'none' : '';
     $('.side-trial').style.display = active ? 'none' : '';
     $('#seatBadge').textContent = active ? 'Full Seats' : 'Member Seats';
     $('#seatBadge').className = 'badge ' + (active ? 'badge-blue' : 'badge-gray');
@@ -436,7 +481,7 @@
     { v:'billing', t:'Payment → Billing', d:'Active subscription & invoices' },
   ];
   const PAGES = [
-    { v:'register', t:'Registration (5 steps)' },
+    { v:'register', t:'Registration (4 steps)' },
     { v:'dashboard', t:'Dashboard — Home' },
     { v:'plan', t:'Plan & Pricing' },
     { v:'order', t:'Order Confirmation' },
@@ -518,7 +563,9 @@
     if (e.target.closest('#saveMember')) { closeModal(); toast('Member updated.'); render(); return; }
     const rg = e.target.closest('[data-reg]'); if (rg) { S.regStep = +rg.dataset.reg; go('register'); if (window.innerWidth < 900) openDrawer(false); return; }
     if (e.target.closest('#regBack')) { S.regStep = Math.max(0, (S.regStep||0) - 1); render(); return; }
-    if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regStep = 0; toast('Account created — welcome to ProConnect.'); go('dashboard'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
+    if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regStep = 0; toast('Registration complete — welcome to ProConnect.'); go('dashboard'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
+    if (e.target.closest('#addTeam')) { openModal('addTeam'); return; }
+    if (e.target.closest('#saveTeam')) { closeModal(); toast('Team member added.'); return; }
     if (e.target.closest('[data-mclose]') || e.target.classList.contains('overlay')) { closeModal(); return; }
 
     // drawer
