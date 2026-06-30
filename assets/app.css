@@ -289,3 +289,23 @@ table.tbl tr:last-child td { border-bottom: none; }
   .page-title { font-size: 20px; }
   .stat-card .value { font-size: 22px; }
 }
+
+/* ---------- Plan calculator (two-column) ---------- */
+.calc-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-top:28px; flex-wrap:wrap; }
+.calc-cur-row { display:flex; align-items:center; gap:10px; }
+.calc-cur-label { font-size:13.5px; font-weight:600; color:var(--ink); white-space:nowrap; }
+.calc-cur-row .cur-select { min-width:236px; }
+.calc-grid { display:grid; grid-template-columns:1fr 360px; gap:20px; align-items:start; margin-top:16px; }
+.calc-grid .summary { margin-top:0; position:sticky; top:84px; }
+.calc-left .seatpick:first-child { margin-top:0; }
+.cur-menu .cur-search { gap:8px; padding:4px 6px 8px !important; cursor:default; position:sticky; top:0; background:#fff; }
+.cur-menu .cur-search:hover { background:#fff; }
+.cur-search input { flex:1; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font:500 13.5px 'Montserrat'; outline:none; color:var(--ink); }
+.cur-search input:focus { border-color:var(--blue); }
+@media (max-width:900px) {
+  .calc-head { flex-direction:column; }
+  .calc-cur-row { width:100%; }
+  .calc-cur-row .cur-select { flex:1; }
+  .calc-grid { grid-template-columns:1fr; }
+  .calc-grid .summary { position:static; }
+}

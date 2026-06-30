@@ -48,7 +48,7 @@
     dashboard() {
       const trial = S.plan === 'trial';
       return `
-      <h1 class="page-title">Hello Arufa</h1><p class="page-sub">Get Started Finding Something</p>
+      <h1 class="page-title">Hello Faiz</h1><p class="page-sub">Get Started Finding Something</p>
       <div class="stat-grid" style="margin-top:22px">
         <div class="stat-card"><div class="label">Total Country</div><div class="value">2</div></div>
         <div class="stat-card"><div class="label">Total Branch</div><div class="value">2</div></div>
@@ -110,33 +110,40 @@
         <ul class="flist"><li class="y">Post for own department only</li><li class="y">View department applicants</li><li class="n">No branch-management</li></ul>
       </div>
 
-      <h2 class="section-title" style="margin-top:28px">Calculate Your Monthly Cost</h2>
-      <p class="muted" style="font-size:13.5px;margin-top:4px">Estimate your investment based on your team size</p>
-      <label class="field-label" style="display:block;font-size:13px;color:var(--muted);margin:16px 0 8px">Currency</label>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="cur-select ${S.curOpen?'open':''}" id="curSelect" style="flex:1">
-          <button class="cur-trigger" id="curTrigger"><span class="flag">${S.cur.flag}</span><span>${S.cur.name}</span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-          <ul class="cur-menu">${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>${c.name}</span><span class="code">${c.code}</span></li>`).join('')}</ul>
+      <div class="calc-head">
+        <div><h2 class="section-title">Calculate Your Monthly Cost</h2><p class="muted" style="font-size:13.5px;margin-top:4px">Select country first to apply seats, it's to effect to price</p></div>
+        <div class="calc-cur-row">
+          <span class="calc-cur-label">Currency :</span>
+          <div class="cur-select ${S.curOpen?'open':''}" id="curSelect">
+            <button class="cur-trigger" id="curTrigger"><span class="flag">${S.cur.flag}</span><span>(${S.cur.code}) ${S.cur.name}</span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <ul class="cur-menu">
+              <li class="cur-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#929393" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="curSearch" placeholder="Search here..." autocomplete="off"></li>
+              ${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>(${c.code}) ${c.name}</span></li>`).join('')}
+            </ul>
+          </div>
+          <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes and purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
         </div>
-        <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes & purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
       </div>
-      ${curItem('Full Recruiter Seats','full','full', money(S.cur,S.cur.full))}
-      ${curItem('Department Seats','dept','dept', money(S.cur,S.cur.dept))}
-      <div class="seatpick" style="background:#f9fafb">${seatTile('member')}<div class="info"><b>Member Seats</b><span class="per">FREE</span></div><span class="unlimited">Unlimited</span></div>
-
-      <div class="summary">
-        <h3>Calculation Summary</h3><p class="sub">This calculation works on all type seats</p>
-        <div class="seats"><div><span class="lbl">Full seats</span><div class="val">${S.full} seats</div></div><div><span class="lbl">Dept seats</span><div class="val">${S.dept} seats</div></div></div>
-        <div class="total"><span class="cur">${S.cur.code}</span><span class="amt">${fmt(total,S.cur.sep)}</span><span class="mo">/mo</span></div>
-        <div class="tog"><span class="save-badge" ${S.annual?'':'hidden'}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save 10%</span><label class="switch"><input type="checkbox" id="annual" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px">Annual</span></div>
-        <button class="btn btn-primary btn-block btn-lg" style="margin-top:18px" id="planUpgrade">Upgrade Now</button>
+      <div class="calc-grid">
+        <div class="calc-left">
+          ${curItem('Full Recruiter Seats','full','full', money(S.cur,S.cur.full))}
+          ${curItem('Department Seats','dept','dept', money(S.cur,S.cur.dept))}
+          <div class="seatpick" style="background:var(--bg)">${seatTile('member')}<div class="info"><b>Member Seats</b><span class="per">FREE</span></div><span class="unlimited">Unlimited</span></div>
+        </div>
+        <div class="summary">
+          <h3>Calculation Summary</h3><p class="sub">This calculation works on all type seats</p>
+          <div class="seats"><div><span class="lbl">Full seats</span><div class="val">${S.full} seats</div></div><div><span class="lbl">Dept seats</span><div class="val">${S.dept} seats</div></div></div>
+          <div class="total"><span class="cur">${S.cur.code}</span><span class="amt">${fmt(total,S.cur.sep)}</span><span class="mo">/mo</span></div>
+          <div class="tog"><span class="save-badge" ${S.annual?'':'hidden'}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save 10%</span><label class="switch"><input type="checkbox" id="annual" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px">Annual</span></div>
+          <button class="btn btn-primary btn-block btn-lg" style="margin-top:18px" id="planUpgrade">Upgrade Now</button>
+        </div>
       </div>
 
-      <div class="card" style="margin-top:22px;padding:6px"><div class="table-wrap"><table class="tbl" style="min-width:480px"><thead><tr><th>Feature</th><th>Free Account</th><th>Full Recruiter</th><th>Dept Head</th></tr></thead><tbody>
-        ${[['Business Profile','—','✓','✓'],['HQ & Branch Info','—','✓','HQ only'],['Team Management','—','✓','—'],['Find Candidate','—','✓','Dept only'],['Job Posting','—','All depts','Own dept'],['Support Level','Email','Priority','Email']].map(r=>`<tr><td>${r[0]}</td><td style="text-align:center">${cell(r[1])}</td><td style="text-align:center">${cell(r[2])}</td><td style="text-align:center">${cell(r[3])}</td></tr>`).join('')}
+      <div class="card" style="margin-top:22px;padding:6px"><div class="table-wrap"><table class="tbl" style="min-width:560px"><thead><tr><th>Feature</th><th style="text-align:center">Free Seats</th><th style="text-align:center">Dept Seat</th><th style="text-align:center">Full Seat</th></tr></thead><tbody>
+        ${[['Business Profile','—','—','✓'],['Comp Rep','—','—','✓'],['HQ & Branch Management','—','—','✓'],['Team Management','Self','Same Department Only','All Departments'],['Manage Jobs','—','✓','✓'],['Find Candidate','—','✓','✓'],['Manage Profile','✓','✓','✓'],['Job Posting','—','Unlimited','Unlimited'],['Type Profile','—','Department Profile','All Profile'],['Type Branch','—','Dept List','HQ & Branch List'],['Support Level','Email','Email','Priority 24/7']].map(r=>`<tr><td>${r[0]}</td><td style="text-align:center">${cell(r[1])}</td><td style="text-align:center">${cell(r[2])}</td><td style="text-align:center">${cell(r[3])}</td></tr>`).join('')}
       </tbody></table></div></div>
 
-      <div class="card" style="margin-top:22px;background:var(--blue);color:#fff;text-align:center;padding:26px 22px;border:none">
+      <div class="card" style="margin-top:22px;background:linear-gradient(135deg,#1560bd 0%,#042648 100%);color:#fff;text-align:center;padding:30px 22px;border:none">
         <h2 style="font-size:19px;font-weight:700">Need a custom solution?</h2><p style="font-size:13.5px;margin-top:8px;opacity:.92">Contact our sales team for enterprise-grade features and custom billing options.</p>
         <button class="btn btn-white" style="margin-top:16px" data-toast="Our sales team will be in touch shortly.">Contact Now</button>
       </div>
@@ -413,6 +420,15 @@
     if (e.target.closest('#flowTab')) { openDrawer(true); return; }
     if (e.target.closest('#flowClose') || e.target.closest('#flowOverlay')) { openDrawer(false); return; }
     const dm = e.target.closest('[data-modal]'); if (dm) { openDrawer(false); go(dm.dataset.modal === 'moveSeat' ? 'staff' : (dm.dataset.modal === 'cancel' || dm.dataset.modal === 'editSeats' ? 'billing' : S.view)); openModal(dm.dataset.modal, dm.dataset.ctx || 'Cody Fisher'); return; }
+  });
+
+  document.addEventListener('input', (e) => {
+    if (e.target.id === 'curSearch') {
+      const q = e.target.value.trim().toLowerCase();
+      document.querySelectorAll('.cur-menu li[data-cur]').forEach(li => {
+        li.style.display = li.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
   });
 
   // toggles (change event)
