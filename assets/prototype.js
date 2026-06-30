@@ -18,7 +18,7 @@
     { k:'business', t:'Business Profile Details',           d:'Tell us about your company so we can set up your profile.' },
     { k:'rep',      t:'Company Representative Info',          d:"Provide your information as the company's point of contact." },
     { k:'branch',   t:'Headquarters and Branch Information',  d:"Please enter the details of your company's headquarters and branches." },
-    { k:'team',     t:'Team Management',                      d:'Add, edit and manage your team members and their roles.' },
+    { k:'team',     t:'Team Management',                      d:'Add, edit, and manage your team members information and roles. You can invite new staff and update existing member details anytime.' },
   ];;
 
   const S = {
@@ -104,13 +104,28 @@
           <tr><td>1</td><td>Headquarter</td><td style="font-size:12.5px;color:var(--muted)">Maintenance, IT, HRD, Marketing, Finance, Legal, Operation</td><td>Jakarta, Indonesia</td><td>info@seruam.com</td><td>081234567890</td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${eIc}</button><button title="Delete">${tIc}</button></div></td></tr>
         </tbody></table></div>`;
       }
-      else { headAction = `<button class="btn btn-outline btn-sm" id="addTeam"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Team Member</button>`;
-        const tm = [['Bambang Setiawan','bambang@seruam.com','Headquarters','Human Resource','HRD (Owner)','HRD HQ','Active'],['Brooklyn Simmons','brocklyns@seruam.com','Malaysia','Human Resource','HRD','PIC Branch','Active'],['Cody Fisher','codyf@seruam.com','Bandung','IT','Backend','HRD Branch','Active']];
+      else {
+        headAction = `<button class="btn btn-outline btn-sm" id="addTeam"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Invite New Member</button>`;
+        const mvIc2 = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3 3-5 6-5"/><polyline points="16 11 19 14 16 17"/><line x1="13" y1="14" x2="19" y2="14"/></svg>';
+        const rb = { owner:'badge-red', hrd:'badge-blue', member:'badge-gray' };
+        const tm = [
+          ['Bambang Setiawan','bambang@seruam.com','Headquarters','Human Resource','HRD','owner','Owner'],
+          ['Brooklyn Simmons','brocklyns@seruam.com','Bandung','Human Resource','HRD','hrd','HRD'],
+          ['Cody Fisher','codyf@seruam.com','Bandung','IT','Backend','member','Member'],
+          ['Avery Johnson','averyj@seruam.com','Bandung','Finance','Accounting','member','Member'],
+          ['Taylor Martinez','taylorm@seruam.com','Bandung','IT','IT Support','member','Member'],
+          ['Riley Patel','rileyp@seruam.com','Bandung','Support','Customer Service','member','Member'],
+          ['Peyton Robinson','peytonr@seruam.com','Bandung','Legal','Legal','member','Member'],
+          ['Jamie Garcia','jamie@seruam.com','Bandung','Research','Business Analysis','member','Member'],
+          ['Quinn Adams','quinna@seriuam.com','Bandung','IT','Quality Assurance','member','Member'],
+          ['Ashley Torres','ashleyt@seriuam.com','Bandung','IT','Web Development','member','Member'],
+        ];
         form = `
-        <div class="toolbar" style="margin:18px 0 14px"><div class="search">${searchIc}<input placeholder="Search name or email..."></div><select class="select" style="width:auto;min-width:160px"><option>Select Branch</option></select><select class="select" style="width:auto;min-width:150px"><option>Select Role</option></select><button class="btn btn-outline btn-sm" data-toast="Filter applied.">Apply</button></div>
-        <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Name</th><th>Branch</th><th>Departement</th><th>Job Title</th><th>Role</th><th>Role Status</th><th style="text-align:right">Action</th></tr></thead><tbody>
-          ${tm.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><img class="avatar" src="assets/p${(i%6)+1}.jpg" alt=""><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}</td><td>${m[3]}</td><td>${m[4]}</td><td>${m[5]}</td><td><span class="badge badge-blue">✓ ${m[6]}</span></td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${eIc}</button><button title="Delete">${tIc}</button></div></td></tr>`).join('')}
-        </tbody></table></div>`;
+        <div class="toolbar" style="margin:18px 0 14px"><div class="search">${searchIc}<input placeholder="Search name or email..."></div><select class="select" style="width:auto;min-width:170px"><option>Select Branch</option><option>Headquarters</option><option>Bandung</option><option>Malaysia</option></select><select class="select" style="width:auto;min-width:150px"><option>Select Role</option><option>Owner</option><option>HRD</option><option>Member</option></select><button class="btn btn-outline btn-sm" data-toast="Filter applied.">Apply</button></div>
+        <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Name</th><th>Email</th><th>Branch</th><th>Departement</th><th>Job Title</th><th>Role</th><th style="text-align:right">Action</th></tr></thead><tbody>
+          ${tm.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><img class="avatar" src="assets/p${(i%6)+1}.jpg" alt=""><div class="nm">${m[0]}${i===0?' (you)':''}</div></div></td><td>${m[1]}</td><td>${m[2]}</td><td>${m[3]}</td><td>${m[4]}</td><td><span class="badge ${rb[m[5]]}">${m[6]}</span></td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${eIc}</button>${i===0?`<button title="Manage seat">${mvIc2}</button>`:`<button title="Delete">${tIc}</button>`}</div></td></tr>`).join('')}
+        </tbody></table></div>
+        <div class="between" style="margin-top:18px"><div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">Item Per page <select class="select" style="width:auto;padding:6px 30px 6px 12px"><option>10</option><option>25</option><option>50</option></select></div><div class="pager"><button>«</button><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>…</button><button>99</button><button>›</button><button>»</button></div></div>`;
       }
       return `
       <div class="reg-wrap">
@@ -123,7 +138,7 @@
       </div>
       <div class="reg-foot">
         <button class="btn btn-outline" ${step===0?'disabled':''} id="regBack">Back</button>
-        <button class="btn btn-primary" id="regNext">${step===REG.length-1?'Finish':'Next'}</button>
+        <button class="btn btn-primary" id="regNext">${step===REG.length-1?'Submit':'Next'}</button>
       </div>`;
     },
         dashboard() {
