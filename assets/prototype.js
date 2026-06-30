@@ -307,7 +307,7 @@
       <div class="grid" style="grid-template-columns:1.35fr 1fr;margin-top:16px;align-items:start">
         <div class="card card-pad">
           <div class="between"><div><div class="section-title" style="font-size:16px">Current Subscription</div><p class="muted" style="font-size:13px;margin-top:2px">${active?'You are currently in Plan':'You are currently in Trial Plan'}</p></div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-outline btn-sm" id="changeCycle">Change Cycle</button>${active?`<button class="btn btn-outline btn-sm" id="editSeats">Edit seats</button>`:`<button class="btn btn-outline btn-sm" data-go="plan">Upgrade <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>`}</div></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-outline btn-sm" id="changeCycle">Change Cycle</button>${active?`<button class="btn btn-outline btn-sm" id="addSeats">Add Seats</button><button class="btn btn-outline btn-sm" id="removeSeats">Remove Seats</button>`:`<button class="btn btn-outline btn-sm" data-go="plan">Upgrade <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>`}</div></div>
           <div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap">
             <div style="flex:1;min-width:170px;background:var(--bg);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px">${seatTile('full',42)}<div><b style="font-size:15px">Full Seats</b><div class="muted" style="font-size:12px;margin-top:2px">${active?b.full:0} seats</div></div><b style="margin-left:auto;font-size:14px">${active?Math.max(0,b.full-(b.full?4:0)):0} Avail</b></div>
             <div style="flex:1;min-width:170px;background:var(--bg);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px">${seatTile('dept',42)}<div><b style="font-size:15px">Dept Seats</b><div class="muted" style="font-size:12px;margin-top:2px">${active?b.dept:0} seats</div></div><b style="margin-left:auto;font-size:14px">${active?Math.max(0,b.dept-(b.dept?1:0)):0} Avail</b></div>
@@ -372,25 +372,31 @@
   let modalTmp = {};
   function openModal(kind, ctx) {
     let html = '';
-    if (kind === 'editSeats' || kind === 'removeSeats') {
+    if (kind === 'addSeats' || kind === 'removeSeats') {
+      const isAdd = kind === 'addSeats';
       modalTmp = { full: S.bought.full, dept: S.bought.dept };
       const avF = Math.max(0, S.bought.full - (S.bought.full ? 4 : 0));
       const avD = Math.max(0, S.bought.dept - (S.bought.dept ? 1 : 0));
-      const canRemove = modalTmp.full + modalTmp.dept > 0;
-      const banner = kind === 'removeSeats'
-        ? `To remove the seats only for the available seat, please setting your seats member first <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-left:auto"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
-        : `To remove the seats only for the available seat`;
+      const title = isAdd ? 'Add Seats' : 'Remove Seats';
+      const instr = isAdd ? 'Select how many seats to add' : 'Select seats to remove';
+      const canSave = isAdd ? true : (modalTmp.full + modalTmp.dept > 0);
+      const banner = isAdd
+        ? `Add seats to your subscription. You will be charged a prorated amount for the rest of this billing cycle.`
+        : `To remove seats you can only go down to your available (unassigned) seats. Reassign members first if needed.`;
       const seatBox = (kind2, label, av, key, val) => `<div style="flex:1;min-width:0;border:1px solid var(--line);border-radius:14px;padding:14px">
         <div style="display:flex;align-items:center;gap:12px;background:var(--bg);border-radius:10px;padding:12px">${seatTile(kind2,42)}<div><b style="font-size:15px">${label}</b><div class="muted" style="font-size:12.5px;margin-top:2px">${av} Avail</div></div></div>
         <div class="seat-counter-wrap">${counter(key,val)}</div></div>`;
-      html = `<div class="modal modal-pad" style="max-width:560px"><div class="modal-head"><h3>Edit Seats</h3><button class="modal-close" data-mclose>×</button></div>
+      const btnStyle = isAdd
+        ? 'background:var(--blue);color:#fff;border-color:var(--blue)'
+        : (canSave ? 'background:var(--red);color:#fff;border-color:var(--red)' : 'background:#b8bcc4;color:#fff;border-color:#b8bcc4;cursor:not-allowed');
+      html = `<div class="modal modal-pad" style="max-width:560px"><div class="modal-head"><h3>${title}</h3><button class="modal-close" data-mclose>×</button></div>
         <div style="display:flex;align-items:center;gap:12px;background:var(--blue-soft-2);border-radius:10px;padding:14px 16px;margin-top:18px;font-size:13.5px;color:var(--ink-2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span style="flex:1">${banner}</span></div>
-        <p style="text-align:center;font-weight:700;font-family:'Montserrat';font-size:15px;margin-top:20px">Select seats to remove</p>
+        <p style="text-align:center;font-weight:700;font-family:'Montserrat';font-size:15px;margin-top:20px">${instr}</p>
         <div style="display:flex;gap:16px;margin-top:14px">
           ${seatBox('full','Full Seats',avF,'mfull',modalTmp.full)}
           ${seatBox('dept','Dept Seats',avD,'mdept',modalTmp.dept)}
         </div>
-        <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn" id="saveSeats" ${canRemove?'':'disabled'} style="${canRemove?'background:var(--red);color:#fff;border-color:var(--red)':'background:#b8bcc4;color:#fff;border-color:#b8bcc4;cursor:not-allowed'}">Remove Seats</button></div></div>`;
+        <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn" id="saveSeats" ${canSave?'':'disabled'} style="${btnStyle}">${title}</button></div></div>`;
     } else if (kind === 'cancel') {
       html = `<div class="modal modal-sm modal-pad" style="text-align:center"><div class="between" style="margin-bottom:6px"><span></span><button class="modal-close" data-mclose>×</button></div>
         <span style="display:inline-flex;width:78px;height:78px;border-radius:50%;border:3px solid var(--red);align-items:center;justify-content:center;margin:8px auto 0"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8 16c1-1.5 2.5-2 4-2s3 .5 4 2"/></svg></span>
@@ -509,7 +515,7 @@
     { v:'staff', t:'Staff Management' },
   ];
   const MDLS = [
-    { k:'editSeats', t:'Edit Seats' },
+    { k:'addSeats', t:'Add Seats' },
     { k:'removeSeats', t:'Remove Seats' },
     { k:'cancel', t:'Cancel Subscription' },
     { k:'moveSeat', t:'Move Member Seat', ctx:'Cody Fisher' },
@@ -570,7 +576,8 @@
     if (e.target.closest('#payNow')) { S.plan = 'active'; S.bought = { full: S.full, dept: S.dept, cur: S.cur, annual: S.annual }; toast('Payment successful — your subscription is now active.'); go('billing'); return; }
     if (e.target.closest('#promoBtn')) { const v = $('#promoInput').value.trim(); S.promo = v; S.promoState = /beasiswa/i.test(v) ? 'ok' : (v ? 'fail' : ''); render(); return; }
 
-    if (e.target.closest('#editSeats')) { openModal('editSeats'); return; }
+    if (e.target.closest('#addSeats')) { openModal('addSeats'); return; }
+    if (e.target.closest('#removeSeats')) { openModal('removeSeats'); return; }
     if (e.target.closest('#cancelSub')) { openModal('cancel'); return; }
     const mv = e.target.closest('.mv'); if (mv) { openModal('moveSeat', mv.dataset.member); return; }
     if (e.target.closest('#saveSeats')) { S.bought.full = modalTmp.full; S.bought.dept = modalTmp.dept; closeModal(); toast('Seats updated.'); render(); return; }
@@ -591,7 +598,7 @@
     // drawer
     if (e.target.closest('#flowTab')) { openDrawer(true); return; }
     if (e.target.closest('#flowClose') || e.target.closest('#flowOverlay')) { openDrawer(false); return; }
-    const dm = e.target.closest('[data-modal]'); if (dm) { openDrawer(false); go(dm.dataset.modal === 'moveSeat' ? 'staff' : (dm.dataset.modal === 'cancel' || dm.dataset.modal === 'editSeats' ? 'billing' : S.view)); openModal(dm.dataset.modal, dm.dataset.ctx || 'Cody Fisher'); return; }
+    const dm = e.target.closest('[data-modal]'); if (dm) { openDrawer(false); go(dm.dataset.modal === 'moveSeat' ? 'staff' : (dm.dataset.modal === 'cancel' || dm.dataset.modal === 'addSeats' || dm.dataset.modal === 'removeSeats' ? 'billing' : S.view)); openModal(dm.dataset.modal, dm.dataset.ctx || 'Cody Fisher'); return; }
   });
 
   document.addEventListener('input', (e) => {
