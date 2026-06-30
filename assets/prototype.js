@@ -321,8 +321,8 @@
         <div class="card card-pad">
           <div class="section-title" style="font-size:16px">Payment Method</div><p class="muted" style="font-size:13px;margin-top:2px">Manage your payment detials</p>
           <div style="height:1px;background:var(--line);margin:14px 0"></div>
-          ${active?`<div style="border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px"><span style="background:#fff;border:1px solid var(--line);color:#1a1f71;font-weight:800;font-style:italic;padding:6px 10px;border-radius:6px;font-size:14px">VISA</span><div><b>**** **** **** 3627</b><div class="muted" style="font-size:12px">Expiry 02/26</div></div></div>
-          <button class="btn btn-outline btn-block" style="margin-top:18px">Update Payment Method</button>`:`<div style="min-height:88px"></div><button class="btn btn-outline btn-block">Update Payment Method</button>`}
+          <div style="border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px"><span style="display:inline-flex;align-items:center;flex:none"><svg width="56" height="20" viewBox="0 0 64 22" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" font-style="italic" fill="#1A1F71" letter-spacing="0.5">VISA</text><rect x="1" y="19" width="62" height="2.4" fill="#F7B600"/></svg></span><div><b style="letter-spacing:1px">**** **** **** 3627</b><div class="muted" style="font-size:12px;margin-top:2px">Expiry 02/26</div></div></div>
+          <button class="btn btn-outline btn-block" style="margin-top:18px">Update Payment Method</button>
         </div>
       </div>
       <div class="card card-pad" style="margin-top:18px">
