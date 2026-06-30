@@ -460,6 +460,12 @@
         ${F('Address', `<textarea class="input" rows="3" placeholder="Please state your address, city, and postal code (optional)"></textarea>`)}
         </div>
         <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn btn-primary" id="saveTeam">Add Member</button></div></div>`;
+    } else if (kind === 'regSuccess') {
+      html = `<div class="modal modal-sm modal-pad" style="text-align:center"><div class="between" style="margin-bottom:0"><span></span><button class="modal-close" data-mclose>×</button></div>
+        <span style="display:inline-flex;width:72px;height:72px;align-items:center;justify-content:center;margin:4px auto 0"><svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg></span>
+        <h3 style="font-size:20px;margin-top:14px">Account Created Successfully</h3>
+        <p class="muted" style="font-size:14px;margin-top:8px;max-width:380px;margin-left:auto;margin-right:auto">Enjoy 7 days of free access to Full Seats and Department Seats.</p>
+        <div class="modal-foot"><button class="btn btn-outline" id="regViewPlan">View about plan</button><button class="btn btn-primary" id="regUnderstand">Understand</button></div></div>`;
     }
     $('#modalRoot').innerHTML = `<div class="overlay">${html}</div>`;
   }
@@ -515,6 +521,7 @@
     { v:'staff', t:'Staff Management' },
   ];
   const MDLS = [
+    { k:'regSuccess', t:'Account Created' },
     { k:'addSeats', t:'Add Seats' },
     { k:'removeSeats', t:'Remove Seats' },
     { k:'cancel', t:'Cancel Subscription' },
@@ -590,7 +597,9 @@
     if (e.target.closest('#saveMember')) { closeModal(); toast('Member updated.'); render(); return; }
     const rg = e.target.closest('[data-reg]'); if (rg) { S.regStep = +rg.dataset.reg; go('register'); if (window.innerWidth < 900) openDrawer(false); return; }
     if (e.target.closest('#regBack')) { S.regStep = Math.max(0, (S.regStep||0) - 1); render(); return; }
-    if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regStep = 0; toast('Registration complete — welcome to ProConnect.'); go('dashboard'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
+    if (e.target.closest('#regViewPlan')) { closeModal(); go('plan'); return; }
+    if (e.target.closest('#regUnderstand')) { closeModal(); return; }
+    if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regStep = 0; go('dashboard'); openModal('regSuccess'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
     if (e.target.closest('#addTeam')) { openModal('addTeam'); return; }
     if (e.target.closest('#saveTeam')) { closeModal(); toast('Team member added.'); return; }
     if (e.target.closest('[data-mclose]') || e.target.classList.contains('overlay')) { closeModal(); return; }
