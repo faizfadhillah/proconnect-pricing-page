@@ -266,12 +266,12 @@ table.tbl tr:last-child td { border-bottom: none; }
   .topbar { padding: 0 16px; }
   .app-body { display: block; }
   .sidebar {
-    position: fixed; top: 0; left: 0; height: 100dvh; width: 286px; z-index: 210;
+    position: fixed; top: 64px; left: 0; height: calc(100dvh - 64px); width: 286px; z-index: 210;
     transform: translateX(-100%); transition: transform .26s ease;
     box-shadow: 0 0 50px rgba(0,0,0,.35); overflow-y: auto;
   }
   .sidebar.open { transform: translateX(0); }
-  .sidebar-backdrop { display: block; position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  .sidebar-backdrop { display: block; position: fixed; inset: 0; top: 64px; background: rgba(0,0,0,.45);
     z-index: 200; opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s; }
   .sidebar-backdrop.open { opacity: 1; visibility: visible; }
   .main { width: 100%; }
@@ -308,4 +308,10 @@ table.tbl tr:last-child td { border-bottom: none; }
   .calc-cur-row .cur-select { flex:1; }
   .calc-grid { grid-template-columns:1fr; }
   .calc-grid .summary { position:static; }
+}
+
+/* desktop: collapsible sidebar via hamburger */
+@media (min-width: 901px) {
+  .sidebar { transition: width .2s ease, padding .2s ease; }
+  .app-body.sb-hidden .sidebar { width: 0; padding-left: 0; padding-right: 0; overflow: hidden; border-right: none; }
 }

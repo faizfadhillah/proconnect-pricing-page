@@ -410,7 +410,11 @@
   /* ===================== EVENTS ===================== */
   document.addEventListener('click', (e) => {
     // hamburger -> toggle mobile sidebar drawer
-    if (e.target.closest('.hamburger')) { sbOpen(!sidebarEl.classList.contains('open')); return; }
+    if (e.target.closest('.hamburger')) {
+      if (window.innerWidth > 900) { document.querySelector('.app-body').classList.toggle('sb-hidden'); }
+      else { sbOpen(!sidebarEl.classList.contains('open')); }
+      return;
+    }
     if (e.target.classList && e.target.classList.contains('sidebar-backdrop')) { sbOpen(false); return; }
 
     const go_ = e.target.closest('[data-go]'); if (go_) { e.preventDefault(); go(go_.dataset.go); sbOpen(false); if (window.innerWidth < 900) openDrawer(false); return; }
