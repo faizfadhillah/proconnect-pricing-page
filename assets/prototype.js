@@ -130,7 +130,7 @@
       return `
       <div class="reg-wrap">
         ${steps}
-        <div class="card card-pad">
+        <div class="card card-pad${(cur.k==='business'||cur.k==='rep')?' reg-narrow':''}">
           <div class="between" style="align-items:flex-start"><div><div class="section-title" style="font-size:18px">${cur.t}</div><p class="muted" style="font-size:13px;margin-top:4px">${cur.d}</p></div>${headAction}</div>
           <div style="height:1px;background:var(--line);margin:18px 0"></div>
           ${form}
@@ -382,7 +382,7 @@
         : `To remove the seats only for the available seat`;
       const seatBox = (kind2, label, av, key, val) => `<div style="flex:1;min-width:0;border:1px solid var(--line);border-radius:14px;padding:14px">
         <div style="display:flex;align-items:center;gap:12px;background:var(--bg);border-radius:10px;padding:12px">${seatTile(kind2,42)}<div><b style="font-size:15px">${label}</b><div class="muted" style="font-size:12.5px;margin-top:2px">${av} Avail</div></div></div>
-        <div style="display:flex;justify-content:center;margin-top:18px">${counter(key,val)}</div></div>`;
+        <div class="seat-counter-wrap">${counter(key,val)}</div></div>`;
       html = `<div class="modal modal-pad" style="max-width:560px"><div class="modal-head"><h3>Edit Seats</h3><button class="modal-close" data-mclose>×</button></div>
         <div style="display:flex;align-items:center;gap:12px;background:var(--blue-soft-2);border-radius:10px;padding:14px 16px;margin-top:18px;font-size:13.5px;color:var(--ink-2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span style="flex:1">${banner}</span></div>
         <p style="text-align:center;font-weight:700;font-family:'Montserrat';font-size:15px;margin-top:20px">Select seats to remove</p>

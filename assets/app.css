@@ -333,7 +333,7 @@ table.tbl tr:last-child td { border-bottom: none; }
    REGISTRATION (vertical stepper flow)
    ============================================================ */
 .app-body.reg-mode .sidebar { display: none; }
-.app-body.reg-mode .page { max-width: 1160px; margin: 0 auto; }
+.app-body.reg-mode .page { max-width: 1440px; margin: 0 auto; }
 .reg-wrap { display: grid; grid-template-columns: 264px 1fr; gap: 32px; align-items: start; }
 .reg-vsteps { display: flex; flex-direction: column; position: sticky; top: 84px; }
 .reg-vstep { display: flex; gap: 14px; position: relative; padding-bottom: 36px; cursor: pointer; }
@@ -368,3 +368,9 @@ table.tbl tr:last-child td { border-bottom: none; }
   .reg-vstep:not(:last-child)::before { display: none; }
   .reg-vstep .rl { font-size: 11px; padding-top: 0; }
 }
+
+/* registration: form steps stay readable, table steps go full width */
+.reg-narrow { max-width: 880px; }
+/* center the +/- counter inside the Edit/Remove Seats modal */
+.seat-counter-wrap { display: flex; justify-content: center; margin-top: 18px; }
+.seat-counter-wrap .counter { margin-left: 0; }
