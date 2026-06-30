@@ -255,7 +255,7 @@
         <div class="between" style="margin-bottom:14px"><div><div class="section-title" style="font-size:16px">Team Members</div><p class="muted" style="font-size:13px;margin-top:2px">Add, edit and manage your staff and their roles</p></div><button class="btn btn-outline btn-sm" data-toast="Invite link copied — share it with your teammate."><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Invite Member</button></div>
         <div class="toolbar" style="margin-bottom:12px"><div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><input placeholder="Search name or email"></div><select class="select" style="width:auto;min-width:150px"><option>Select Role</option><option>Full Seats</option><option>Dept Seats</option><option>Free Seats</option></select><button class="btn btn-outline btn-sm" data-toast="Filter applied.">Apply</button></div>
         <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Name</th><th>Role</th><th>Role Status</th><th style="text-align:right">Action</th></tr></thead><tbody>
-          ${members.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><span class="avatar"></span><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}${m[3]!=='member'?seatChip(roleIc[m[3]]):''}</td><td>${m[4]==='Active'?`<span class="badge badge-blue">✓ Active</span>`:`<span class="badge badge-red">✕ Non Active</span>`}</td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${editIc}</button><button class="mv" data-member="${m[0]}" title="Move seat">${mvIc}</button></div></td></tr>`).join('')}
+          ${members.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><span class="avatar"></span><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}${m[3]!=='member'?seatChip(roleIc[m[3]]):''}</td><td>${m[4]==='Active'?`<span class="badge badge-blue">✓ Active</span>`:`<span class="badge badge-red">✕ Non Active</span>`}</td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button class="ed" data-member="${m[0]}" data-role="${m[2]}" data-status="${m[4]}" title="Edit">${editIc}</button><button class="mv" data-member="${m[0]}" title="Move seat">${mvIc}</button></div></td></tr>`).join('')}
         </tbody></table></div>
         <div class="between" style="margin-top:16px"><div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">Item Per page <select class="select" style="width:auto;padding:6px 30px 6px 12px"><option>10</option><option>25</option><option>50</option></select></div><div class="pager"><button>«</button><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>…</button><button>99</button><button>›</button><button>»</button></div></div>
       </div>`;
@@ -320,6 +320,22 @@
         ${card('monthly','Monthly', money(b.cur,mMon)+' / month','','')}
         ${card('yearly','Yearly', money(b.cur,mYrPerMo)+' / month','Billed '+money(b.cur,yrBilled)+' yearly','Save 10%')}
         <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn btn-primary" id="confirmCycle">Confirm Change</button></div></div>`;
+    } else if (kind === 'editMember') {
+      const m = modalTmp;
+      const lbl = (t) => `<label style="display:block;font-size:13px;font-weight:600;color:var(--ink);margin:0 0 6px">${t}<span style="color:#ef4444"> *</span></label>`;
+      const opt = (v,cur) => `<option ${v===cur?'selected':''}>${v}</option>`;
+      html = `<div class="modal modal-pad" style="max-width:600px"><div class="modal-head"><h3>Edit Member</h3><button class="modal-close" data-mclose>×</button></div>
+        <p class="muted" style="font-size:13px;margin-top:2px">Update ${m.name}'s placement, role and status.</p>
+        <b style="display:block;font-size:15px;margin-top:18px">Team Role</b>
+        <div class="form-grid-2" style="margin-top:14px">
+          <div>${lbl('Placement Branch')}<select class="select">${['Semarang','Jakarta HQ','Surabaya'].map(v=>opt(v,'Semarang')).join('')}</select></div>
+          <div>${lbl('Role')}<select class="select"><optgroup label="Full Seats">${opt('PIC Branch',m.role)}${opt('HRD Branch',m.role==='HRD HQ'?'HRD Branch':m.role)}</optgroup><optgroup label="Dept Seats">${opt('Dept Head HQ',m.role)}${opt('Dept Head Branch',m.role)}</optgroup><optgroup label="Free Seats">${opt('Member',m.role)}</optgroup></select></div>
+          <div>${lbl('Department')}<select class="select">${['Human Resource','Finance','Operations'].map(v=>opt(v,'Human Resource')).join('')}</select></div>
+          <div>${lbl('Employee Type')}<select class="select">${['Full Time','Part Time','Contract'].map(v=>opt(v,'Full Time')).join('')}</select></div>
+          <div>${lbl('End Date')}<input class="input" type="text" placeholder="Select end date"></div>
+          <div>${lbl('Status')}<select class="select">${opt('Active',m.status)}${opt('Non Active',m.status==='Active'?'Active':'Non Active')}</select></div>
+        </div>
+        <div class="modal-foot"><button class="btn btn-outline" data-mclose>Cancel</button><button class="btn btn-primary" id="saveMember">Save Changes</button></div></div>`;
     }
     $('#modalRoot').innerHTML = `<div class="overlay">${html}</div>`;
   }
@@ -432,6 +448,8 @@
     if (e.target.closest('#changeCycle')) { modalTmp = {}; openModal('changeCycle'); return; }
     const cyc = e.target.closest('[data-cycle]'); if (cyc) { modalTmp.cycle = cyc.dataset.cycle; openModal('changeCycle'); return; }
     if (e.target.closest('#confirmCycle')) { S.bought.annual = (modalTmp.cycle === 'yearly'); closeModal(); toast('Billing cycle updated.'); render(); return; }
+    const ed = e.target.closest('.ed'); if (ed) { modalTmp = { name: ed.dataset.member, role: ed.dataset.role, status: ed.dataset.status }; openModal('editMember'); return; }
+    if (e.target.closest('#saveMember')) { closeModal(); toast('Member updated.'); render(); return; }
     if (e.target.closest('[data-mclose]') || e.target.classList.contains('overlay')) { closeModal(); return; }
 
     // drawer
