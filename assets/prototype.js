@@ -182,28 +182,27 @@
       <h1 class="page-title">Simple, transparent pricing</h1>
       <p class="page-sub">Pay only for the recruiters you need. Unlimited job postings included.</p>
 
-      <div class="card card-pad" style="margin-top:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <div style="flex:1;min-width:180px"><div class="section-title" style="font-size:16px">Understand Our Seat Types</div><p class="muted" style="font-size:13px;margin-top:4px">When you set specific role members, it affects your seat type.</p></div>
-        <button class="btn btn-outline" data-toast="Seat types: Full Recruiter, Department Head, and free Member seats.">Learn More</button>
-      </div>
-
-      <div class="card card-pad" style="margin-top:14px">
-        <div class="between"><b style="font-size:16px">${S.plan==='active'?"You're on a Paid Plan":"You're on Free Trial"}</b><a data-go="${S.plan==='active'?'billing':'order'}" style="font-weight:600;font-size:13.5px;cursor:pointer">Upgrade anytime →</a></div>
-        <div style="display:flex;gap:36px;margin-top:14px;flex-wrap:wrap">
-          <div style="display:flex;align-items:center;gap:10px">${seatTile('full')}<div><b style="font-size:14px">Full seats</b><div class="muted" style="font-size:12px">${S.plan==='active'?S.bought.full:10} seats</div></div></div>
-          <div style="display:flex;align-items:center;gap:10px">${seatTile('dept')}<div><b style="font-size:14px">Dept seats</b><div class="muted" style="font-size:12px">${S.plan==='active'?S.bought.dept:2} seats</div></div></div>
+      <div class="card card-pad" style="margin-top:20px">
+        <div class="between" style="align-items:flex-start"><div><div class="section-title" style="font-size:16px">Understand Our Seat Types</div><p class="muted" style="font-size:13px;margin-top:4px">When you set spesifik role members, it's effect to your seats type</p></div><button class="btn btn-outline btn-sm" data-toast="Seat types: Full Recruiter, Department Head, and free Member seats.">Learn more</button></div>
+        <div style="background:var(--bg);border-radius:12px;padding:16px 18px;margin-top:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px"><b style="font-size:15px">This organisation plan is active</b><div style="margin-top:4px"><a data-go="${S.plan==='active'?'billing':'order'}" style="color:var(--blue);font-weight:600;font-size:13px;cursor:pointer">Upgrade anytime →</a></div></div>
+          <div style="display:flex;gap:28px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:10px">${seatTile('full')}<div><b style="font-size:14px">Full seats</b><div class="muted" style="font-size:12px">${S.plan==='active'?S.bought.full:10} seats</div></div></div>
+            <div style="display:flex;align-items:center;gap:10px">${seatTile('dept')}<div><b style="font-size:14px">Dept seats</b><div class="muted" style="font-size:12px">${S.plan==='active'?S.bought.dept:2} seats</div></div></div>
+          </div>
         </div>
-      </div>
-
-      <div class="seatcard blue" style="margin-top:20px">
-        <div class="hd">${seatTile('full',42)}<h4>Full Recruiter Seat</h4></div>
-        <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">HR Directors, PIC Branch, HRD Branch.</span></p>
-        <ul class="flist"><li class="y">Post jobs for all departments</li><li class="y">Full candidate database access</li><li class="y">Multi-branch management</li></ul>
-      </div>
-      <div class="seatcard green" style="margin-top:14px">
-        <div class="hd">${seatTile('dept',42)}<h4>Department Head Seat</h4></div>
-        <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">Dept Head HQ, Dept Head Branch.</span></p>
-        <ul class="flist"><li class="y">Post for own department only</li><li class="y">View department applicants</li><li class="n">No branch-management</li></ul>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+          <div class="seatcard blue" style="margin-top:0">
+            <div class="hd">${seatTile('full',42)}<h4>Full Recruiter Seat</h4></div>
+            <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">HR Directors, PIC Branch, HRD Branch.</span></p>
+            <ul class="flist"><li class="y">Post jobs for all departments</li><li class="y">Full candidate database access</li><li class="y">Multi-branch management</li></ul>
+          </div>
+          <div class="seatcard green" style="margin-top:0">
+            <div class="hd">${seatTile('dept',42)}<h4>Department Head Seat</h4></div>
+            <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">Dept Head HQ, Dept Head Branch.</span></p>
+            <ul class="flist"><li class="y">Post for own department only</li><li class="y">View department applicants</li><li class="n">No branch-management</li></ul>
+          </div>
+        </div>
       </div>
 
       <div class="calc-head">
