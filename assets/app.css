@@ -416,5 +416,9 @@ table.tbl tr:last-child td { border-bottom: none; }
   .btn-outline:hover { background: #1f2c44; }
   .nav a:hover, .nav .nav-item:hover, .pager button:hover, .cur-menu li:hover { background: #202a3a; }
   input::placeholder, textarea::placeholder { color: var(--light); }
+  /* free-trial banner: keep dark, high-contrast text on the yellow bar in dark mode */
+  .trial-banner { color: #241c00; }
+  .trial-banner strong { color: #140f00; }
+  .trial-banner a { color: #000; }
   .slider { background: #3a4356; }
 }
