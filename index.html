@@ -19,11 +19,11 @@
 .summary .tog{display:flex;align-items:center;gap:10px;margin-top:18px;justify-content:flex-end}
 .save-badge{margin-right:auto;display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.16);color:#4ade80;font-size:12px;font-weight:600;padding:4px 9px;border-radius:20px}
 .save-badge[hidden]{display:none}
-.seatpick{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px;display:flex;align-items:center;gap:12px}
+.seatpick{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px;display:flex;align-items:center;gap:12px}
 .seatpick .info{display:flex;flex-direction:column;min-width:0}
 .seatpick .info b{font-size:14.5px}.seatpick .info .price{font-size:13px;font-weight:600;margin-top:2px}.seatpick .info .per{font-size:11.5px;color:var(--light)}
 .counter{margin-left:auto;display:flex;align-items:center;gap:8px}
-.counter-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer;color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+.counter-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--surface);font-size:18px;cursor:pointer;color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
 .counter-btn:hover{background:var(--bg)}.counter-val{min-width:22px;text-align:center;font-weight:700;font-size:15px}
 .unlimited{margin-left:auto;color:var(--light);font-weight:600}
 .seatcard{border-radius:var(--radius);padding:18px}.seatcard.blue{background:var(--blue-soft)}.seatcard.green{background:var(--green-soft)}
@@ -33,10 +33,10 @@
 .flist li::before{position:absolute;left:0;top:1px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
 .flist li.y::before{content:"✓";background:var(--green)}.flist li.n::before{content:"✕";background:var(--red)}
 .cur-select{position:relative}
-.cur-trigger{width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;font:600 14.5px 'Montserrat';color:var(--ink)}
+.cur-trigger{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;font:600 14.5px 'Montserrat';color:var(--ink)}
 .cur-trigger .flag{font-size:20px}.cur-trigger .chev{margin-left:auto;transition:transform .2s}
 .cur-select.open .chev{transform:rotate(180deg)}
-.cur-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:20;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(16,24,40,.14);list-style:none;padding:6px;display:none;max-height:260px;overflow:auto}
+.cur-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:20;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(16,24,40,.14);list-style:none;padding:6px;display:none;max-height:260px;overflow:auto}
 .cur-select.open .cur-menu{display:block}
 .cur-menu li{padding:11px 12px;border-radius:8px;cursor:pointer;display:flex;gap:10px;align-items:center;font-size:14px}
 .cur-menu li:hover,.cur-menu li.active{background:var(--blue-soft)}.cur-menu li .code{margin-left:auto;color:var(--muted);font-size:12.5px}
