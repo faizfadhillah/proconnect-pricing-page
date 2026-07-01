@@ -3,6 +3,7 @@
    Used by every screen in the Employer Dashboard prototype.
    ============================================================ */
 :root {
+  color-scheme: light dark;
   --blue: #1560bd;
   --blue-600: #1151a6;
   --blue-soft: #eefaff;
