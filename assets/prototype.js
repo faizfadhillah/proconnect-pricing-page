@@ -22,7 +22,7 @@
   ];;
 
   const S = {
-    view: 'dashboard', cur: CUR[0], full: 0, dept: 0, annual: false, curOpen: false, regStep: 0,
+    view: 'dashboard', cur: CUR[0], full: 0, dept: 0, annual: false, curOpen: false, regStep: 0, regDone: false,
     plan: 'trial',                                   // 'trial' | 'active'
     bought: { full: 0, dept: 0, cur: CUR[0], annual: false },
     promo: '', promoState: '',                       // '', 'ok', 'fail'
@@ -66,7 +66,7 @@
       const upload = (btn) => `<div class="reg-upload"><span class="reg-up-ph">${userIc}</span><div><button class="btn btn-outline btn-sm" data-toast="Photo upload — coming soon.">${btn}</button><div class="reg-hint" style="margin-top:6px">Size recommendation: 400 x 400px</div></div></div>`;
       const verify = (ph) => `<div class="reg-verify">${inp(ph)}<button class="reg-verify-btn" data-toast="Verification link sent.">Verify</button></div>`;
       const checkIc = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>';
-      const steps = `<div class="reg-vsteps">${REG.map((r,i)=>`<div class="reg-vstep ${i===step?'active':''} ${i<step?'done':''}" data-reg="${i}"><span class="rn">${i<step?checkIc:i+1}</span><span class="rl">${r.t}</span></div>`).join('')}</div>`;
+      const steps = `<div class="reg-vsteps">${REG.map((r,i)=>{const dn=i<step||S.regDone;return `<div class="reg-vstep ${i===step?'active':''} ${dn?'done':''}" data-reg="${i}"><span class="rn">${dn?checkIc:i+1}</span><span class="rl">${r.t}</span></div>`;}).join('')}</div>`;
       let headAction = '', form = '';
       if (cur.k==='business') form = `
         ${upload('Upload Company Photo')}
@@ -152,9 +152,9 @@
         <div class="stat-card"><div class="label">Total Active Jobs</div><div class="value">0</div></div>
       </div>
       <div class="card card-pad" style="margin-top:18px">
-        <div class="between"><div><div class="section-title">Profile Completion</div><div class="muted" style="margin-top:4px">4 of 4 steps completed</div></div><button class="btn btn-outline btn-sm">Edit</button></div>
+        <div class="between"><div><div class="section-title">Profile Completion</div><div class="muted" style="margin-top:4px">4 of 4 steps completed</div></div><button class="btn btn-outline btn-sm" data-profstep="0">Edit</button></div>
         <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:18px">
-          ${['Business Profile Details','Company Representative Info','Headquarters and Branch Information','Team Management'].map(t=>`<div style="display:flex;align-items:center;gap:10px;background:var(--blue-soft-2);border-radius:12px;padding:14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 9"/></svg><b style="color:var(--blue);font-size:13px;font-family:'Montserrat'">${t}</b></div>`).join('')}
+          ${['Business Profile Details','Company Representative Info','Headquarters and Branch Information','Team Management'].map((t,i)=>`<div data-profstep="${i}" style="display:flex;align-items:center;gap:10px;background:var(--blue-soft-2);border-radius:12px;padding:14px;cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 9"/></svg><b style="color:var(--blue);font-size:13px;font-family:'Montserrat'">${t}</b></div>`).join('')}
         </div>
       </div>
       <div class="card card-pad" style="margin-top:18px;background:var(--amber-soft);border-color:#f0e2bf">
@@ -595,11 +595,12 @@
     if (e.target.closest('#confirmCycle')) { S.bought.annual = (modalTmp.cycle === 'yearly'); closeModal(); toast('Billing cycle updated.'); render(); return; }
     const ed = e.target.closest('.ed'); if (ed) { modalTmp = { name: ed.dataset.member, role: ed.dataset.role, status: ed.dataset.status }; openModal('editMember'); return; }
     if (e.target.closest('#saveMember')) { closeModal(); toast('Member updated.'); render(); return; }
+    const ps = e.target.closest('[data-profstep]'); if (ps) { S.regDone = true; S.regStep = +ps.dataset.profstep; go('register'); if (window.innerWidth < 900) openDrawer(false); return; }
     const rg = e.target.closest('[data-reg]'); if (rg) { S.regStep = +rg.dataset.reg; go('register'); if (window.innerWidth < 900) openDrawer(false); return; }
     if (e.target.closest('#regBack')) { S.regStep = Math.max(0, (S.regStep||0) - 1); render(); return; }
     if (e.target.closest('#regViewPlan')) { closeModal(); go('plan'); return; }
     if (e.target.closest('#regUnderstand')) { closeModal(); return; }
-    if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regStep = 0; go('dashboard'); openModal('regSuccess'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
+    if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regDone = true; S.regStep = 0; go('dashboard'); openModal('regSuccess'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
     if (e.target.closest('#addTeam')) { openModal('addTeam'); return; }
     if (e.target.closest('#saveTeam')) { closeModal(); toast('Team member added.'); return; }
     if (e.target.closest('[data-mclose]') || e.target.classList.contains('overlay')) { closeModal(); return; }

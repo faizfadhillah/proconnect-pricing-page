@@ -379,3 +379,5 @@ table.tbl tr:last-child td { border-bottom: none; }
 /* show element only on mobile (e.g. external-link arrow on Upgrade) */
 .mobile-only { display: none !important; }
 @media (max-width: 900px) { .btn .mobile-only { display: inline-flex !important; align-items: center; } }
+
+.side-foot .aseanta-logo { display: block; margin: 12px auto 0; width: 150px; max-width: 80%; height: auto; }
