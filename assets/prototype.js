@@ -183,7 +183,7 @@
       <p class="page-sub">Pay only for the recruiters you need. Unlimited job postings included.</p>
 
       <div class="card card-pad" style="margin-top:20px">
-        <div class="between" style="align-items:flex-start"><div><div class="section-title" style="font-size:16px">Understand Our Seat Types</div><p class="muted" style="font-size:13px;margin-top:4px">When you set spesifik role members, it's effect to your seats type</p></div><button class="btn btn-outline btn-sm" data-toast="Seat types: Full Recruiter, Department Head, and free Member seats.">Learn more</button></div>
+        <div class="between" style="align-items:flex-start"><div><div class="section-title" style="font-size:16px">Understand Our Seat Types</div><p class="muted" style="font-size:13px;margin-top:4px">When you set spesifik role members, it's effect to your seats type</p></div><button class="btn btn-outline" data-toast="Seat types: Full Recruiter, Department Head, and free Member seats.">Learn more</button></div>
         <div style="background:var(--bg);border-radius:12px;padding:16px 18px;margin-top:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
           <div style="flex:1;min-width:200px"><b style="font-size:15px">This organisation plan is active</b><div style="margin-top:4px"><a data-go="${S.plan==='active'?'billing':'order'}" style="color:var(--blue);font-weight:600;font-size:13px;cursor:pointer">Upgrade anytime →</a></div></div>
           <div style="display:flex;gap:28px;flex-wrap:wrap">
@@ -216,7 +216,7 @@
               ${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>(${c.code}) ${c.name}</span></li>`).join('')}
             </ul>
           </div>
-          <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes and purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+          <button style="background:none;border:none;cursor:pointer;color:var(--blue);display:inline-flex;align-items:center;justify-content:center;padding:6px;flex:none" data-toast="Prices are localised to each market — taxes and purchasing power." aria-label="Currency info"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1560bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
         </div>
       </div>
       <div class="calc-grid">
@@ -240,7 +240,7 @@
 
       <div class="card" style="margin-top:22px;background:linear-gradient(135deg,#1560bd 0%,#042648 100%);color:#fff;text-align:center;padding:30px 22px;border:none">
         <h2 style="font-size:19px;font-weight:700">Need a custom solution?</h2><p style="font-size:13.5px;margin-top:8px;opacity:.92">Contact our sales team for enterprise-grade features and custom billing options.</p>
-        <button class="btn btn-white" style="margin-top:16px" data-toast="Our sales team will be in touch shortly.">Contact Now</button>
+        <button class="btn btn-white" style="margin-top:16px" id="contactNow">Contact Now</button>
       </div>
 
       <h2 class="section-title" style="margin-top:28px">Frequently Asked Questions</h2>
@@ -465,6 +465,24 @@
         <h3 style="font-size:20px;margin-top:14px">Account Created Successfully</h3>
         <p class="muted" style="font-size:14px;margin-top:8px;max-width:380px;margin-left:auto;margin-right:auto">Enjoy 7 days of free access to Full Seats and Department Seats.</p>
         <div class="modal-foot"><button class="btn btn-outline" id="regViewPlan">View about plan</button><button class="btn btn-primary" id="regUnderstand">Understand</button></div></div>`;
+    } else if (kind === 'contact') {
+      const F = (label, ctrl) => `<div class="reg-field"><label class="reg-lab">${label}</label>${ctrl}</div>`;
+      const inp = (ph) => `<input class="input" placeholder="${ph}">`;
+      const sel = (ph, arr) => `<select class="select"><option value="" disabled selected hidden>${ph}</option>${arr.map(o=>`<option>${o}</option>`).join('')}</select>`;
+      html = `<div class="modal modal-pad" style="max-width:560px"><div class="modal-head"><h3>Contact Us</h3><button class="modal-close" data-mclose>×</button></div>
+        <p class="muted" style="font-size:13px;margin-top:2px">Tell us about your needs and our team will reach out.</p>
+        <div style="margin-top:18px">
+          <div class="form-grid-2">
+            ${F('First Name', inp('Input first name'))}
+            ${F('Last Name', inp('Input last name'))}
+          </div>
+          ${F('Work Email', inp('Input email'))}
+          ${F('Company / Institution', inp('Input organization name'))}
+          ${F('I am a...', sel('Select your position',['HR Director','Founder / CEO','Recruiter','Department Head','Other']))}
+          ${F('Country', sel('Select country',['Indonesia','Malaysia','Singapore','Philippines','Thailand','Vietnam']))}
+          ${F('Message (optional)', `<textarea class="input" rows="4" placeholder="Tell's about your needs"></textarea>`)}
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" id="sendContact" style="margin-top:8px">Send Request</button></div>`;
     }
     $('#modalRoot').innerHTML = `<div class="overlay">${html}</div>`;
   }
@@ -520,6 +538,7 @@
     { v:'staff', t:'Staff Management' },
   ];
   const MDLS = [
+    { k:'contact', t:'Contact Us' },
     { k:'regSuccess', t:'Account Created' },
     { k:'addSeats', t:'Add Seats' },
     { k:'removeSeats', t:'Remove Seats' },
@@ -597,6 +616,8 @@
     const ps = e.target.closest('[data-profstep]'); if (ps) { S.regDone = true; S.regStep = +ps.dataset.profstep; go('register'); if (window.innerWidth < 900) openDrawer(false); return; }
     const rg = e.target.closest('[data-reg]'); if (rg) { S.regStep = +rg.dataset.reg; go('register'); if (window.innerWidth < 900) openDrawer(false); return; }
     if (e.target.closest('#regBack')) { S.regStep = Math.max(0, (S.regStep||0) - 1); render(); return; }
+    if (e.target.closest('#contactNow')) { openModal('contact'); return; }
+    if (e.target.closest('#sendContact')) { closeModal(); toast('Request sent — our team will reach out soon.'); return; }
     if (e.target.closest('#regViewPlan')) { closeModal(); go('plan'); return; }
     if (e.target.closest('#regUnderstand')) { closeModal(); return; }
     if (e.target.closest('#regNext')) { if ((S.regStep||0) >= REG.length - 1) { S.regDone = true; S.regStep = 0; go('dashboard'); openModal('regSuccess'); } else { S.regStep = (S.regStep||0) + 1; render(); } return; }
