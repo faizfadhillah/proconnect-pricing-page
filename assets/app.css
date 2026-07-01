@@ -159,8 +159,9 @@ svg { display: block; }
 .trial-banner svg { flex: none; }
 .trial-banner a { color: #1f1900; text-decoration: underline; font-weight: 600; }
 
-/* page content wrapper */
-.page { padding: 26px 30px 50px; max-width: 1180px; }
+/* page content wrapper — fills wide screens up to a comfortable max */
+.page { padding: 26px 34px 60px; max-width: 1600px; }
+@media (min-width: 1700px) { .page { padding-left: 48px; padding-right: 48px; } }
 
 /* ============================================================
    STAT CARDS

@@ -69,12 +69,10 @@
           <div style="display:flex;align-items:center;gap:12px">${seatTile('member',44)}<div><b style="font-size:15px">Member seats</b><div class="muted" style="font-size:13px">2 seats</div></div></div>
         </div>
       </div>
-      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:18px;align-items:start">
-        <div class="grid" style="gap:16px">
-          ${actionCard('Find Candidates','Directly Find the Ideal Candidates for Your Business','Find Now')}
-          ${actionCard('Manage Jobs','Post Jobs and Manage Candidate Recruitment for Your Business','Manage Now')}
-        </div>
+      <div class="action-grid" style="margin-top:18px">
+        ${actionCard('Find Candidates','Directly Find the Ideal Candidates for Your Business','Find Now')}
         ${actionCard('Manage Profile','View and Manage Your Business Profile Details','Manage Now')}
+        ${actionCard('Manage Jobs','Post Jobs and Manage Candidate Recruitment for Your Business','Manage Now')}
       </div>`;
     },
 
@@ -99,37 +97,43 @@
         </div>
       </div>
 
-      <div class="seatcard blue" style="margin-top:20px">
-        <div class="hd">${seatTile('full',42)}<h4>Full Recruiter Seat</h4></div>
-        <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">HR Directors, PIC Branch, HRD Branch.</span></p>
-        <ul class="flist"><li class="y">Post jobs for all departments</li><li class="y">Full candidate database access</li><li class="y">Multi-branch management</li></ul>
-      </div>
-      <div class="seatcard green" style="margin-top:14px">
-        <div class="hd">${seatTile('dept',42)}<h4>Department Head Seat</h4></div>
-        <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">Dept Head HQ, Dept Head Branch.</span></p>
-        <ul class="flist"><li class="y">Post for own department only</li><li class="y">View department applicants</li><li class="n">No branch-management</li></ul>
+      <div class="seatcards" style="margin-top:20px">
+        <div class="seatcard blue">
+          <div class="hd">${seatTile('full',42)}<h4>Full Recruiter Seat</h4></div>
+          <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">HR Directors, PIC Branch, HRD Branch.</span></p>
+          <ul class="flist"><li class="y">Post jobs for all departments</li><li class="y">Full candidate database access</li><li class="y">Multi-branch management</li></ul>
+        </div>
+        <div class="seatcard green">
+          <div class="hd">${seatTile('dept',42)}<h4>Department Head Seat</h4></div>
+          <p style="margin-top:12px;font-size:13.5px"><b>Role for:</b> <span class="muted">Dept Head HQ, Dept Head Branch.</span></p>
+          <ul class="flist"><li class="y">Post for own department only</li><li class="y">View department applicants</li><li class="n">No branch-management</li></ul>
+        </div>
       </div>
 
       <h2 class="section-title" style="margin-top:28px">Calculate Your Monthly Cost</h2>
       <p class="muted" style="font-size:13.5px;margin-top:4px">Estimate your investment based on your team size</p>
-      <label class="field-label" style="display:block;font-size:13px;color:var(--muted);margin:16px 0 8px">Currency</label>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="cur-select ${S.curOpen?'open':''}" id="curSelect" style="flex:1">
-          <button class="cur-trigger" id="curTrigger"><span class="flag">${S.cur.flag}</span><span>${S.cur.name}</span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-          <ul class="cur-menu">${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>${c.name}</span><span class="code">${c.code}</span></li>`).join('')}</ul>
+      <div class="calc-wrap">
+        <div class="calc-left">
+          <label class="field-label" style="display:block;font-size:13px;color:var(--muted);margin:16px 0 8px">Currency</label>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="cur-select ${S.curOpen?'open':''}" id="curSelect" style="flex:1">
+              <button class="cur-trigger" id="curTrigger"><span class="flag">${S.cur.flag}</span><span>${S.cur.name}</span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+              <ul class="cur-menu">${CUR.map(c=>`<li data-cur="${c.code}" class="${c.code===S.cur.code?'active':''}"><span class="flag">${c.flag}</span><span>${c.name}</span><span class="code">${c.code}</span></li>`).join('')}</ul>
+            </div>
+            <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes & purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+          </div>
+          ${curItem('Full Recruiter Seats','full','full', money(S.cur,S.cur.full))}
+          ${curItem('Department Seats','dept','dept', money(S.cur,S.cur.dept))}
+          <div class="seatpick" style="background:#f9fafb">${seatTile('member')}<div class="info"><b>Member Seats</b><span class="per">FREE</span></div><span class="unlimited">Unlimited</span></div>
         </div>
-        <button class="icon-box" style="border-color:var(--blue)" data-toast="Prices are localised to each market — taxes & purchasing power." aria-label="Currency info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
-      </div>
-      ${curItem('Full Recruiter Seats','full','full', money(S.cur,S.cur.full))}
-      ${curItem('Department Seats','dept','dept', money(S.cur,S.cur.dept))}
-      <div class="seatpick" style="background:#f9fafb">${seatTile('member')}<div class="info"><b>Member Seats</b><span class="per">FREE</span></div><span class="unlimited">Unlimited</span></div>
 
-      <div class="summary">
-        <h3>Calculation Summary</h3><p class="sub">This calculation works on all type seats</p>
-        <div class="seats"><div><span class="lbl">Full seats</span><div class="val">${S.full} seats</div></div><div><span class="lbl">Dept seats</span><div class="val">${S.dept} seats</div></div></div>
-        <div class="total"><span class="cur">${S.cur.code}</span><span class="amt">${fmt(total,S.cur.sep)}</span><span class="mo">/mo</span></div>
-        <div class="tog"><span class="save-badge" ${S.annual?'':'hidden'}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save 10%</span><label class="switch"><input type="checkbox" id="annual" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px">Annual</span></div>
-        <button class="btn btn-primary btn-block btn-lg" style="margin-top:18px" id="planUpgrade">Upgrade Now</button>
+        <div class="summary">
+          <h3>Calculation Summary</h3><p class="sub">This calculation works on all type seats</p>
+          <div class="seats"><div><span class="lbl">Full seats</span><div class="val">${S.full} seats</div></div><div><span class="lbl">Dept seats</span><div class="val">${S.dept} seats</div></div></div>
+          <div class="total"><span class="cur">${S.cur.code}</span><span class="amt">${fmt(total,S.cur.sep)}</span><span class="mo">/mo</span></div>
+          <div class="tog"><span class="save-badge" ${S.annual?'':'hidden'}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save 10%</span><label class="switch"><input type="checkbox" id="annual" ${S.annual?'checked':''}><span class="slider"></span></label><span style="font-size:14px">Annual</span></div>
+          <button class="btn btn-primary btn-block btn-lg" style="margin-top:18px" id="planUpgrade">Upgrade Now</button>
+        </div>
       </div>
 
       <div class="card" style="margin-top:22px;padding:6px"><div class="table-wrap"><table class="tbl" style="min-width:480px"><thead><tr><th>Feature</th><th>Free Account</th><th>Full Recruiter</th><th>Dept Head</th></tr></thead><tbody>
@@ -235,8 +239,13 @@
         ['Avery Johnson','averyj@seruam.com','HRD HQ','full','Active'],
         ['Taylor Martinez','taylorm@seruam.com','Dept Head Branch','dept','Active'],
       ];
-      const roleIc = { full:'#2563eb', dept:'#1e9e5a', member:'#9ca3af' };
-      const seatChip = c => `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:6px"><path d="M2 9 12 4l10 5-10 5L2 9z"/></svg>`;
+      const seatChip = kind => {
+        const c = kind==='full' ? '#2563eb' : '#1e9e5a';
+        const path = kind==='full'
+          ? `<path d="M2 9 12 4l10 5-10 5L2 9z"/><path d="M5 11v5c0 1 3 3 7 3s7-2 7-3v-5"/>`
+          : `<circle cx="9" cy="7" r="3"/><circle cx="15" cy="7" r="3"/><circle cx="12" cy="14" r="3"/>`;
+        return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:6px">${path}</svg>`;
+      };
       const editIc = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`;
       const mvIc = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3 3-5 6-5"/><polyline points="16 11 19 14 16 17"/><line x1="13" y1="14" x2="19" y2="14"/></svg>`;
       return `
@@ -248,7 +257,7 @@
         <div class="between" style="margin-bottom:14px"><div><div class="section-title" style="font-size:16px">Team Members</div><p class="muted" style="font-size:13px;margin-top:2px">Add, edit and manage your staff and their roles</p></div><button class="btn btn-outline btn-sm" data-toast="Invite link copied — share it with your teammate."><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Invite Member</button></div>
         <div class="toolbar" style="margin-bottom:12px"><div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><input placeholder="Search name or email"></div><select class="select" style="width:auto;min-width:150px"><option>Select Role</option><option>Full Seats</option><option>Dept Seats</option><option>Free Seats</option></select><button class="btn btn-outline btn-sm" data-toast="Filter applied.">Apply</button></div>
         <div class="table-wrap"><table class="tbl"><thead><tr><th>No</th><th>Name</th><th>Role</th><th>Role Status</th><th style="text-align:right">Action</th></tr></thead><tbody>
-          ${members.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><span class="avatar"></span><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}${m[3]!=='member'?seatChip(roleIc[m[3]]):''}</td><td>${m[4]==='Active'?`<span class="badge badge-blue">✓ Active</span>`:`<span class="badge badge-red">✕ Non Active</span>`}</td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${editIc}</button><button class="mv" data-member="${m[0]}" title="Move seat">${mvIc}</button></div></td></tr>`).join('')}
+          ${members.map((m,i)=>`<tr><td>${i+1}</td><td><div class="cell-user"><span class="avatar"></span><div><div class="nm">${m[0]}</div><div class="em">${m[1]}</div></div></div></td><td>${m[2]}${m[3]!=='member'?seatChip(m[3]):''}</td><td>${m[4]==='Active'?`<span class="badge badge-blue">✓ Active</span>`:`<span class="badge badge-red">✕ Non Active</span>`}</td><td style="text-align:right"><div class="tbl-actions" style="justify-content:flex-end"><button title="Edit">${editIc}</button><button class="mv" data-member="${m[0]}" title="Move seat">${mvIc}</button></div></td></tr>`).join('')}
         </tbody></table></div>
         <div class="between" style="margin-top:16px"><div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">Item Per page <select class="select" style="width:auto;padding:6px 30px 6px 12px"><option>10</option><option>25</option><option>50</option></select></div><div class="pager"><button>«</button><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>…</button><button>99</button><button>›</button><button>»</button></div></div>
       </div>`;

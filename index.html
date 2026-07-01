@@ -49,6 +49,16 @@
 .order-grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
 @media(max-width:900px){.order-grid{grid-template-columns:1fr}}
 
+/* ---- wide-screen layouts (accommodate large monitors) ---- */
+.seatcards{display:grid;gap:16px}
+.action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.calc-wrap{display:block}
+@media(min-width:1000px){
+  .seatcards{grid-template-columns:1fr 1fr}
+  .calc-wrap{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .calc-wrap .summary{margin-top:0;position:sticky;top:84px}
+}
+
 /* ---- flow / pages panel (bottom-right tab + right drawer) ---- */
 .flow-tab{position:fixed;bottom:22px;right:22px;z-index:100;background:#0b0f1a;color:#fff;border:none;border-radius:999px;padding:12px 18px;font:600 13.5px 'Inter';cursor:pointer;box-shadow:0 12px 36px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:9px}
 .flow-tab:hover{background:#161b29}
