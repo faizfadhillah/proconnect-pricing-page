@@ -382,7 +382,8 @@ table.tbl tr:last-child td { border-bottom: none; }
 .mobile-only { display: none !important; }
 @media (max-width: 900px) { .btn .mobile-only { display: inline-flex !important; align-items: center; } }
 
-.side-foot .aseanta-logo { display: block; margin: 12px auto 0; width: 150px; max-width: 80%; height: auto; }
+.side-foot .aseanta-logo { display: block; margin: 12px auto 0; width: 132px; max-width: 78%; height: auto; }
+.side-foot .aseanta-tag { text-align: center; font: 700 8.5px 'Montserrat',sans-serif; letter-spacing: .06em; color: var(--ink); margin-top: 5px; }
 
 /* ============================================================
    DARK MODE (auto, follows OS prefers-color-scheme)
